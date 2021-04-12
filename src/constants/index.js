@@ -1,0 +1,6 @@
+export const SIMRS_TOKEN = 'GARDA_MEDICA_SIMRS_TOKEN'
+export const SIMRS_ROLE_ID = 'SIMR_ROLE_ID'
+export const SIMRS_NO_HANDPHONE = 'SIMRS_NO_HANDPHONE'
+export const SIMRS_OTP_NUMBER = 'SIMRS_OTP_NUMBER'
+export const SIMRS_RS_ID = 'SIMRS_RS_ID'
+
