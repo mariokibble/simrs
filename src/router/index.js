@@ -25,6 +25,20 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/antrian',
+      name: 'antrian',
+      component: () => import('@/pages/Antrian/Antrian.vue'),
+      meta: {
+        pageTitle: 'Antrian',
+        breadcrumb: [
+          {
+            text: 'Antrian',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
       path: '/error-404',
       name: 'error-404',
       component: () => import('@/pages/error/Error404.vue'),

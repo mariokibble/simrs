@@ -1,5 +1,5 @@
-import pemeriksaan from "./modules/pemeriksaan";
+import pemeriksaan from './modules/pemeriksaan'
 
 export default {
-    pemeriksaan
+  pemeriksaan,
 }
