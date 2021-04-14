@@ -21,6 +21,4 @@ const addPrefixName = ({
   return `${prefix}`
 }
 
-// aku tulis aja yah mas, jika dia itu adalah laki-laki lebih besar dari 18 tahun maka nama depannya adalah Tn, jika dia perempuan sudah menikah dipanggil nya nyonya, jika dia perempuan belum menikah di panggilnya Nn
-
 export default addPrefixName

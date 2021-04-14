@@ -211,7 +211,6 @@ export default {
       isLoading: false,
       dir: false,
       columns: [
-        //   No Antrian, Nama, Tanggal Lahir, NRM, Poli, DPJP, Status TTV , Action.
         {
           label: 'No Antrian',
           field: 'kode_antrian',

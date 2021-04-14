@@ -229,15 +229,4 @@ export default {
   },
 
 }
-/*
-    1. Keluhan utama (wajib)
-    2. Tekanan darah (mmHg) (wajib kecuali bayi dan anak opsional)
-    3. Nadi (x/menit) (wajib)
-    4. Pernapasan (x/menit) (wajib)
-    5. Suhu tubuh (oC) (wajib)
-    6. Saturasi (%) (opsional)
-    7. Berat badan (kg) (opsional)
-    8. Tinggi badan (cm) (opsional)
-    9. Lingkar kepala (cm) (opsional)
-*/
 </script>
