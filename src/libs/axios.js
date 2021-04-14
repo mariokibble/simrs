@@ -9,8 +9,8 @@ const axiosIns = axios.create({
   baseURL: 'https://dev-simrs-api.gardamedica.id',
   headers: {
     Accept: 'application/json',
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+  },
   // timeout: 1000,
   // headers: {'X-Custom-Header': 'foobar'}
 })

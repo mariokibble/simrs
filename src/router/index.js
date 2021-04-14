@@ -25,6 +25,20 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/antrian-ttv',
+      name: 'antrian-ttv',
+      component: () => import('@/pages/AntrianTtv'),
+      meta: {
+        pageTitle: 'Antrian TTV',
+        breadcrumb: [
+          {
+            text: 'Antrian TTV',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
       path: '/error-404',
       name: 'error-404',
       component: () => import('@/pages/error/Error404.vue'),

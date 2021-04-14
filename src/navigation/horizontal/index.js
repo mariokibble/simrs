@@ -4,14 +4,9 @@ export default [
     icon: 'FileIcon',
     children: [
       {
-        title: 'Home',
-        route: 'home',
+        title: 'Antrian TTV',
+        route: 'antrian-ttv',
         icon: 'HomeIcon',
-      },
-      {
-        title: 'Second Page',
-        route: 'second-page',
-        icon: 'FileIcon',
       },
     ],
   },
