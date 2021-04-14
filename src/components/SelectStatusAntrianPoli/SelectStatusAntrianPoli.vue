@@ -13,12 +13,12 @@ export default {
   },
   data() {
     return {
-      selected: 'nama',
+      selected: null,
       items: [
-        { value: null, text: 'Pilih pencarian berdasarkan :' },
-        { value: 'nama', text: 'Nama' },
-        { value: 'kode_antrian', text: 'Kode antrian' },
-        { value: 'nomor_rekam_medis', text: 'NRM' },
+        { value: null, text: 'Pilih status' },
+        { value: 3, text: 'Belum diperiksa' },
+        { value: 4, text: 'Sedang diperiksa' },
+        { value: 5, text: 'Sudah diperiksa' },
       ],
     }
   },

@@ -26,5 +26,6 @@ export default {
     riwayat: '/pemeriksaan/user',
     ttv: '/pemeriksaan/ttv',
     hapus: '/pemeriksaan/cancel',
+    update: '/pemeriksaan/update',
   },
 }

@@ -27,12 +27,20 @@ export default {
     // TODO: rs_id should get from storage
     return this.getPemeriksaan(`status=1&${query}`)
   },
+  getAntrianPoli(query) {
+    // TODO: rs_id should get from storage
+    return this.getPemeriksaan(`${query}`)
+  },
   addTtv(form) {
     const request = resource.post(`${endpoint.pemeriksaan.ttv}`, form)
     return request
   },
   deletePemeriksaan(id) {
     const request = resource.post(`${endpoint.pemeriksaan.hapus}/${id}`)
+    return request
+  },
+  updatePemeriksaan(data) {
+    const request = resource.post(`${endpoint.pemeriksaan.update}`, data)
     return request
   },
 }

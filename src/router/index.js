@@ -39,6 +39,20 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/antrian-poli',
+      name: 'antrian-poli',
+      component: () => import('@/pages/AntrianPoli'),
+      meta: {
+        pageTitle: 'Antrian Poli',
+        breadcrumb: [
+          {
+            text: 'Antrian Poli',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
       path: '/error-404',
       name: 'error-404',
       component: () => import('@/pages/error/Error404.vue'),
