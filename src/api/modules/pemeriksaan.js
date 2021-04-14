@@ -20,9 +20,19 @@ export default {
 
     return request
   },
-  getAntrianRajal({ limit = 10, page = 1, poli = '' }) {
+  getPemeriksaan(query) {
+    return resource.get(`${endpoint.pemeriksaan.pendaftaran}?${query}`)
+  },
+  getAntrianTtv(query) {
     // TODO: rs_id should get from storage
-    const request = resource.get(`${endpoint.pemeriksaan.pendaftaran}?rs_id=1&status=1&limit=${limit}&page=${page}&poli_id=${poli || ''}`)
+    return this.getPemeriksaan(`status=1&${query}`)
+  },
+  addTtv(form) {
+    const request = resource.post(`${endpoint.pemeriksaan.ttv}`, form)
+    return request
+  },
+  deletePemeriksaan(id) {
+    const request = resource.post(`${endpoint.pemeriksaan.hapus}/${id}`)
     return request
   },
 }

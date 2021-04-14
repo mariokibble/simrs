@@ -10,25 +10,29 @@
           </div>
         </b-form-group>
       </div>
-      <div class="custom-search">
+      <div class="custom-search mr-1">
         <b-form-group>
           <div class="d-flex align-items-center">
-            <label class="mr-1">Search</label>
+            <label class="col-3 text-right">Search</label>
+            <SelectSearchAntrian
+              class="col-3 mr-1"
+              @selected="changeEntry('selectedSearch', ...arguments)"
+            />
             <b-form-input
               v-model="searchTerm"
               placeholder="Search"
               type="text"
-              class="d-inline-block"
+              class="d-inline-block col-6"
             />
           </div>
         </b-form-group>
       </div>
 
     </div>
-    <!-- TODO: + filter poli -->
     <!-- table -->
     <vue-good-table
       mode="remote"
+      style-class="vgt-table striped"
       :columns="columns"
       :rows="rows"
       :rtl="direction"
@@ -54,8 +58,19 @@
         slot="table-row"
         slot-scope="props"
       >
+        <span v-if="props.column.field === 'user.nama'">
+          <b>
+            {{ prefixName({
+              jenisKelamin: props.row.user.jenis_kelamin,
+              statusPernikahan: props.row.user.pernikahan,
+              tanggalLahir: props.row.user.tanggal_lahir,
+            })
+            }}
+          </b>
+          {{ props.row.user.nama }}
+        </span>
         <span
-          v-if="props.column.field === 'user.tanggal_lahir'"
+          v-else-if="props.column.field === 'user.tanggal_lahir'"
           class="text-nowrap"
         >
           <FormatDate :date="props.row.user.tanggal_lahir" />
@@ -64,49 +79,35 @@
         <!-- Column: Action -->
         <span v-else-if="props.column.field === 'action'">
           <span>
-            <!-- TODO: update TTV => pindah ke antrian =>   -->
             <!-- button detail, edit, delete, TTV, rekamedis -->
-            <b-dropdown
-              variant="link"
-              toggle-class="text-decoration-none"
-              no-caret
+            <b-button
+              v-ripple.400="'rgba(40, 199, 111, 0.15)'"
+              v-b-tooltip.hover.top="'Lihat detail'"
+              variant="flat-success"
+              class="btn-icon"
             >
-              <template v-slot:button-content>
-                <feather-icon
-                  icon="MoreVerticalIcon"
-                  size="16"
-                  class="text-body align-middle mr-25"
-                />
-              </template>
-              <b-dropdown-item>
-                <feather-icon
-                  icon="BookOpenIcon"
-                  class="mr-50"
-                />
-                <span>Detail</span>
-              </b-dropdown-item>
-              <b-dropdown-item>
-                <feather-icon
-                  icon="Edit2Icon"
-                  class="mr-50"
-                />
-                <span>Edit</span>
-              </b-dropdown-item>
-              <b-dropdown-item>
-                <feather-icon
-                  icon="TrashIcon"
-                  class="mr-50"
-                />
-                <span>Delete</span>
-              </b-dropdown-item>
-              <b-dropdown-item>
-                <feather-icon
-                  icon="TargetIcon"
-                  class="mr-50"
-                />
-                <span>Update TTV</span>
-              </b-dropdown-item>
-            </b-dropdown>
+              <feather-icon icon="EyeIcon" />
+            </b-button>
+
+            <b-button
+              v-b-tooltip.hover.top="'Edit TTV'"
+              v-ripple.400="'rgba(40, 199, 111, 0.15)'"
+              variant="flat-success"
+              class="btn-icon"
+              @click="$emit('updateTtv', props.row.id)"
+            >
+              <feather-icon icon="TargetIcon" />
+            </b-button>
+
+            <b-button
+              v-b-tooltip.hover.top="'Hapus'"
+              v-ripple.400="'rgba(40, 199, 111, 0.15)'"
+              variant="flat-success"
+              class="btn-icon"
+              @click="$emit('deletePemeriksaan', { id:props.row.id, kodeAntrian: props.row.kode_antrian })"
+            >
+              <feather-icon icon="TrashIcon" />
+            </b-button>
           </span>
         </span>
 
@@ -169,13 +170,17 @@
 
 <script>
 import {
-  BPagination, BFormGroup, BFormInput, BFormSelect, BDropdown, BDropdownItem, BCard,
+  BPagination, BFormGroup, BFormInput, BFormSelect, BCard, BButton, VBTooltip,
 } from 'bootstrap-vue'
 import { VueGoodTable } from 'vue-good-table'
 import SelectPoli from '@/components/SelectPoli/SelectPoli.vue'
 import store from '@/store/index'
 import FormatDate from '@/components/FormatDate/FormatDate.vue'
 import fetchApi from '@/api/index'
+import Ripple from 'vue-ripple-directive'
+import { debounce } from 'debounce'
+import SelectSearchAntrian from '@/components/SelectSearchAntrian/SelectSearchAntrian.vue'
+import addPrefixName from '@/utils/addPrefixName'
 
 export default {
   components: {
@@ -184,14 +189,25 @@ export default {
     BFormGroup,
     BFormInput,
     BFormSelect,
-    BDropdown,
-    BDropdownItem,
     BCard,
     FormatDate,
     SelectPoli,
+    BButton,
+    SelectSearchAntrian,
+  },
+  directives: {
+    'b-tooltip': VBTooltip,
+    Ripple,
+  },
+  props: {
+    reload: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
+      prefixName: addPrefixName,
       isLoading: false,
       dir: false,
       columns: [
@@ -201,12 +217,16 @@ export default {
           field: 'kode_antrian',
         },
         {
-          label: 'Nama',
-          field: 'user.nama',
-        },
-        {
           label: 'Poli',
           field: 'poli.nama',
+        },
+        {
+          label: 'NRM',
+          field: 'nrm',
+        },
+        {
+          label: 'Nama',
+          field: 'user.nama',
         },
         {
           label: 'Tanggal Lahir',
@@ -224,6 +244,7 @@ export default {
       rows: [],
       totalRecords: 0,
       searchTerm: '',
+      selectedSearch: null,
       filterValue: '',
       serverParams: {
         columnFilters: {
@@ -248,27 +269,51 @@ export default {
       this.dir = false
       return this.dir
     },
+
   },
   watch: {
-    async filterValue() {
+    filterValue() {
+      this.init()
+    },
+    reload() {
+      this.init()
+    },
+    async selectedSearch(val) {
+      if (val && this.searchTerm) {
+        this.isLoading = true
+        this.updateParams({ page: 1, perPage: 10 })
+        await this.loadItems()
+        this.isLoading = false
+      }
+    },
+  },
+  created() {
+    this.init()
+  },
+  methods: {
+    async init() {
       this.isLoading = true
-      this.updateParams({
-        page: 1,
-        perPage: 10,
-      })
+      this.updateParamsToDefault()
       await this.loadItems()
       this.isLoading = false
     },
-  },
-  async created() {
-    this.loadItems()
-  },
-  methods: {
     changeEntry(key, value) {
       this[key] = value
     },
     updateParams(newProps) {
       this.serverParams = { ...this.serverParams, ...newProps }
+    },
+    updateParamsToDefault() {
+      this.serverParams = {
+        columnFilters: {
+        },
+        sort: {
+          field: '',
+          type: '',
+        },
+        page: 1,
+        perPage: 10,
+      }
     },
     onPageChange(params) {
       this.updateParams({ page: params.currentPage })
@@ -291,14 +336,14 @@ export default {
       this.updateParams(params)
       this.loadItems()
     },
-    // eslint-disable-next-line no-unused-vars
-    onSearch(params) {
-      // TODO: debounce and fetch items by search
-      // console.log(params)
-    },
+    // eslint-disable-next-line prefer-arrow-callback, func-names
+    onSearch: debounce(function () {
+      this.init()
+    }, 200),
     async loadItems() {
       try {
-        const { data: res } = await fetchApi.pemeriksaan.getAntrianRajal({ perPage: this.serverParams.perPage, page: this.serverParams.page, poli: this.filterValue })
+        const query = `rs_id=1&limit=${this.serverParams.perPage}&page=${this.serverParams.page}${this.filterValue ? '&poli_id='.concat(this.filterValue) : ''}&${this.selectedSearch}=${this.searchTerm}`
+        const { data: res } = await fetchApi.pemeriksaan.getAntrianTtv(query)
         const { data } = res
         this.rows = data
         this.totalRecords = res.total

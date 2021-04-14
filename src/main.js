@@ -12,6 +12,7 @@ import './global-components'
 // 3rd party plugins
 import '@/libs/portal-vue'
 import '@/libs/toastification'
+import '@/libs/sweet-alerts'
 
 // import Storage
 import '@/libs/storage'

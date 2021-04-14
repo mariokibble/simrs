@@ -24,5 +24,7 @@ export default {
     dokter: '/dokter',
     pendaftaran: '/pemeriksaan',
     riwayat: '/pemeriksaan/user',
+    ttv: '/pemeriksaan/ttv',
+    hapus: '/pemeriksaan/cancel',
   },
 }
