@@ -25,14 +25,14 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/antrian',
-      name: 'antrian',
-      component: () => import('@/pages/Antrian/Antrian.vue'),
+      path: '/antrian-ttv',
+      name: 'antrian-ttv',
+      component: () => import('@/pages/AntrianTtv'),
       meta: {
-        pageTitle: 'Antrian',
+        pageTitle: 'Antrian TTV',
         breadcrumb: [
           {
-            text: 'Antrian',
+            text: 'Antrian TTV',
             active: true,
           },
         ],
