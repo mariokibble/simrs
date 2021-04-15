@@ -47,4 +47,16 @@ export default {
     const request = resource.get(`${endpoint.pemeriksaan.dokterByRs}/${rsId}`)
     return request
   },
+  mulaiTtv(pemeriksaanId) {
+    const request = resource.post(`${endpoint.pemeriksaan.mulaiTtv}/${pemeriksaanId}`)
+    return request
+  },
+  selesaiTtv(pemeriksaanId) {
+    const request = resource.post(`${endpoint.pemeriksaan.selesaiTtv}/${pemeriksaanId}`)
+    return request
+  },
+  mulaiPoli(pemeriksaanId) {
+    const request = resource.post(`${endpoint.pemeriksaan.mulaiPoli}/${pemeriksaanId}`)
+    return request
+  },
 }
