@@ -216,14 +216,6 @@ export default {
           field: 'kode_antrian',
         },
         {
-          label: 'Poli',
-          field: 'poli.nama',
-        },
-        {
-          label: 'NRM',
-          field: 'nrm',
-        },
-        {
           label: 'Nama',
           field: 'user.nama',
         },
@@ -232,8 +224,12 @@ export default {
           field: 'user.tanggal_lahir',
         },
         {
-          label: 'Jenis Kelamin',
-          field: 'user.jenis_kelamin',
+          label: 'NRM',
+          field: 'nrm',
+        },
+        {
+          label: 'Poli',
+          field: 'poli.nama',
         },
         {
           label: 'Action',
