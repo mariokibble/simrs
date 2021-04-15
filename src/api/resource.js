@@ -1,11 +1,11 @@
 import axios from '@/libs/axios'
-import { SIMRS_TOKEN } from '@/constants/index'
+import { SIMRS_TOKEN_CURRENT } from '@/constants/index'
 import storage from '@/utils/storage'
 
 function createResource() {
   axios.interceptors.request.use(config => {
     // for intercept request or header request
-    const token = storage.getStorage(SIMRS_TOKEN)
+    const token = storage.getStorage(SIMRS_TOKEN_CURRENT)
 
     if (token) {
       // eslint-disable-next-line no-param-reassign

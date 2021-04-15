@@ -62,4 +62,8 @@ export default {
   getKehadiran(query) {
     return this.getPemeriksaan(query)
   },
+  getRumahSakit() {
+    const request = resource.get(`${endpoint.pemeriksaan.rumahSakit}`)
+    return request
+  },
 }

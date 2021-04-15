@@ -12,16 +12,11 @@ const router = new VueRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: () => import('@/pages/Home.vue'),
+      name: 'login',
+      component: () => import('@/pages/Login/Login.vue'),
       meta: {
-        pageTitle: 'Home',
-        breadcrumb: [
-          {
-            text: 'Home',
-            active: true,
-          },
-        ],
+        layout: 'full',
+        requiresAuth: false,
       },
     },
     {

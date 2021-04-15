@@ -6,6 +6,7 @@ import app from './app'
 import appConfig from './app-config'
 import verticalMenu from './vertical-menu'
 import ttv from './ttv'
+import userLoggedIn from './userLoggedIn/index'
 
 Vue.use(Vuex)
 
@@ -15,6 +16,7 @@ export default new Vuex.Store({
     appConfig,
     verticalMenu,
     ttv,
+    userLoggedIn,
   },
   strict: process.env.DEV,
 })
