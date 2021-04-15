@@ -39,6 +39,20 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/antrian-poliklinik',
+      name: 'antrian-poliklinik',
+      component: () => import('@/pages/AntrianPoli'),
+      meta: {
+        pageTitle: 'Antrian Poliklinik',
+        breadcrumb: [
+          {
+            text: 'Antrian Poliklinik',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
       path: '/error-404',
       name: 'error-404',
       component: () => import('@/pages/error/Error404.vue'),

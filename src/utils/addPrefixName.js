@@ -4,7 +4,7 @@ const addPrefixName = ({
 }) => {
   let prefix = ''
   const umur = new Date().getFullYear() - new Date(tanggalLahir).getFullYear()
-  if (jenisKelamin === 'Laki-laki') {
+  if (jenisKelamin === 'Laki-laki' || jenisKelamin === 'L') {
     if (umur > 18) {
       prefix = 'Tn.'
     } else {
