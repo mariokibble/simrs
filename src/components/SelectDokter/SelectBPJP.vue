@@ -10,7 +10,7 @@
 
 </template>
 <script>
-// import fetchApi from '@/api/index'
+import fetchApi from '@/api/index'
 
 import {
   BFormSelect,
@@ -42,15 +42,15 @@ export default {
   },
   created() {
     this.isLoading = true
-
-    this.items = [
-      { value: null, text: 'Pilih BPJP' },
-      { value: 1, text: 'dr. Sobri' },
-      { value: 2, text: 'dr. Astari' },
-      { value: 3, text: 'dr. Febri' },
-    ]
-
-    this.isLoading = false
+    fetchApi.pemeriksaan.getDokterByRsId(1)
+      .then(({ data }) => {
+        this.items = [
+          { value: null, text: 'Pilih DPJP' },
+          ...data.map(item => ({ value: item.id, text: item.user.nama })),
+        ]
+        this.isLoading = false
+      })
+      .catch(err => console.log(err))
   },
 }
 </script>

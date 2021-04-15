@@ -43,4 +43,8 @@ export default {
     const request = resource.post(`${endpoint.pemeriksaan.update}`, data)
     return request
   },
+  getDokterByRsId(rsId) {
+    const request = resource.get(`${endpoint.pemeriksaan.dokterByRs}/${rsId}`)
+    return request
+  },
 }

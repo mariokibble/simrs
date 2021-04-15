@@ -13,7 +13,7 @@ export default {
   },
   data() {
     return {
-      selected: 'nama',
+      selected: 'nomor_rekam_medis',
       items: [
         { value: null, text: 'Pilih pencarian berdasarkan :' },
         { value: 'nama', text: 'Nama' },

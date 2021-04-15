@@ -5,8 +5,8 @@ export default [
     icon: 'HomeIcon',
   },
   {
-    title: 'Antrian Poli',
-    route: 'antrian-poli',
+    title: 'Antrian Poliklinik',
+    route: 'antrian-poliklinik',
     icon: 'HomeIcon',
   },
 ]

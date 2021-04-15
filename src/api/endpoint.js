@@ -27,5 +27,6 @@ export default {
     ttv: '/pemeriksaan/ttv',
     hapus: '/pemeriksaan/cancel',
     update: '/pemeriksaan/update',
+    dokterByRs: '/dokter/by_rs',
   },
 }

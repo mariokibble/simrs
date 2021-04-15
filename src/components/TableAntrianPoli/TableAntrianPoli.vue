@@ -12,7 +12,7 @@
             />
             <SelectBPJP
               class="mr-1"
-              @selected="changeEntry('filterByBpjp', ...arguments)"
+              @selected="changeEntry('filterByDpjp', ...arguments)"
             />
             <SelectStatusAntrianPoli @selected="changeEntry('filterByStatus', ...arguments)" />
           </div>
@@ -236,22 +236,6 @@ export default {
           field: 'kode_antrian',
         },
         {
-          label: 'Poli',
-          field: 'poli.nama',
-        },
-        {
-          label: 'NRM',
-          field: 'nrm',
-        },
-        {
-          label: 'DPJP',
-          field: 'dokter.user.nama',
-        },
-        {
-          label: 'Status',
-          field: 'status',
-        },
-        {
           label: 'Nama',
           field: 'user.nama',
         },
@@ -260,8 +244,20 @@ export default {
           field: 'user.tanggal_lahir',
         },
         {
-          label: 'Jenis Kelamin',
-          field: 'user.jenis_kelamin',
+          label: 'NRM',
+          field: 'nrm',
+        },
+        {
+          label: 'Poli',
+          field: 'poli.nama',
+        },
+        {
+          label: 'DPJP',
+          field: 'dokter.user.nama',
+        },
+        {
+          label: 'Status',
+          field: 'status',
         },
         {
           label: 'Action',
@@ -274,7 +270,7 @@ export default {
       selectedSearch: null,
       filterByPoli: null,
       filterByStatus: null,
-      filterByBpjp: null,
+      filterByDpjp: null,
       serverParams: {
         columnFilters: {
         },
@@ -321,6 +317,9 @@ export default {
       this.init()
     },
     filterByStatus() {
+      this.init()
+    },
+    filterByDpjp() {
       this.init()
     },
     reload() {
@@ -393,9 +392,9 @@ export default {
         let query = 'rs_id=1'
         query += `&status=${this.filterByStatus ? this.filterByStatus : '3,4,5'}`
         query += `&limit=${this.serverParams.perPage}&page=${this.serverParams.page}`
-        // query += `${this.filterByBpjp ? '&dokter_id='.concat(this.filterByBpjp) : ''}`
+        query += `${this.filterByDpjp ? '&dokter_id='.concat(this.filterByDpjp) : ''}`
         query += `${this.filterByPoli ? '&poli_id='.concat(this.filterByPoli) : ''}`
-        query += `&${this.selectedSearch}=${this.searchTerm}`
+        query += this.selectedSearch && this.searchTerm ? `&${this.selectedSearch}=${this.searchTerm}` : ''
 
         const { data: res } = await fetchApi.pemeriksaan.getAntrianPoli(query)
         const { data } = res

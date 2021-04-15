@@ -39,14 +39,14 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/antrian-poli',
-      name: 'antrian-poli',
+      path: '/antrian-poliklinik',
+      name: 'antrian-poliklinik',
       component: () => import('@/pages/AntrianPoli'),
       meta: {
-        pageTitle: 'Antrian Poli',
+        pageTitle: 'Antrian Poliklinik',
         breadcrumb: [
           {
-            text: 'Antrian Poli',
+            text: 'Antrian Poliklinik',
             active: true,
           },
         ],
