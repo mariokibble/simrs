@@ -59,4 +59,7 @@ export default {
     const request = resource.post(`${endpoint.pemeriksaan.mulaiPoli}/${pemeriksaanId}`)
     return request
   },
+  getKehadiran(query) {
+    return this.getPemeriksaan(query)
+  },
 }

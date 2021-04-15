@@ -13,6 +13,11 @@ export default [
         route: 'antrian-poli',
         icon: 'HomeIcon',
       },
+      {
+        title: 'List Kehadiran',
+        route: 'list-kehadiran',
+        icon: 'HomeIcon',
+      },
     ],
   },
 ]

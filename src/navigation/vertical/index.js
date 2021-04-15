@@ -9,4 +9,9 @@ export default [
     route: 'antrian-poliklinik',
     icon: 'HomeIcon',
   },
+  {
+    title: 'List Kehadiran',
+    route: 'list-kehadiran',
+    icon: 'HomeIcon',
+  },
 ]
