@@ -95,10 +95,16 @@ export default {
         return resolve(true)
       })())
     },
-    preUpdateTtv(value) {
-      this.$refs.modalUpdateTtv.show()
-      this.SET_ENTRY_FORM({ key: FORM_TYPES.PEMERIKSAAN_ID, value })
-      this.SET_ENTRY_FORM({ key: FORM_TYPES.WAKTU_MULAI, value: getDate() })
+    async preUpdateTtv(value) {
+      try {
+        this.$refs.modalUpdateTtv.show()
+        this.SET_ENTRY_FORM({ key: FORM_TYPES.PEMERIKSAAN_ID, value })
+        this.SET_ENTRY_FORM({ key: FORM_TYPES.WAKTU_MULAI, value: getDate() })
+
+        await fetchApi.pemeriksaan.mulaiTtv(value)
+      } catch (error) {
+        console.log(error)
+      }
     },
     deleteConfirm({ id, kodeAntrian }) {
       this.$swal({

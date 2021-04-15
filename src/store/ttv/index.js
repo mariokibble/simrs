@@ -55,6 +55,7 @@ export default {
           const formData = { ...state.formState }
           delete formData[FORM_TYPES.ID]
           await fetchApi.pemeriksaan.addTtv(formData)
+          await fetchApi.pemeriksaan.selesaiTtv(state.formState[FORM_TYPES.PEMERIKSAAN_ID])
           commit('CLEAR_ENTRY_FORM')
           return res(true)
         } catch (error) {

@@ -28,7 +28,7 @@ export default {
     async goToRekamedis({ status, id, kodeAntrian }) {
       try {
         if (Number(status) === 3) {
-          await fetchApi.pemeriksaan.updatePemeriksaan({ id, status: 4 })
+          await fetchApi.pemeriksaan.mulaiPoli(id)
           this.$toast({
             component: ToastificationContent,
             props: {

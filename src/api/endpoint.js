@@ -28,5 +28,8 @@ export default {
     hapus: '/pemeriksaan/cancel',
     update: '/pemeriksaan/update',
     dokterByRs: '/dokter/by_rs',
+    mulaiTtv: '/pemeriksaan/schedule/start_ttv',
+    selesaiTtv: '/pemeriksaan/schedule/start_ttv',
+    mulaiPoli: '/pemeriksaan/schedule/start_poli',
   },
 }
