@@ -53,6 +53,20 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/list-kehadiran',
+      name: 'list-kehadiran',
+      component: () => import('@/pages/ListKehadiran'),
+      meta: {
+        pageTitle: 'List Kehadiran',
+        breadcrumb: [
+          {
+            text: 'List Kehadiran',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
       path: '/error-404',
       name: 'error-404',
       component: () => import('@/pages/error/Error404.vue'),
