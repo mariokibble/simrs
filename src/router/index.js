@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import { getUserDataFromStorage } from '@/utils/getDataStorage'
+import authRouter from './authRouter'
 
 Vue.use(VueRouter)
 
@@ -10,13 +12,20 @@ const router = new VueRouter({
     return { x: 0, y: 0 }
   },
   routes: [
+    ...authRouter,
     {
       path: '/',
-      name: 'login',
-      component: () => import('@/pages/Login/Login.vue'),
+      name: 'dashboard',
+      component: () => import('@/pages/Dashboard'),
       meta: {
-        layout: 'full',
-        requiresAuth: false,
+        requiresAuth: true,
+        pageTitle: 'Dashboard',
+        breadcrumb: [
+          {
+            text: 'Dashboard',
+            active: true,
+          },
+        ],
       },
     },
     {
@@ -24,6 +33,7 @@ const router = new VueRouter({
       name: 'antrian-ttv',
       component: () => import('@/pages/AntrianTtv'),
       meta: {
+        requiresAuth: true,
         pageTitle: 'Antrian TTV',
         breadcrumb: [
           {
@@ -38,6 +48,7 @@ const router = new VueRouter({
       name: 'antrian-poliklinik',
       component: () => import('@/pages/AntrianPoli'),
       meta: {
+        requiresAuth: true,
         pageTitle: 'Antrian Poliklinik',
         breadcrumb: [
           {
@@ -52,6 +63,7 @@ const router = new VueRouter({
       name: 'list-kehadiran',
       component: () => import('@/pages/ListKehadiran'),
       meta: {
+        requiresAuth: true,
         pageTitle: 'List Kehadiran',
         breadcrumb: [
           {
@@ -75,6 +87,30 @@ const router = new VueRouter({
     },
   ],
 })
+
+
+router.beforeEach((to, from, next) => {
+  const { tokenCurrent } = getUserDataFromStorage()
+  const isLoggedIn = () => !!tokenCurrent
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    if (!isLoggedIn()) {
+      next({
+        path: '/login',
+      })
+    } else {
+      next()
+    }
+  } else if (isLoggedIn()) {
+    next({
+      path: '/',
+    })
+  } else {
+    next()
+  }
+})
+
 
 // ? For splash screen
 // Remove afterEach hook if you are not using splash screen

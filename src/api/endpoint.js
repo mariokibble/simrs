@@ -7,7 +7,7 @@ export default {
     checkOtp: '/auth/otp/check',
     checkToken: '/auth/user',
     loginAdmin: '/auth/login/admin',
-    logout: '/logout',
+    logout: '/auth/logout',
     registerPasien: '/auth/register',
     editProfile: '/auth/profile',
     getQrCodePasien: '/auth/qrcode',

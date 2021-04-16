@@ -2,10 +2,10 @@
   <div class="auth-wrapper auth-v1 px-2">
     <b-card class="mb-0">
       <b-card-title class="mb-1">
-        Selamat Datang di Aplikasi SIMRS GARDA !
+        Selamat datang di aplikasi SIMRS GARDA !
       </b-card-title>
       <b-card-text class="mb-2">
-        Anda Dapat Memasukan Username dan Password di Bawah Ini
+        Anda dapat memasukan Username dan Password di bawah ini
       </b-card-text>
       <validation-observer
         ref="loginForm"
@@ -98,8 +98,8 @@ export default {
     return {
       no_handphone: '',
       image,
-      username: '',
-      password: '',
+      username: 'dokter3',
+      password: '123456',
     }
   },
   methods: {
