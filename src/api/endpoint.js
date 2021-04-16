@@ -29,7 +29,7 @@ export default {
     update: '/pemeriksaan/update',
     dokterByRs: '/dokter/by_rs',
     mulaiTtv: '/pemeriksaan/schedule/start_ttv',
-    selesaiTtv: '/pemeriksaan/schedule/start_ttv',
+    selesaiTtv: '/pemeriksaan/schedule/stop_ttv',
     mulaiPoli: '/pemeriksaan/schedule/start_poli',
   },
 }
