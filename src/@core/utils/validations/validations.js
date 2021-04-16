@@ -15,6 +15,7 @@ import {
 } from 'vee-validate/dist/rules'
 import ar from 'vee-validate/dist/locale/ar.json'
 import en from 'vee-validate/dist/locale/en.json'
+import id from 'vee-validate/dist/locale/id.json'
 
 // eslint-disable-next-line object-curly-newline
 import { validatorPositive, validatorUrlValidator, validatorPassword, validatorCreditCard } from './validators'
@@ -69,6 +70,9 @@ export const url = extend('url', {
 
 // Install English and Arabic localizations.
 localize({
+  id: {
+    messages: id.messages,
+  },
   en: {
     messages: en.messages,
     names: {
@@ -94,6 +98,8 @@ localize({
     },
   },
 })
+
+localize('id')
 // ////////////////////////////////////////////////////////
 // NOTE:
 // Quasar validation for reference only

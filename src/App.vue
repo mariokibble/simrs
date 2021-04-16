@@ -20,8 +20,11 @@ import { watch } from '@vue/composition-api'
 import useAppConfig from '@core/app-config/useAppConfig'
 
 import { useWindowSize, useCssVar } from '@vueuse/core'
-
+import { getUserDataFromStorage } from '@/utils/getDataStorage'
 import store from '@/store'
+import {
+  SIMRS_TOKEN_CURRENT,
+} from '@/constants/index'
 
 const LayoutVertical = () => import('@/layouts/vertical/LayoutVertical.vue')
 const LayoutHorizontal = () => import('@/layouts/horizontal/LayoutHorizontal.vue')
@@ -48,6 +51,12 @@ export default {
     },
   },
   beforeCreate() {
+    const userDataFromStorage = getUserDataFromStorage()
+    if (userDataFromStorage) {
+      this.$storage.setStorage(SIMRS_TOKEN_CURRENT, userDataFromStorage.tokenParent)
+    }
+    store.commit('userLoggedIn/UPDATE_DATA_USER_FROM_STORAGE', userDataFromStorage)
+
     // Set colors in theme
     const colors = ['primary', 'secondary', 'success', 'info', 'warning', 'danger', 'light', 'dark']
 
