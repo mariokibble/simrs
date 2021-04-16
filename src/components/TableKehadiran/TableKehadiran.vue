@@ -91,6 +91,18 @@
           <FormatDate :date="props.row.user.tanggal_lahir" />
         </span>
 
+        <span
+          v-else-if="props.column.field === 'user.no_handphone'"
+        >
+          {{
+            props.row.user.no_handphone
+              ? props.row.user.no_handphone
+              : props.row.user.carrier_by
+                ? props.row.user.carrier_by.no_handphone
+                : ''
+          }}
+        </span>
+
         <!-- Column: Action -->
         <span v-else-if="props.column.field === 'action'">
           <span>
@@ -179,6 +191,12 @@
           </div>
         </div>
       </template>
+      <div
+        slot="emptystate"
+        class="text-center"
+      >
+        Data kehadiran tidak ada
+      </div>
     </vue-good-table>
   </b-card>
 </template>
@@ -195,6 +213,7 @@ import fetchApi from '@/api/index'
 import Ripple from 'vue-ripple-directive'
 import { debounce } from 'debounce'
 import addPrefixName from '@/utils/addPrefixName'
+import { getDateWithoutHours } from '@/utils/getDate'
 import SelectSearchKehadiran from './SelectSearchKehadiran.vue'
 import SelectTanggalAppointment from './SelectTanggalAppointment.vue'
 import SelectStatusKehadiran from './SelectStatusKehadiran.vue'
@@ -269,7 +288,7 @@ export default {
       searchTerm: '',
       selectedSearch: null,
       filterByPoli: '',
-      filterByTanggalKedatangan: '',
+      filterByTanggalKedatangan: getDateWithoutHours(),
       filterByStatus: '',
       serverParams: {
         columnFilters: {
@@ -408,7 +427,7 @@ export default {
         query += `&limit=${this.serverParams.perPage}&page=${this.serverParams.page}`
         query += `${this.filterByPoli ? '&poli_id='.concat(this.filterByPoli) : ''}`
         query += this.selectedSearch && this.searchTerm ? `&${this.selectedSearch}=${this.searchTerm}` : ''
-        query += `${this.filterByTanggalKedatangan ? '&tanggal_kedatangan='.concat(this.filterByTanggalKedatangan) : ''}`
+        query += `${this.filterByTanggalKedatangan ? '&tanggal_periksa='.concat(this.filterByTanggalKedatangan) : ''}`
         const { data: res } = await fetchApi.pemeriksaan.getKehadiran(query)
         const { data } = res
         const newData = []

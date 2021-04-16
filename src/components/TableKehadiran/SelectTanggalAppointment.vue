@@ -6,7 +6,7 @@
 </template>
 <script>
 import { BFormSelect } from 'bootstrap-vue'
-import { getDateWithoutHours } from '@/utils/getDate';
+import { getDateWithoutHours } from '@/utils/getDate'
 
 export default {
   components: {
@@ -25,9 +25,6 @@ export default {
     selected(val) {
       this.$emit('selected', val)
     },
-  },
-  created() {
-    this.$emit('selected', this.selected)
   },
 }
 </script>

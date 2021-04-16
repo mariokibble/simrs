@@ -45,7 +45,7 @@ export default {
     fetchApi.pemeriksaan.getPoli()
       .then(({ data }) => {
         this.items = [
-          { value: null, text: 'Pilih poli' },
+          { value: null, text: 'Pilih poliklinik' },
           ...data.map(item => ({ value: item.id, text: item.nama })),
         ]
         this.isLoading = false
