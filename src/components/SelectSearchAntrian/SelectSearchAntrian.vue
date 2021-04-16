@@ -17,7 +17,7 @@ export default {
       items: [
         { value: null, text: 'Pilih pencarian berdasarkan :' },
         { value: 'nama', text: 'Nama' },
-        { value: 'kode_antrian', text: 'Kode antrian' },
+        { value: 'kode_antrian', text: 'No antrian' },
         { value: 'nomor_rekam_medis', text: 'NRM' },
       ],
     }

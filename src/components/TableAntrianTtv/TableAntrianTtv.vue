@@ -164,6 +164,13 @@
           </div>
         </div>
       </template>
+
+      <div
+        slot="emptystate"
+        class="text-center"
+      >
+        Antrian TTV tidak ada
+      </div>
     </vue-good-table>
   </b-card>
 </template>
@@ -228,7 +235,7 @@ export default {
           field: 'nrm',
         },
         {
-          label: 'Poli',
+          label: 'Poliklinik',
           field: 'poli.nama',
         },
         {
