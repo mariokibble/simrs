@@ -23,6 +23,9 @@ export default {
   getPemeriksaan(query) {
     return resource.get(`${endpoint.pemeriksaan.pendaftaran}?${query}`)
   },
+  getVerifikasi(query) {
+    return resource.get(`${endpoint.pemeriksaan.verifikasi}?${query}`)
+  },
   getAntrianTtv(query) {
     // TODO: rs_id should get from storage
     return this.getPemeriksaan(`status=1&${query}`)
@@ -31,8 +34,15 @@ export default {
     // TODO: rs_id should get from storage
     return this.getPemeriksaan(`${query}`)
   },
+  getAntrianVerifikasi(query) {
+    return this.getVerifikasi(`${query}`)
+  },
   addTtv(form) {
     const request = resource.post(`${endpoint.pemeriksaan.ttv}`, form)
+    return request
+  },
+  getPemeriksaanById(id) {
+    const request = resource.get(`${endpoint.pemeriksaan.pendaftaran}/${id}`)
     return request
   },
   deletePemeriksaan(id) {

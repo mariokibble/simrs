@@ -28,5 +28,6 @@ export default {
     hapus: '/pemeriksaan/cancel',
     update: '/pemeriksaan/update',
     dokterByRs: '/dokter/by_rs',
+    verifikasi: '/pemeriksaan/verifikasi',
   },
 }
