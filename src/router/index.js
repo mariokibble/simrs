@@ -29,6 +29,34 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/antrian-verifikasi',
+      name: 'antrian-verifikasi',
+      component: () => import('@/pages/Verifikasi'),
+      meta: {
+        pageTitle: 'Antrian Verifikasi',
+        breadcrumb: [
+          {
+            text: 'Antrian Verifikasi',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/antrian-verifikasi/:id',
+      name: 'detail-verifikasi',
+      component: () => import('@/pages/DetailVerifikasi/DetailVerifikasi.vue'),
+      meta: {
+        pageTitle: 'Detail Verifikasi',
+        breadcrumb: [
+          {
+            text: 'Detail Verifikasi',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
       path: '/antrian-ttv',
       name: 'antrian-ttv',
       component: () => import('@/pages/AntrianTtv'),
