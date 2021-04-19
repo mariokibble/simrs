@@ -1,10 +1,8 @@
-import { icon } from "leaflet";
-
 export default [
-  { 
+  {
     title: 'Antrian Verifikasi',
     route: 'antrian-verifikasi',
-    icon: 'HomeIcon'
+    icon: 'HomeIcon',
   },
   {
     title: 'Dashboard',

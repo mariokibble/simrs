@@ -13,9 +13,10 @@ import fetchApi from '@/api'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
 export default {
-  name: 'antrian-verifikasi',
+  name: 'AntrianVerifikasi',
   components: {
     TableAntrianVerifikasi,
+    // eslint-disable-next-line vue/no-unused-components
     ToastificationContent,
   },
   data() {
@@ -42,7 +43,7 @@ export default {
         text: 'Apakah kamu yakin, akan menghapus verifikasi ini ?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: "Iya, hapus sekarang!",
+        confirmButtonText: 'Iya, hapus sekarang!',
         cancelButtonText: 'Tidak, batalkan',
         customClass: {
           confirmButton: 'btn btn-primary',

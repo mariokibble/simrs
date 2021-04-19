@@ -6,18 +6,18 @@ export default {
   getter: {},
   actions: {
     show({ commit }) {
-      commit("show");
+      commit('show')
     },
     hide({ commit }) {
-      commit("hide");
+      commit('hide')
     },
   },
   mutations: {
     show(state) {
-      state.loading = true;
+      state.loading = true
     },
     hide(state) {
-      state.loading = false;
+      state.loading = false
     },
   },
-};
+}
