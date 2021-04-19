@@ -16,7 +16,7 @@ export default new Vuex.Store({
     appConfig,
     verticalMenu,
     ttv,
-    loader
+    loader,
   },
   strict: process.env.DEV,
 })

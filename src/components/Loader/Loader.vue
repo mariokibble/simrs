@@ -9,12 +9,12 @@
 </template>
 
 <script>
-import { BSpinner } from "bootstrap-vue";
+import { BSpinner } from 'bootstrap-vue'
+
 export default {
+  name: 'Loader',
   comments: {
     BSpinner,
   },
-  name: "loader",
-  props: ["visible"]
-};
+}
 </script>
