@@ -6,10 +6,6 @@
         <b-form-group>
           <div class="d-flex align-items-center">
             <label class="mr-1">Filter</label>
-            <SelectPoli
-              class="mr-1"
-              @selected="changeEntry('filterByPoli', ...arguments)"
-            />
             <SelectTanggalAppointment
               class="mr-1"
               @selected="changeEntry('filterByTanggalKedatangan', ...arguments)"
@@ -206,7 +202,6 @@ import {
   BPagination, BFormGroup, BFormInput, BFormSelect, BCard, BButton, VBTooltip, BBadge,
 } from 'bootstrap-vue'
 import { VueGoodTable } from 'vue-good-table'
-import SelectPoli from '@/components/SelectPoli/SelectPoli.vue'
 import store from '@/store/index'
 import FormatDate from '@/components/FormatDate/FormatDate.vue'
 import fetchApi from '@/api/index'
@@ -227,7 +222,6 @@ export default {
     BFormSelect,
     BCard,
     FormatDate,
-    SelectPoli,
     BButton,
     SelectSearchKehadiran,
     BBadge,
@@ -287,7 +281,6 @@ export default {
       totalRecords: 0,
       searchTerm: '',
       selectedSearch: null,
-      filterByPoli: '',
       filterByTanggalKedatangan: getDateWithoutHours(),
       filterByStatus: '',
       serverParams: {
@@ -330,9 +323,6 @@ export default {
     },
   },
   watch: {
-    filterByPoli() {
-      this.init()
-    },
     filterByTanggalKedatangan() {
       this.init()
     },
@@ -425,7 +415,6 @@ export default {
         let query = 'rs_id=1'
         query += `&status=${this.filterByStatus ? this.filterByStatus : '1,2'}`
         query += `&limit=${this.serverParams.perPage}&page=${this.serverParams.page}`
-        query += `${this.filterByPoli ? '&poli_id='.concat(this.filterByPoli) : ''}`
         query += this.selectedSearch && this.searchTerm ? `&${this.selectedSearch}=${this.searchTerm}` : ''
         query += `${this.filterByTanggalKedatangan ? '&tanggal_periksa='.concat(this.filterByTanggalKedatangan) : ''}`
         const { data: res } = await fetchApi.pemeriksaan.getKehadiran(query)

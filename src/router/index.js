@@ -88,7 +88,6 @@ const router = new VueRouter({
   ],
 })
 
-
 router.beforeEach((to, from, next) => {
   const { tokenCurrent } = getUserDataFromStorage()
   const isLoggedIn = () => !!tokenCurrent
@@ -110,7 +109,6 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
-
 
 // ? For splash screen
 // Remove afterEach hook if you are not using splash screen
