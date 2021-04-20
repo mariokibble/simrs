@@ -68,6 +68,7 @@
 import {
   BLink, BNavbarNav, BNavItemDropdown, BDropdownItem, BDropdownDivider, BAvatar,
 } from 'bootstrap-vue'
+
 export default {
   components: {
     BLink,
@@ -84,8 +85,9 @@ export default {
       default: () => {},
     },
   },
+
   computed: {
-    getRole(){}
+    getRole(){},
   },
 }
 </script>
