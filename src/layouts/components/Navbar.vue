@@ -51,7 +51,10 @@
 
         <b-dropdown-divider />
         <!-- Todo: https://stackoverflow.com/questions/62223195/vue-router-uncaught-in-promise-error-redirected-from-login-to-via-a -->
-        <b-dropdown-item link-class="d-flex align-items-center" @click="$router.replace('/logout')">
+        <b-dropdown-item
+          link-class="d-flex align-items-center"
+          @click="$router.replace('/logout')"
+        >
           <feather-icon
             size="16"
             icon="LogOutIcon"
@@ -87,7 +90,7 @@ export default {
   },
 
   computed: {
-    getRole(){},
+    // getRole() {},
   },
 }
 </script>

@@ -43,8 +43,7 @@
       class="content-header-right text-md-right d-md-block d-none mb-1"
       md="3"
       cols="12"
-    >
-    </b-col>
+    />
   </b-row>
 </template>
 
