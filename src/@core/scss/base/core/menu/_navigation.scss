@@ -20,7 +20,7 @@
   overflow: hidden;
 
   &.menu-light {
-    @include menu-theme($body-color, $white);
+    @include menu-theme($body-color, $third);
   }
 
   &.menu-dark {
@@ -85,7 +85,7 @@
         max-width: 36px;
       }
       .brand-text {
-        color: $primary;
+        color: $white;
         padding-left: 1rem;
         margin-bottom: 0;
         font-weight: 600;

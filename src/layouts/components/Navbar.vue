@@ -15,11 +15,7 @@
         </b-link>
       </li>
     </ul>
-
     <!-- Left Col -->
-    <div class="bookmark-wrapper align-items-center flex-grow-1 d-none d-lg-flex">
-      <dark-Toggler class="d-none d-lg-block" />
-    </div>
 
     <b-navbar-nav class="nav align-items-center ml-auto">
       <b-nav-item-dropdown
@@ -30,9 +26,9 @@
         <template #button-content>
           <div class="d-sm-flex d-none user-nav">
             <p class="user-name font-weight-bolder mb-0">
-              John Doe
+              {{ $store.state.userLoggedIn.user && $store.state.userLoggedIn.user.nama ? $store.state.userLoggedIn.user.nama : '' }}
             </p>
-            <span class="user-status">Admin</span>
+            <!-- <span class="user-status">Admin</span> -->
           </div>
           <b-avatar
             size="40"
@@ -53,36 +49,9 @@
           <span>Profile</span>
         </b-dropdown-item>
 
-        <b-dropdown-item link-class="d-flex align-items-center">
-          <feather-icon
-            size="16"
-            icon="MailIcon"
-            class="mr-50"
-          />
-          <span>Inbox</span>
-        </b-dropdown-item>
-
-        <b-dropdown-item link-class="d-flex align-items-center">
-          <feather-icon
-            size="16"
-            icon="CheckSquareIcon"
-            class="mr-50"
-          />
-          <span>Task</span>
-        </b-dropdown-item>
-
-        <b-dropdown-item link-class="d-flex align-items-center">
-          <feather-icon
-            size="16"
-            icon="MessageSquareIcon"
-            class="mr-50"
-          />
-          <span>Chat</span>
-        </b-dropdown-item>
-
         <b-dropdown-divider />
-
-        <b-dropdown-item link-class="d-flex align-items-center">
+        <!-- Todo: https://stackoverflow.com/questions/62223195/vue-router-uncaught-in-promise-error-redirected-from-login-to-via-a -->
+        <b-dropdown-item link-class="d-flex align-items-center" @click="$router.replace('/logout')">
           <feather-icon
             size="16"
             icon="LogOutIcon"
@@ -99,8 +68,6 @@
 import {
   BLink, BNavbarNav, BNavItemDropdown, BDropdownItem, BDropdownDivider, BAvatar,
 } from 'bootstrap-vue'
-import DarkToggler from '@core/layouts/components/app-navbar/components/DarkToggler.vue'
-
 export default {
   components: {
     BLink,
@@ -110,14 +77,15 @@ export default {
     BDropdownDivider,
     BAvatar,
 
-    // Navbar Components
-    DarkToggler,
   },
   props: {
     toggleVerticalMenuActive: {
       type: Function,
       default: () => {},
     },
+  },
+  computed: {
+    getRole(){}
   },
 }
 </script>

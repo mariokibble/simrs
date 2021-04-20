@@ -145,7 +145,7 @@
         }
       }
       a {
-        color: darken($theme-color, 4.9%);
+        color: lighten($black, 4.9%);
         padding: $menu-padding;
         line-height: 1.45;
 
@@ -230,7 +230,7 @@
           background: linear-gradient(118deg, rgba($primary, 1), rgba($primary, 0.7));
           box-shadow: 0 0 10px 1px rgba($primary, 0.7);
           color: $white;
-          font-weight: 400;
+          font-weight: 550;
           border-radius: 4px;
         }
       }

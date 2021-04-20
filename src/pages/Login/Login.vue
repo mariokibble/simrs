@@ -124,7 +124,7 @@ export default {
         this.$storage.setStorage(SIMRS_NO_HANDPHONE, data.user.no_handphone)
         this.$storage.setStorage(SIMRS_RS_ID, data.user.rs_id)
         this.UPDATE_DATA_USER_FROM_STORAGE(getUserDataFromStorage())
-        this.$router.replace('/antrian-ttv')
+        this.$router.replace('/')
       } catch (err) {
         if (err.response.status === 422) {
           this.$toast({

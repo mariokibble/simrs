@@ -314,8 +314,8 @@ export default {
     },
     statusText() {
       const text = {
-        0: 'Belum-diverifikasi',
-        1: 'Sudah-diverifikasi',
+        0: 'Belum diverifikasi',
+        1: 'Sudah diverifikasi',
         9: 'Ditolak',
       }
 

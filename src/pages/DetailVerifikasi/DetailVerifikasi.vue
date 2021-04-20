@@ -22,7 +22,8 @@
       <b-modal
         id="modal-verifikasi-pemeriksaan"
         ref="modalVerifikasiPemeriksaan"
-        ok-variant="dark"
+        ok-variant="secondary"
+        cancel-variant="danger"
         ok-title="Konfirmasi"
         cancel-title="Batalkan"
         modal-class="modal-dark"
@@ -100,9 +101,9 @@ export default {
       if (this.status === 0) {
         return 'Terverifikasi'
       } if (this.status === 1) {
-        return 'Terverifikasi-catatan'
+        return 'Terverifikasi dengan catatan'
       }
-      return 'Ditolak'
+      return 'Ditolak dengan catatan'
     },
   },
   created() {
@@ -113,7 +114,6 @@ export default {
       fetchApi.pemeriksaan
         .getPemeriksaanById(this.pasientId)
         .then(({ data }) => {
-          console.log(data)
           this.pemeriksaan = data
           this.fetching = false
         })
