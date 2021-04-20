@@ -20,7 +20,7 @@ export default [
         icon: 'HomeIcon',
       },
       {
-    
+
         title: 'Antrian Poliklinik',
         route: 'antrian-poliklinik',
         icon: 'HomeIcon',
@@ -30,7 +30,7 @@ export default [
         route: 'list-kehadiran',
         icon: 'HomeIcon',
       },
-    ]
+    ],
   },
   {
     title: 'Logout',

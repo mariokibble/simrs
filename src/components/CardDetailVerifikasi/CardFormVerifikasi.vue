@@ -78,14 +78,14 @@
                   name="Catatan tambahan"
                   :rules="selected.length === 0 ? 'required' : ''"
                 >
-                    <b-form-textarea
-                      id="noteCustomTextarea"
-                      v-model="noteCustom"
-                      placeholder="tulis di sini..."
-                      rows="3"
-                      max-rows="6"
-                  ></b-form-textarea>
-                   <small class="text-danger">{{ errors[0] }}</small>
+                  <b-form-textarea
+                    id="noteCustomTextarea"
+                    v-model="noteCustom"
+                    placeholder="tulis di sini..."
+                    rows="3"
+                    max-rows="6"
+                  />
+                  <small class="text-danger">{{ errors[0] }}</small>
                 </ValidationProvider>
               </div>
             </div>
@@ -112,7 +112,7 @@
 </template>
 <script>
 import {
-  BRow, BCol, BCard, BButton, BFormCheckbox, BFormTextarea
+  BRow, BCol, BCard, BButton, BFormCheckbox, BFormTextarea,
 } from 'bootstrap-vue'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { required } from '@validations'
