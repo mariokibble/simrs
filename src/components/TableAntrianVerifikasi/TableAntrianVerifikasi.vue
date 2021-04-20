@@ -54,6 +54,7 @@
         enabled: false,
       }"
       :total-rows="totalRecords"
+      :line-numbers="true"
       @on-page-change="onPageChange"
       @on-sort-change="onSortChange"
       @on-column-filter="onColumnFilter"
@@ -239,10 +240,6 @@ export default {
       isLoading: false,
       dir: false,
       columns: [
-        {
-          label: 'No',
-          field: 'no_antrian',
-        },
         {
           label: 'Nama',
           field: 'user.nama',
