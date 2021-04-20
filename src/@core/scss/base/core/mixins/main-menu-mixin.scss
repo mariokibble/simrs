@@ -145,7 +145,7 @@
         }
       }
       a {
-        color: darken($theme-color, 4.9%);
+        color: lighten($theme-color, 100%);
         padding: $menu-padding;
         line-height: 1.45;
 
@@ -228,9 +228,11 @@
         z-index: 1;
         > a {
           background: linear-gradient(118deg, rgba($primary, 1), rgba($primary, 0.7));
-          box-shadow: 0 0 10px 1px rgba($primary, 0.7);
-          color: $white;
-          font-weight: 400;
+          // dicommand
+          // box-shadow: 0 0 10px 1px rgba($primary, 0.7);
+          // color: $white;
+          color: darken($black, 4.9%);
+          font-weight: 550;
           border-radius: 4px;
         }
       }
@@ -306,11 +308,14 @@
 
         .active {
           background: linear-gradient(118deg, rgba($primary, 1), rgba($primary, 0.7));
-          box-shadow: 0 0 10px 1px rgba($primary, 0.7);
+          // dicommand 
+          // box-shadow: 0 0 10px 1px rgba($primary, 0.7);
           border-radius: 4px;
           z-index: 1;
           > a {
-            color: $white;
+            // dicommand
+            // color: $white;
+            color: darken($black, 4.9%);
           }
         }
       }

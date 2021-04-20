@@ -8,7 +8,8 @@
     <b-modal
       id="modal-antrian-rajal"
       ref="modalUpdateTtv"
-      ok-variant="dark"
+      ok-variant="secondary"
+      cancel-variant="danger"
       ok-title="Simpan"
       cancel-title="Batalkan"
       modal-class="modal-dark"

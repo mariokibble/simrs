@@ -103,7 +103,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('userLoggedIn', ['UPDATE_DATA_USER_FROM_STORAGE']),
+    ...mapMutations('userLoggedIn', ['UPDATE_DATA_USER_FROM_STORAGE', 'UPDATE_USER']),
     checkValidateForm() {
       return new Promise((resolve, reject) => (async () => {
         const validated = await this.$refs.loginForm.validate()
@@ -123,8 +123,9 @@ export default {
         this.$storage.setStorage(SIMRS_ROLE_ID, data.user.role_id)
         this.$storage.setStorage(SIMRS_NO_HANDPHONE, data.user.no_handphone)
         this.$storage.setStorage(SIMRS_RS_ID, data.user.rs_id)
+        this.UPDATE_USER('userLoggedIn/UPDATE_USER', data)
         this.UPDATE_DATA_USER_FROM_STORAGE(getUserDataFromStorage())
-        this.$router.replace('/antrian-ttv')
+        this.$router.replace('/')
       } catch (err) {
         if (err.response.status === 422) {
           this.$toast({

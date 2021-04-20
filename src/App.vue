@@ -25,6 +25,7 @@ import store from '@/store'
 import {
   SIMRS_TOKEN_CURRENT,
 } from '@/constants/index'
+import fetchApi from '@/api'
 
 const LayoutVertical = () => import('@/layouts/vertical/LayoutVertical.vue')
 const LayoutHorizontal = () => import('@/layouts/horizontal/LayoutHorizontal.vue')
@@ -52,11 +53,17 @@ export default {
   },
   beforeCreate() {
     const userDataFromStorage = getUserDataFromStorage()
-    if (userDataFromStorage) {
-      this.$storage.setStorage(SIMRS_TOKEN_CURRENT, userDataFromStorage.tokenParent)
+    if (userDataFromStorage.tokenParent) {
+      fetchApi.auth.getUserLoggedIn()
+        .then(({ data }) => {
+          store.commit('userLoggedIn/UPDATE_USER', data)
+          this.$storage.setStorage(SIMRS_TOKEN_CURRENT, userDataFromStorage.tokenParent)
+        })
+        .catch(() => {
+          this.$storage.clearStorage()
+        })
     }
     store.commit('userLoggedIn/UPDATE_DATA_USER_FROM_STORAGE', userDataFromStorage)
-
     // Set colors in theme
     const colors = ['primary', 'secondary', 'success', 'info', 'warning', 'danger', 'light', 'dark']
 
