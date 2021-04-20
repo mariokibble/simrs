@@ -32,5 +32,6 @@ export default {
     selesaiTtv: '/pemeriksaan/schedule/stop_ttv',
     mulaiPoli: '/pemeriksaan/schedule/start_poli',
     rumahSakit: '/rumah_sakit',
+    verifikasi: '/pemeriksaan/verifikasi',
   },
 }
