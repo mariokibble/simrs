@@ -33,6 +33,7 @@ const router = new VueRouter({
       name: 'antrian-verifikasi',
       component: () => import('@/pages/Verifikasi'),
       meta: {
+        requiresAuth: true,
         pageTitle: 'Antrian Verifikasi',
         breadcrumb: [
           {
@@ -47,6 +48,7 @@ const router = new VueRouter({
       name: 'detail-verifikasi',
       component: () => import('@/pages/DetailVerifikasi/DetailVerifikasi.vue'),
       meta: {
+        requiresAuth: true,
         pageTitle: 'Detail Verifikasi',
         breadcrumb: [
           {

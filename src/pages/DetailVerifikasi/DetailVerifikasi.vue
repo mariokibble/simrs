@@ -43,7 +43,7 @@
         />
       </b-modal>
     </div>
-    <div>
+    <div v-else>
       loading ...
     </div>
   </div>
