@@ -89,7 +89,6 @@
             {{ statusText(props.row.status) }}
           </b-badge>
         </span>
-
         <span v-else-if="props.column.field === 'user.nama'">
           <b>
             {{
