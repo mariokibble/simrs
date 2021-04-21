@@ -160,6 +160,36 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/antrian-lab',
+      name: 'antrian-lab',
+      component: () => import('@/pages/AntrianLab/index.js'),
+      meta: {
+        pageTitle: 'Antrian Laboratorium',
+        requiresAuth: true,
+        breadcrumb: [
+          {
+            text: 'Antrian Laboratorium',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/antrian-radiologi',
+      name: 'antrian-radiologi',
+      component: () => import('@/pages/AntrianRadiologi/index.js'),
+      meta: {
+        pageTitle: 'Antrian Radiologi',
+        requiresAuth: true,
+        breadcrumb: [
+          {
+            text: 'Antrian Radiologi',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
       path: '/error-404',
       name: 'error-404',
       component: () => import('@/pages/error/Error404.vue'),

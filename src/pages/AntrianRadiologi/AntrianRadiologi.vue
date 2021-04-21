@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TableAntrianLab
+    <TableAntrianRadiologi
       :reload="reload"
       @deletePemeriksaan="deleteConfirm"
     />
@@ -8,13 +8,13 @@
 </template>
 <script>
 
-import TableAntrianLab from '@/components/TableAntrianLab/TableAntrianLab.vue'
+import TableAntrianRadiologi from '@/components/TableAntrianRadiologi/TableAntrianRadiologi.vue'
 import fetchApi from '@/api'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
 export default {
   components: {
-    TableAntrianLab,
+    TableAntrianRadiologi,
     // eslint-disable-next-line vue/no-unused-components
     ToastificationContent,
   },

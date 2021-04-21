@@ -80,4 +80,12 @@ export default {
     const request = resource.get(`${endpoint.pemeriksaan.rumahSakit}`)
     return request
   },
+  getLab() { 
+    const request = resource.get(`${endpoint.pemeriksaan.laboratorium}`)
+    return request
+  },
+  getRadiologi() { 
+    const request = resource.get(`${endpoint.pemeriksaan.radiologi}`)
+    return request
+  }
 }

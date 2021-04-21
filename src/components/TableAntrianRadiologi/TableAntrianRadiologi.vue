@@ -244,7 +244,10 @@ export default {
           label: "Asal Pemeriksaan",
           field: "poli.nama",
         },
-
+        { 
+          label: 'Jenis Pemeriksaan',
+          field: 'jenis_pemeriksaan',
+        },
         {
           label: "Prioritas",
           field: "prioritas",
@@ -385,8 +388,7 @@ export default {
     }, 200),
     async loadItems() {
       try {
-        const { data: res } = await fetchApi.pemeriksaan.getLab();
-        console.log(data.res, '<<<data res')
+        const { data: res } = await fetchApi.pemeriksaan.getRadiologi();
         const { data } = res;
         this.rows = data;
         this.totalRecords = res.total;
