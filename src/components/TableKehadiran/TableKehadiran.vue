@@ -372,7 +372,7 @@ export default {
     },
     async tandaiSudahDiTelpon(id) {
       const newData = []
-      let newTandaiSudahDitelpon;
+      let newTandaiSudahDitelpon
       this.rows.forEach(item => {
         const { is_kontak: tandaiSudahDibaca } = item
         newTandaiSudahDitelpon = tandaiSudahDibaca
