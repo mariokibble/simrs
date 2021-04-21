@@ -49,6 +49,10 @@ export default {
     const request = resource.post(`${endpoint.pemeriksaan.hapus}/${id}`)
     return request
   },
+  updateStatusAcceptedVerifikasi(idPemeriksaan) {
+    const request = resource.post(`${endpoint.pemeriksaan.verifikasi}/${idPemeriksaan}`)
+    return request
+  },
   updatePemeriksaan(data) {
     const request = resource.post(`${endpoint.pemeriksaan.update}`, data)
     return request

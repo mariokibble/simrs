@@ -127,6 +127,9 @@ export default {
     },
     async submitForm() {
       try {
+        if (this.status !== 2) {
+          await fetchApi.pemeriksaan.updateStatusAcceptedVerifikasi(this.pemeriksaan.id)
+        }
         await fetchApi.pemeriksaan.updatePemeriksaan({
           id: this.pemeriksaan.id,
           status: this.status === 2 ? 9 : 1,
