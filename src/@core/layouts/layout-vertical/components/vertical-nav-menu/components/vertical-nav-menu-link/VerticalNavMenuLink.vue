@@ -11,7 +11,15 @@
       v-bind="linkProps"
       class="d-flex align-items-center"
     >
-      <feather-icon :icon="item.icon || 'CircleIcon'" />
+      <!-- TODO: icon custom -->
+      <feather-icon
+        v-if="!item.iconCustom"
+        :icon="item.icon || 'CircleIcon'"
+      />
+      <svgicon
+        v-else
+        :name="item.icon"
+      />
       <span class="menu-title text-truncate">{{ t(item.title) }}</span>
       <b-badge
         v-if="item.tag"
@@ -26,6 +34,7 @@
 </template>
 
 <script>
+import '@/assets/images/iconSidebar'
 import { useUtils as useAclUtils } from '@core/libs/acl'
 import { BLink, BBadge } from 'bootstrap-vue'
 import { useUtils as useI18nUtils } from '@core/libs/i18n'

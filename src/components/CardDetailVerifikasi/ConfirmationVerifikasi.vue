@@ -1,17 +1,17 @@
 <template>
   <b-card-text>
-    <p>Nama: {{ namaPasien }} </p>
-    <p>Tanggal Lahir: <FormatDate :date="tanggalLahir" /> </p>
+    <p>Nama: <b>{{ namaPasien }} </b> </p>
+    <p>Tanggal Lahir: <b><FormatDate :date="tanggalLahir" /></b>  </p>
     <br>
-    <p>Jaminan: {{ jaminan }} </p>
+    <p>Jaminan: <b>{{ jaminan }} </b> </p>
     <br>
-    <p>Tanggal Appointment: <FormatDate :date="tanggalAppointment" /></p>
-    <p>Poliklinik Tujuan: {{ poliklinik }} </p>
-    <p>Dokter: {{ dokter }} </p>
+    <p>Tanggal Appointment: <b><FormatDate :date="tanggalAppointment" /></b> </p>
+    <p>Poliklinik Tujuan: <b> {{ poliklinik }}</b> </p>
+    <p>Dokter: <b>{{ dokter }}</b> </p>
     <br>
-    <p>Status: {{ status }} </p>
+    <p>Status: <b>{{ status }}</b> </p>
     <br>
-    <p> <b> Catatan: </b></p>
+    <p>  Catatan:</p>
     <ul>
       <li
         v-for="note in catatan"

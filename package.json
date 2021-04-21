@@ -1,11 +1,12 @@
 {
-  "name": "vuexy-vuejs-react-html-laravel-admin-dashboard-template",
-  "version": "6.4.0",
+  "name": "simrs",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "svg": "vsvg -s ./src/assets/images/svgIconSidebar -t ./src/assets/images/iconSidebar"
   },
   "dependencies": {
     "@casl/ability": "4.1.6",

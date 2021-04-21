@@ -13,6 +13,8 @@ import './global-components'
 import '@/libs/portal-vue'
 import '@/libs/toastification'
 import '@/libs/sweet-alerts'
+import '@/libs/svg-icon'
+
 
 // import Storage
 import '@/libs/storage'
@@ -29,6 +31,8 @@ require('@core/scss/core.scss')
 
 // import assets styles
 require('@/assets/scss/style.scss')
+
+require('@/assets/css/svgicon.css')
 
 Vue.config.productionTip = false
 

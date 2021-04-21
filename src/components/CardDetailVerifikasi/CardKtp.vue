@@ -9,6 +9,7 @@
       width="440px"
       class="mt-1 ml-2"
       fluid
+      @click="$emit('showModalImage', uri)"
     />
   </b-card>
 </template>

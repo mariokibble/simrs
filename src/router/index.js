@@ -37,6 +37,10 @@ const router = new VueRouter({
         pageTitle: 'Antrian Verifikasi',
         breadcrumb: [
           {
+            text: 'Rawat jalan',
+            active: false,
+          },
+          {
             text: 'Antrian Verifikasi',
             active: true,
           },
@@ -52,33 +56,14 @@ const router = new VueRouter({
         pageTitle: 'Detail Verifikasi',
         breadcrumb: [
           {
-            text: 'Detail Verifikasi',
-            active: true,
+            text: 'Rawat jalan',
+            active: false,
           },
-        ],
-      },
-    },
-    {
-      path: '/antrian-verifikasi',
-      name: 'antrian-verifikasi',
-      component: () => import('@/pages/Verifikasi'),
-      meta: {
-        pageTitle: 'Antrian Verifikasi',
-        breadcrumb: [
           {
             text: 'Antrian Verifikasi',
-            active: true,
+            to: { name: 'antrian-verifikasi' },
+            active: false,
           },
-        ],
-      },
-    },
-    {
-      path: '/antrian-verifikasi/:id',
-      name: 'detail-verifikasi',
-      component: () => import('@/pages/DetailVerifikasi/DetailVerifikasi.vue'),
-      meta: {
-        pageTitle: 'Detail Verifikasi',
-        breadcrumb: [
           {
             text: 'Detail Verifikasi',
             active: true,
@@ -95,6 +80,10 @@ const router = new VueRouter({
         pageTitle: 'Antrian TTV',
         breadcrumb: [
           {
+            text: 'Rawat jalan',
+            active: false,
+          },
+          {
             text: 'Antrian TTV',
             active: true,
           },
@@ -110,6 +99,10 @@ const router = new VueRouter({
         pageTitle: 'Antrian Poliklinik',
         breadcrumb: [
           {
+            text: 'Rawat jalan',
+            active: false,
+          },
+          {
             text: 'Antrian Poliklinik',
             active: true,
           },
@@ -124,6 +117,10 @@ const router = new VueRouter({
         requiresAuth: true,
         pageTitle: 'List Kehadiran',
         breadcrumb: [
+          {
+            text: 'Rawat jalan',
+            active: false,
+          },
           {
             text: 'List Kehadiran',
             active: true,

@@ -1,0 +1,13 @@
+/* eslint-disable */
+require('./AntrianPoliklinik')
+require('./AntrianTTV')
+require('./AntrianVerifikasi')
+require('./Farmasi')
+require('./Kasir')
+require('./Laboratorium')
+require('./ListKehadiran')
+require('./Radiologi')
+require('./RawatInap')
+require('./RawatJalan')
+require('./Registrasi')
+require('./RekamMedis')

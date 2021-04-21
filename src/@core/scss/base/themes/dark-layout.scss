@@ -309,14 +309,14 @@
   .main-menu {
     background-color: $theme-dark-card-bg;
 
-    .shadow-bottom {
-      background: linear-gradient(
-        180deg,
-        $theme-dark-card-bg 44%,
-        rgba($theme-dark-card-bg, 0.51) 73%,
-        rgba($theme-dark-card-bg, 0)
-      );
-    }
+    // .shadow-bottom {
+      // background: linear-gradient(
+      //   180deg,
+      //   $theme-dark-card-bg 44%,
+      //   rgba($theme-dark-card-bg, 0.51) 73%,
+      //   rgba($theme-dark-card-bg, 0)
+      // );
+    // }
 
     &:not(.expanded) {
       .navigation {

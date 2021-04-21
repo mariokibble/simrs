@@ -98,11 +98,26 @@ export default {
     },
     async preUpdateTtv(value) {
       try {
-        this.$refs.modalUpdateTtv.show()
-        this.SET_ENTRY_FORM({ key: FORM_TYPES.PEMERIKSAAN_ID, value })
-        this.SET_ENTRY_FORM({ key: FORM_TYPES.WAKTU_MULAI, value: getDate() })
+        const { value: swal } = await this.$swal({
+          title: 'Mulai TTV!',
+          text: 'apakah anda yakin ingin memulai TTV?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Iya!',
+          cancelButtonText: 'Tidak',
+          customClass: {
+            confirmButton: 'btn btn-primary',
+            cancelButton: 'btn btn-outline-danger ml-1',
+          },
+          buttonsStyling: false,
+        })
+        if (swal) {
+          this.$refs.modalUpdateTtv.show()
+          this.SET_ENTRY_FORM({ key: FORM_TYPES.PEMERIKSAAN_ID, value })
+          this.SET_ENTRY_FORM({ key: FORM_TYPES.WAKTU_MULAI, value: getDate() })
 
-        await fetchApi.pemeriksaan.mulaiTtv(value)
+          await fetchApi.pemeriksaan.mulaiTtv(value)
+        }
       } catch (error) {
         console.log(error)
       }

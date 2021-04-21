@@ -28,7 +28,7 @@ export default {
   },
   getAntrianTtv(query) {
     // TODO: rs_id should get from storage
-    return this.getPemeriksaan(`status=1&${query}`)
+    return this.getPemeriksaan(`status=2&${query}`)
   },
   getAntrianPoli(query) {
     // TODO: rs_id should get from storage

@@ -13,7 +13,7 @@ export default {
   },
   data() {
     return {
-      selected: null,
+      selected: 'nama',
       items: [
         { value: null, text: 'Pilih pencarian berdasarkan :' },
         { value: 'nama', text: 'Nama' },

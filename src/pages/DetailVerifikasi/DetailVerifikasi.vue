@@ -10,15 +10,34 @@
         :poliklinik-tujuan="pemeriksaan.poli.nama"
         :dokter="pemeriksaan.dokter.user.nama"
       />
-      <CardKtp :uri="pemeriksaan.user.foto_ktp" />
+      <CardKtp
+        :uri="pemeriksaan.user.foto_ktp"
+        @showModalImage="showModalImage"
+      />
       <CardAsuransi
         v-if="pemeriksaan.asuransi !== 'UMUM'"
         :type-asuransi="pemeriksaan.asuransi"
         :uri="pemeriksaan.asuransi_file"
         :nomor-bpjs="pemeriksaan.user.nomor_bpjs || '-'"
         :nomor-surat-rujukan-bpjs="'-'"
+        @showModalImage="showModalImage"
       />
       <CardFormVerifikasi @submitted="preSubmit" />
+      <b-modal
+        id="modal-image"
+        ref="modalImage"
+        size="xl"
+      >
+        <b-img
+          thumbnail
+          :src="imageModal"
+          alt="image"
+          style="height: 80vh; width: 100%"
+        />
+        <template #modal-footer>
+          <div />
+        </template>
+      </b-modal>
       <b-modal
         id="modal-verifikasi-pemeriksaan"
         ref="modalVerifikasiPemeriksaan"
@@ -53,6 +72,7 @@
 <script>
 import {
   BModal,
+  BImg,
 } from 'bootstrap-vue'
 import CardDataDiri from '@/components/CardDetailVerifikasi/CardDataDiri.vue'
 import CardKtp from '@/components/CardDetailVerifikasi/CardKtp.vue'
@@ -67,6 +87,7 @@ import fetchApi from '@/api'
 
 export default {
   components: {
+    BImg,
     CardDataDiri,
     CardKtp,
     CardAsuransi,
@@ -82,6 +103,7 @@ export default {
       fetching: true,
       catatanTambahan: [],
       status: 0,
+      imageModal: '',
     }
   },
   computed: {
@@ -119,10 +141,13 @@ export default {
         })
         .catch(err => console.log(err))
     },
+    showModalImage(uri) {
+      this.imageModal = uri
+      this.$refs.modalImage.show()
+    },
     preSubmit(payload) {
       this.catatanTambahan = payload.catatan
       this.status = payload.status
-      console.log(payload)
       this.$refs.modalVerifikasiPemeriksaan.show()
     },
     async submitForm() {

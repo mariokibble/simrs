@@ -39,6 +39,7 @@
           height="220px"
           width="440px"
           class="mt-1 ml-2"
+          @click="$emit('showModalImage', uri)"
         />
       </b-col>
     </b-row>

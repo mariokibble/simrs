@@ -314,7 +314,7 @@ export default {
     border-bottom: 1px solid #ebe9f1;
 
   .dark-layout & {
-    border-color: $theme-dark-border-color;
+    // border-color: $theme-dark-border-color;
   }
 
   #skin-radio-group ::v-deep {

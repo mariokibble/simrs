@@ -140,22 +140,22 @@ export default {
         0: [],
         1: [
           {
-            text: 'Foto KTP tidak jelas, harap membawa KTP asli saat datang ke RS',
-            value: 'Foto KTP tidak jelas, harap membawa KTP asli saat datang ke RS',
+            text: 'Foto KTP tidak jelas, harap membawa KTP asli saat datang ke Rumah Sakit tujuan',
+            value: 'Foto KTP tidak jelas, harap membawa KTP asli saat datang ke Rumah Sakit tujuan',
           },
           {
-            text: 'Status kepersetaan BPJS bermasalah karena premi belum dibayar, harap datang ke bagian BPJS di RS untuk pengurusan masalah kepesertaan',
-            value: 'Status kepersetaan BPJS bermasalah karena premi belum dibayar, harap datang ke bagian BPJS di RS untuk pengurusan masalah kepesertaan',
-          },
-          {
-            text: 'Untuk penjelasan selanjutnya silahkan menghubungi Customer Service',
-            value: 'Untuk penjelasan selanjutnya silahkan menghubungi Customer Service',
+            text: 'Status kepesertaan BPJS bermasalah karena premi belum dibayar, harap datang ke bagian BPJS di Rumah Sakit tujuan untuk pengurusan masalah kepesertaan',
+            value: 'Status kepesertaan BPJS bermasalah karena premi belum dibayar, harap datang ke bagian BPJS di Rumah Sakit tujuan untuk pengurusan masalah kepesertaan',
           },
         ],
         2: [
           {
-            text: 'Status kepersetaan BPJS bermasalah karena premi belum dibayar, harap datang ke bagian BPJS di RS untuk pengurusan masalah kepesertaan',
-            value: 'Status kepersetaan BPJS bermasalah karena premi belum dibayar, harap datang ke bagian BPJS di RS untuk pengurusan masalah kepesertaan',
+            text: 'Surat rujukan tidak sesuai, harap meminta surat rujukan yang sesuai di faskes tingkat 1 dan melakukan pendaftaran ulang',
+            value: 'Surat rujukan tidak sesuai, harap meminta surat rujukan yang sesuai di faskes tingkat 1 dan melakukan pendaftaran ulang',
+          },
+          {
+            text: 'Surat rujukan sudah kadaluarsa, harap meminta surat rujukan yang sesuai di faskes tingkat 1 dan melakukan pendaftaran ulang',
+            value: 'Surat rujukan sudah kadaluarsa, harap meminta surat rujukan yang sesuai di faskes tingkat 1 dan melakukan pendaftaran ulang',
           },
           {
             text: 'Status kepesertaan asuransi bermasalah karena premi belum dibayar, harap melakukan konfirmasi ke asuransi untuk pengurusan masalah kepesertaan',
@@ -164,10 +164,6 @@ export default {
           {
             text: 'Foto kartu asuransi tidak jelas, harap melakukan foto ulang dan melakukan pendaftaran ulang',
             value: 'Foto kartu asuransi tidak jelas, harap melakukan foto ulang dan melakukan pendaftaran ulang',
-          },
-          {
-            text: 'Untuk penjelasan selanjutnya silahkan menghubungi Customer Service',
-            value: 'Untuk penjelasan selanjutnya silahkan menghubungi Customer Service',
           },
         ],
       },
@@ -188,6 +184,7 @@ export default {
         if (this.isNoteCustom && this.noteCustom) {
           this.selected.push(this.noteCustom)
         }
+        this.selected.push('Untuk penjelasan selanjutnya silahkan menghubungi Customer Service')
         this.$emit('submitted', { catatan: this.selected, status: this.notesBy })
       }
     },

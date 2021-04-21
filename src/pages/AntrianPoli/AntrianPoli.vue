@@ -25,9 +25,22 @@ export default {
     }
   },
   methods: {
-    async goToRekamedis({ status, id, kodeAntrian }) {
+    async goToRekamedis({ id, kodeAntrian }) {
       try {
-        if (Number(status) === 3) {
+        const { value } = await this.$swal({
+          title: 'Mulai rekammedis!',
+          text: 'apakah anda yakin ingin memulai rekammedis?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Iya!',
+          cancelButtonText: 'Tidak',
+          customClass: {
+            confirmButton: 'btn btn-primary',
+            cancelButton: 'btn btn-outline-danger ml-1',
+          },
+          buttonsStyling: false,
+        })
+        if (value) {
           await fetchApi.pemeriksaan.mulaiPoli(id)
           this.$toast({
             component: ToastificationContent,
@@ -37,8 +50,8 @@ export default {
               variant: 'success',
             },
           })
+          // this.$router.push('/rekamedis')
         }
-        this.$router.push('/rekamedis')
       } catch (error) {
         console.log(error)
       }

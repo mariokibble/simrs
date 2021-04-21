@@ -7,30 +7,65 @@ export default [
   },
   {
     title: 'Rawat jalan',
-    icon: 'MoreHorizontalIcon',
+    icon: 'RawatJalan',
+    iconCustom: true,
     children: [
       {
         title: 'Antrian Verifikasi',
         route: 'antrian-verifikasi',
-        icon: 'HomeIcon',
+        icon: 'AntrianVerifikasi',
+        iconCustom: true,
+      },
+      {
+        title: 'List Kehadiran',
+        route: 'list-kehadiran',
+        icon: 'ListKehadiran',
+        iconCustom: true,
       },
       {
         title: 'Antrian TTV',
         route: 'antrian-ttv',
-        icon: 'HomeIcon',
+        icon: 'AntrianTTV',
+        iconCustom: true,
       },
       {
 
         title: 'Antrian Poliklinik',
         route: 'antrian-poliklinik',
-        icon: 'HomeIcon',
-      },
-      {
-        title: 'List Kehadiran',
-        route: 'list-kehadiran',
-        icon: 'HomeIcon',
+        icon: 'AntrianPoliklinik',
+        iconCustom: true,
       },
     ],
+  },
+  {
+    title: 'Rawat inap',
+    route: 'Rawat inap',
+    icon: 'RawatInap',
+    iconCustom: true,
+  },
+  {
+    title: 'Laboratorium',
+    route: 'Laboratorium',
+    icon: 'Laboratorium',
+    iconCustom: true,
+  },
+  {
+    title: 'Radiologi',
+    route: 'Radiologi',
+    icon: 'Radiologi',
+    iconCustom: true,
+  },
+  {
+    title: 'Farmasi',
+    route: 'Farmasi',
+    icon: 'Farmasi',
+    iconCustom: true,
+  },
+  {
+    title: 'Kasir',
+    route: 'Kasir',
+    icon: 'Kasir',
+    iconCustom: true,
   },
   {
     title: 'Logout',
