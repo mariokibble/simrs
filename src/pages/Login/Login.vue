@@ -73,6 +73,7 @@
                       v-model="password"
                       :error-messages="errors"
                       placeholder="password"
+                      type="password"
                     />
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
@@ -129,10 +130,9 @@ export default {
   },
   data() {
     return {
-      no_handphone: '',
       image,
-      username: 'dokter3',
-      password: '123456',
+      username: '',
+      password: '',
     }
   },
   methods: {
