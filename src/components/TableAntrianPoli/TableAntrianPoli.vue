@@ -18,7 +18,7 @@
           </div>
         </b-form-group>
       </div>
-      <div class="custom-search mr-5">
+      <div class="custom-search mr-1">
         <b-form-group>
           <div class="d-flex align-items-center">
             <label class="col-3 text-right">Search</label>
@@ -32,15 +32,6 @@
               type="text"
               class="d-inline-block col-6"
             />
-            <b-button
-              v-b-tooltip.hover.top="'refresh'"
-              v-ripple.400="'rgba(40, 199, 111, 0.15)'"
-              variant="success"
-              class="btn-icon ml-1"
-              @click="init"
-            >
-              <feather-icon icon="RefreshCwIcon" />
-            </b-button>
           </div>
         </b-form-group>
       </div>
@@ -81,7 +72,17 @@
             {{ statusText(props.row.status) }}
           </b-badge>
         </span>
-
+        <span v-else-if="props.column.field === 'user.nama'">
+          <b>
+            {{ prefixName({
+              jenisKelamin: props.row.user.jenis_kelamin,
+              statusPernikahan: props.row.user.pernikahan,
+              tanggalLahir: props.row.user.tanggal_lahir,
+            })
+            }}
+          </b>
+          {{ props.row.user.nama }}
+        </span>
         <span
           v-else-if="props.column.field === 'user.tanggal_lahir'"
           class="text-nowrap"
@@ -286,7 +287,6 @@ export default {
         page: 1,
         perPage: 10,
       },
-      saveInterval: null,
     }
   },
   computed: {
@@ -343,12 +343,6 @@ export default {
   created() {
     this.init()
   },
-  mounted() {
-    this.interval()
-  },
-  beforeDestroy() {
-    clearInterval(this.saveInterval)
-  },
   methods: {
     async init() {
       this.isLoading = true
@@ -401,19 +395,20 @@ export default {
     }, 200),
     async loadItems() {
       try {
-        const { data: res } = await fetchApi.pemeriksaan.getRadiologi()
+        let query = 'rs_id=1'
+        query += `&status=${this.filterByStatus ? this.filterByStatus : '3,4,5'}`
+        query += `&limit=${this.serverParams.perPage}&page=${this.serverParams.page}`
+        query += `${this.filterByDpjp ? '&dokter_id='.concat(this.filterByDpjp) : ''}`
+        query += `${this.filterByPoli ? '&poli_id='.concat(this.filterByPoli) : ''}`
+        query += this.selectedSearch && this.searchTerm ? `&${this.selectedSearch}=${this.searchTerm}` : ''
+
+        const { data: res } = await fetchApi.pemeriksaan.getAntrianPoli(query)
         const { data } = res
-        console.log(data, '<<data')
         this.rows = data
         this.totalRecords = res.total
       } catch (error) {
         console.log(error)
       }
-    },
-    interval() {
-      this.saveInterval = setInterval(() => {
-        this.init()
-      }, 60 * 1000)
     },
   },
 }

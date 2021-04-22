@@ -80,8 +80,8 @@ export default {
     const request = resource.get(`${endpoint.pemeriksaan.rumahSakit}`)
     return request
   },
-  getLab() { 
-    const request = resource.get(`${endpoint.pemeriksaan.laboratorium}`)
+  getLab(query) { 
+    const request = resource.get(`${endpoint.pemeriksaan.laboratorium}?${query}`)
     return request
   },
   getLabById(id) {

@@ -15,9 +15,9 @@ export default {
     return {
       selected: null,
       items: [
-        { value: null, text: 'Pilih prioritas' },
-        { value: '0', text: 'Non Cito' },
-        { value: '1', text: 'Cito' },
+        { value: null, text: 'Pilih pencarian berdasarkan :' },
+        { value: 'nama', text: 'Nama' },
+        { value: 'nrm', text: 'NRM'}
       ],
     }
   },

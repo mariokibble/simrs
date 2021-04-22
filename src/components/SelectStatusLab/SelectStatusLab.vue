@@ -15,9 +15,12 @@ export default {
     return {
       selected: null,
       items: [
-        { value: null, text: 'Pilih prioritas' },
-        { value: '0', text: 'Non Cito' },
-        { value: '1', text: 'Cito' },
+        { value: null, text: 'Pilih status' },
+        { value: 0, text: 'Belum diproses' },
+        { value: 1, text: 'Sedang diproses' },
+        { value: 2, text: 'Pending' },
+        { value: 3, text: 'Selesai' },
+        { value: 9, text: 'Batal' },
       ],
     }
   },

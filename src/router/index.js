@@ -164,6 +164,7 @@ const router = new VueRouter({
       name: 'antrian-lab',
       component: () => import('@/pages/AntrianLab'),
       meta: {
+        requiresAuth: true,
         pageTitle: 'Antrian Laboratorium',
         breadcrumb: [
           {
@@ -175,13 +176,19 @@ const router = new VueRouter({
     },
     {
       path: '/antrian-lab/:id',
-      name: 'isian-lab',
+      name: 'detail-lab',
       component: () => import('@/pages/DetailIsianLab/DetailIsianLab.vue'),
       meta: {
-        pageTitle: 'Isian Hasil Laboratorium',
+        requiresAuth: true,
+        pageTitle: 'Input Isian Laboratorium',
         breadcrumb: [
           {
-            text: 'Isian Hasil Laboratorium',
+            text: 'Antrian Laboratorium',
+            to: { name: 'antrian-lab' },
+            active: false,
+          },
+          {
+            text: 'Input Hasil Laboratorium',
             active: true,
           },
         ],
