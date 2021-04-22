@@ -256,7 +256,10 @@ export default {
           label: "Asal Pemeriksaan",
           field: "pemeriksaan.poli.nama",
         },
-
+        { 
+          label: "Jenis Pemeriksaan",
+          field: "pemeriksaan.jenis.nama"
+        },
         {
           label: "Prioritas",
           field: "pemeriksaan.is_prioritas",
@@ -434,7 +437,7 @@ export default {
           this.filterByCito ? "&is_prioritas=".concat(this.filterByCito) : ""
         }`;
         query += this.selectedSearch && this.searchTerm ? `&${this.selectedSearch}=${this.searchTerm}` : ''
-        const { data: res } = await fetchApi.pemeriksaan.getLab(query);
+        const { data: res } = await fetchApi.pemeriksaan.getRadiologi(query);
         const { data } = res;
         this.rows = data;
         this.totalRecords = res.total;

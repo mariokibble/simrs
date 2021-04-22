@@ -88,8 +88,8 @@ export default {
     const request = resource.get(`${endpoint.pemeriksaan.laboratorium}/${id}`)
     return request
   },
-  getRadiologi() { 
-    const request = resource.get(`${endpoint.pemeriksaan.radiologi}`)
+  getRadiologi(query) { 
+    const request = resource.get(`${endpoint.pemeriksaan.radiologi}?${query}`)
     return request
   }
 }
