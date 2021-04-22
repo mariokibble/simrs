@@ -163,9 +163,6 @@ const router = new VueRouter({
       path: '/antrian-lab',
       name: 'antrian-lab',
       component: () => import('@/pages/AntrianLab'),
-      beforeEnter(to, from, next) { 
-        next(`/antrian-lab/:id`)
-      },
       meta: {
         pageTitle: 'Antrian Laboratorium',
         breadcrumb: [
