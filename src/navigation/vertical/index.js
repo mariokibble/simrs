@@ -45,13 +45,13 @@ export default [
   },
   {
     title: 'Laboratorium',
-    route: 'Laboratorium',
+    route: 'antrian-lab',
     icon: 'Laboratorium',
     iconCustom: true,
   },
   {
     title: 'Radiologi',
-    route: 'Radiologi',
+    route: 'antrian-radiologi',
     icon: 'Radiologi',
     iconCustom: true,
   },

@@ -10,7 +10,11 @@
               class="mr-1"
               @selected="changeEntry('filterByPoli', ...arguments)"
             />
-            <SelectStatusAntrianVerifikasi
+            <SelectCito
+              class="mr-1"
+              @selected="changeEntry('filterByCito', ...arguments)"
+            />
+            <SelectStatusLab
               class="mr-1"
               @selected="changeEntry('filterByStatus', ...arguments)"
             />
@@ -21,7 +25,7 @@
         <b-form-group>
           <div class="d-flex align-items-center">
             <label class="col-3 text-right">Search</label>
-            <SelectSearchAntrianVerifikasi
+            <SelectSearchLab
               class="col-3 mr-1"
               @selected="changeEntry('selectedSearch', ...arguments)"
             />
@@ -62,12 +66,18 @@
       @on-search="onSearch"
     >
       <template slot="table-row" slot-scope="props">
-        <!-- Column: Status -->
-        <span v-if="props.column.field === 'status'">
+        <!-- Column: Cito -->
+        <span v-if="props.column.field === 'pemeriksaan.is_prioritas'">
+          <b-badge :variant="citoVariant(props.row.pemeriksaan.is_prioritas)">
+            {{ citoText(props.row.pemeriksaan.is_prioritas) }}
+          </b-badge>
+        </span>
+        <span v-else-if="props.column.field === 'status'">
           <b-badge :variant="statusVariant(props.row.status)">
             {{ statusText(props.row.status) }}
           </b-badge>
         </span>
+
         <span v-else-if="props.column.field === 'user.nama'">
           <b>
             {{
@@ -100,11 +110,11 @@
             <!-- button  edit, delete, TTV, rekamedis -->
 
             <b-button
-              v-b-tooltip.hover.top="'Edit Verifikasi'"
+              v-b-tooltip.hover.top="'Input Hasil Laboratorium'"
               v-ripple.400="'rgba(40, 199, 111, 0.15)'"
               variant="flat-success"
               class="btn-icon"
-              @click="$emit('detailVerifikasi', { id: props.row.id })"
+              @click="$emit('detailIsianLab', { id: props.row.id })"
             >
               <feather-icon icon="TargetIcon" />
             </b-button>
@@ -193,8 +203,9 @@ import FormatDate from "@/components/FormatDate/FormatDate.vue";
 import fetchApi from "@/api/index";
 import Ripple from "vue-ripple-directive";
 import { debounce } from "debounce";
-import SelectStatusAntrianVerifikasi from "@/components/SelectStatusAntrianVerifikasi/SelectStatusAntrianVerifikasi.vue";
-import SelectSearchAntrianVerifikasi from "@/components/SelectSearchAntrianVerifikasi/SelectSearchAntrianVerifikasi.vue";
+import SelectCito from "@/components/SelectCito/SelectCito.vue";
+import SelectSearchLab from "@/components/SelectSearchLab/SelectSearchLab.vue";
+import SelectStatusLab from "@/components/SelectStatusLab/SelectStatusLab.vue"
 import addPrefixName from "@/utils/addPrefixName";
 
 export default {
@@ -209,8 +220,9 @@ export default {
     SelectPoli,
     BButton,
     BBadge,
-    SelectStatusAntrianVerifikasi,
-    SelectSearchAntrianVerifikasi,
+    SelectSearchLab,
+    SelectCito,
+    SelectStatusLab,
   },
   directives: {
     "b-tooltip": VBTooltip,
@@ -238,19 +250,17 @@ export default {
         },
         {
           label: "NRM",
-          field: "nomor_rekam_medis",
+          field: "nrm",
         },
         {
           label: "Asal Pemeriksaan",
-          field: "poli.nama",
+          field: "pemeriksaan.poli.nama",
         },
-        { 
-          label: 'Jenis Pemeriksaan',
-          field: 'jenis_pemeriksaan',
-        },
+
         {
           label: "Prioritas",
-          field: "prioritas",
+          field: "pemeriksaan.is_prioritas",
+          name: "prioritas",
         },
         {
           label: "Status",
@@ -262,16 +272,21 @@ export default {
         },
       ],
       rows: [],
+      names: [],
       totalRecords: 0,
-      searchTerm: "",
+      searchTerm: '',
       selectedSearch: null,
       filterByPoli: null,
-      filterByStatus: "0",
+      filterByCito: null,
+      filterByStatus: null,
+      poliId: null,
+      poliName: null,
+      name: null,
       serverParams: {
         columnFilters: {},
         sort: {
-          field: "",
-          type: "",
+          field: '',
+          type: '',
         },
         page: 1,
         perPage: 10,
@@ -295,32 +310,53 @@ export default {
         index: index + 1,
       }));
     },
-    statusVariant() {
-      const statusColor = {
-        0: "light-warning",
-        1: "light-success",
-        9: "light-danger",
+    citoVariant() {
+      const citoColor = {
+        0: "light-success",
+        1: "light-danger",
       };
-      return (status) => statusColor[status];
+      return (prioritas) => citoColor[prioritas];
     },
-    statusText() {
+    citoText() {
       const text = {
-        0: "Belum-diproses",
-        1: "Sedang-diproses",
-        9: "Batal",
+        0: "Non Cito",
+        1: "Cito",
       };
 
-      return (status) => text[status];
+      return (prioritas) => text[prioritas];
     },
+    statusVariant() { 
+      const statusColor = { 
+        0: "light-warning", 
+        1: "light-primary",
+        2: "light-secondary",
+        3: "light-success",
+        9: "light-danger",
+      }
+      return status => statusColor[status]
+    },
+    statusText() { 
+      const text = { 
+        0: "Belum diproses",
+        1: "Sedang diproses",
+        2: "Pending",
+        3: "Selesai",
+        9: "Batal",
+      }
+      return status => text[status]
+    }
   },
   watch: {
     filterByPoli() {
       this.init();
     },
-    filterByStatus() {
+    filterByCito() {
       this.init();
     },
     reload() {
+      this.init();
+    },
+    filterByStatus() {
       this.init();
     },
     async selectedSearch(val) {
@@ -388,12 +424,22 @@ export default {
     }, 200),
     async loadItems() {
       try {
-        const { data: res } = await fetchApi.pemeriksaan.getRadiologi();
+        let query = "rs_id=1";
+        query += `&status=${this.filterByStatus ? this.filterByStatus : "0,1,2,3,9"}`;
+        query += `&limit=${this.serverParams.perPage}&page=${this.serverParams.page}`;
+        query += `${
+          this.filterByPoli ? "&poli_id=".concat(this.filterByPoli) : ""
+        }`;
+        query += `${
+          this.filterByCito ? "&is_prioritas=".concat(this.filterByCito) : ""
+        }`;
+        query += this.selectedSearch && this.searchTerm ? `&${this.selectedSearch}=${this.searchTerm}` : ''
+        const { data: res } = await fetchApi.pemeriksaan.getLab(query);
         const { data } = res;
         this.rows = data;
         this.totalRecords = res.total;
-      } catch (error) { 
-          console.log(error)
+      } catch (error) {
+        console.log(error);
       }
     },
   },

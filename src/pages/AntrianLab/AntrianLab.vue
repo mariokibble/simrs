@@ -32,10 +32,7 @@ export default {
         .then((res) => {
           console.log(res, "<<res");
           const encrypId = window.btoa(`${res.data.id}`)
-          console.log(encrypId, '<<encryptId')
-          this.$router.push(`/antrian-lab/${res.data.id}`).catch(e => { 
-            gotCaught(e)
-          });         // this.$router.push(`/antrian-lab/${encrypId}`)
+          this.$router.push(`/antrian-lab/${encrypId}`)
         })
         .catch((err) => {
           console.info(err.message);
