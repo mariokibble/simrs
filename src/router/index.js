@@ -162,13 +162,29 @@ const router = new VueRouter({
     {
       path: '/antrian-lab',
       name: 'antrian-lab',
-      component: () => import('@/pages/AntrianLab/index.js'),
+      component: () => import('@/pages/AntrianLab'),
+      beforeEnter(to, from, next) { 
+        next(`/antrian-lab/:id`)
+      },
       meta: {
         pageTitle: 'Antrian Laboratorium',
-        requiresAuth: true,
         breadcrumb: [
           {
             text: 'Antrian Laboratorium',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/antrian-lab/:id',
+      name: 'isian-lab',
+      component: () => import('@/pages/DetailIsianLab/DetailIsianLab.vue'),
+      meta: {
+        pageTitle: 'Isian Hasil Laboratorium',
+        breadcrumb: [
+          {
+            text: 'Isian Hasil Laboratorium',
             active: true,
           },
         ],

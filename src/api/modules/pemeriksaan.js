@@ -84,6 +84,10 @@ export default {
     const request = resource.get(`${endpoint.pemeriksaan.laboratorium}`)
     return request
   },
+  getLabById(id) {
+    const request = resource.get(`${endpoint.pemeriksaan.laboratorium}/${id}`)
+    return request
+  },
   getRadiologi() { 
     const request = resource.get(`${endpoint.pemeriksaan.radiologi}`)
     return request
