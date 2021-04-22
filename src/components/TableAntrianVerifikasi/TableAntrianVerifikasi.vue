@@ -118,7 +118,7 @@
               class="btn-icon"
               @click="$emit('detailVerifikasi', { id: props.row.id })"
             >
-              <feather-icon icon="TargetIcon" />
+              <feather-icon icon="EditIcon" />
             </b-button>
 
             <b-button

@@ -128,7 +128,7 @@
               class="btn-icon"
               @click="tandaiSudahDiTelpon(props.row.id)"
             >
-              <feather-icon icon="TargetIcon" />
+              <feather-icon icon="PhoneForwardedIcon" />
             </b-button>
 
             <b-button

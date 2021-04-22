@@ -113,13 +113,13 @@
             </b-button>
 
             <b-button
-              v-b-tooltip.hover.top="'Rekammedis'"
+              v-b-tooltip.hover.top="'Rekam medis'"
               v-ripple.400="'rgba(40, 199, 111, 0.15)'"
               variant="flat-success"
               class="btn-icon"
               @click="$emit('goToRekamedis', { status: props.row.status, id: props.row.id, kodeAntrian: props.row.kode_antrian })"
             >
-              <feather-icon icon="DatabaseIcon" />
+              <feather-icon icon="EditIcon" />
             </b-button>
 
             <b-button
