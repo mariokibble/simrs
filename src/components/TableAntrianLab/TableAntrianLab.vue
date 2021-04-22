@@ -10,9 +10,9 @@
               class="mr-1"
               @selected="changeEntry('filterByPoli', ...arguments)"
             />
-            <SelectStatusAntrianVerifikasi
+            <SelectCito
               class="mr-1"
-              @selected="changeEntry('filterByStatus', ...arguments)"
+              @selected="changeEntry('filterByCito', ...arguments)"
             />
           </div>
         </b-form-group>
@@ -63,9 +63,9 @@
     >
       <template slot="table-row" slot-scope="props">
         <!-- Column: Status -->
-        <span v-if="props.column.field === 'status'">
-          <b-badge :variant="statusVariant(props.row.status)">
-            {{ statusText(props.row.status) }}
+        <span v-if="props.column.field === 'pemeriksaan.is_prioritas'">
+          <b-badge :variant="citoVariant(props.row.pemeriksaan.is_prioritas)">
+            {{ citoText(props.row.pemeriksaan.is_prioritas) }}
           </b-badge>
         </span>
         <span v-else-if="props.column.field === 'user.nama'">
@@ -100,11 +100,11 @@
             <!-- button  edit, delete, TTV, rekamedis -->
 
             <b-button
-              v-b-tooltip.hover.top="'Edit Verifikasi'"
+              v-b-tooltip.hover.top="'Input Hasil Laboratorium'"
               v-ripple.400="'rgba(40, 199, 111, 0.15)'"
               variant="flat-success"
               class="btn-icon"
-              @click="$emit('detailVerifikasi', { id: props.row.id })"
+              @click="$emit('detailIsianLab', { id: props.row.id })"
             >
               <feather-icon icon="TargetIcon" />
             </b-button>
@@ -193,7 +193,7 @@ import FormatDate from "@/components/FormatDate/FormatDate.vue";
 import fetchApi from "@/api/index";
 import Ripple from "vue-ripple-directive";
 import { debounce } from "debounce";
-import SelectStatusAntrianVerifikasi from "@/components/SelectStatusAntrianVerifikasi/SelectStatusAntrianVerifikasi.vue";
+import SelectCito from "@/components/SelectCito/SelectCito.vue";
 import SelectSearchAntrianVerifikasi from "@/components/SelectSearchAntrianVerifikasi/SelectSearchAntrianVerifikasi.vue";
 import addPrefixName from "@/utils/addPrefixName";
 
@@ -209,8 +209,8 @@ export default {
     SelectPoli,
     BButton,
     BBadge,
-    SelectStatusAntrianVerifikasi,
     SelectSearchAntrianVerifikasi,
+    SelectCito,
   },
   directives: {
     "b-tooltip": VBTooltip,
@@ -242,12 +242,13 @@ export default {
         },
         {
           label: "Asal Pemeriksaan",
-          field: "poli.nama",
+          field: "pemeriksaan.poli_id",
         },
 
         {
           label: "Prioritas",
-          field: "prioritas",
+          field: "pemeriksaan.is_prioritas",
+          name: "cito",
         },
         {
           label: "Status",
@@ -259,11 +260,15 @@ export default {
         },
       ],
       rows: [],
+      names: [],
       totalRecords: 0,
       searchTerm: "",
       selectedSearch: null,
       filterByPoli: null,
-      filterByStatus: "0",
+      filterByCito: null,
+      poliId : null,
+      poliName: null,
+      name: null,
       serverParams: {
         columnFilters: {},
         sort: {
@@ -292,29 +297,27 @@ export default {
         index: index + 1,
       }));
     },
-    statusVariant() {
-      const statusColor = {
-        0: "light-warning",
-        1: "light-success",
-        9: "light-danger",
+    citoVariant() {
+      const citoColor = {
+        0: "light-success",
+        1: "light-danger",
       };
-      return (status) => statusColor[status];
+      return cito => citoColor[cito];
     },
-    statusText() {
+    citoText() {
       const text = {
-        0: "Belum-diproses",
-        1: "Sedang-diproses",
-        9: "Batal",
+        0: "Non Cito",
+        1: "Cito",
       };
 
-      return (status) => text[status];
+      return cito => text[cito];
     },
   },
   watch: {
     filterByPoli() {
       this.init();
     },
-    filterByStatus() {
+    filterByCito() {
       this.init();
     },
     reload() {
@@ -386,7 +389,6 @@ export default {
     async loadItems() {
       try {
         const { data: res } = await fetchApi.pemeriksaan.getLab();
-        console.log(data.res, '<<<data res')
         const { data } = res;
         this.rows = data;
         this.totalRecords = res.total;
