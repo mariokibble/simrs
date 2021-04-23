@@ -180,7 +180,7 @@ const router = new VueRouter({
       component: () => import('@/pages/DetailIsianLab/DetailIsianLab.vue'),
       meta: {
         requiresAuth: true,
-        pageTitle: 'Input Isian Laboratorium',
+        pageTitle: 'Input Hasil Laboratorium',
         breadcrumb: [
           {
             text: 'Antrian Laboratorium',
@@ -197,13 +197,33 @@ const router = new VueRouter({
     {
       path: '/antrian-radiologi',
       name: 'antrian-radiologi',
-      component: () => import('@/pages/AntrianRadiologi/index.js'),
+      component: () => import('@/pages/AntrianRadiologi'),
       meta: {
-        pageTitle: 'Antrian Radiologi',
         requiresAuth: true,
+        pageTitle: 'Antrian Radiologi',
         breadcrumb: [
           {
             text: 'Antrian Radiologi',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/antrian-radiologi/:id',
+      name: 'detail-radiologi',
+      component: () => import('@/pages/DetailIsianRadiologi/DetailIsianRadiologi.vue'),
+      meta: {
+        requiresAuth: true,
+        pageTitle: 'Input Hasil Radiologi',
+        breadcrumb: [
+          {
+            text: 'Antrian Radiologi',
+            to: { name: 'antrian-radiologi' },
+            active: false,
+          },
+          {
+            text: 'Input Hasil Radiologi',
             active: true,
           },
         ],

@@ -116,7 +116,6 @@ export default {
       fetchApi.pemeriksaan
         .getPemeriksaanById(this.pasientId)
         .then(({ data }) => {
-          console.log(data)
           this.pemeriksaan = data
           this.fetching = false
         })

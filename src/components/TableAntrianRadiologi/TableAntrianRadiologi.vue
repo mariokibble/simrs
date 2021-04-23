@@ -114,7 +114,7 @@
               v-ripple.400="'rgba(40, 199, 111, 0.15)'"
               variant="flat-success"
               class="btn-icon"
-              @click="$emit('detailIsianLab', { id: props.row.id })"
+              @click="$emit('detailIsianRadiologi', { id: props.row.id })"
             >
               <feather-icon icon="TargetIcon" />
             </b-button>
