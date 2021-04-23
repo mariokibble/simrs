@@ -27,12 +27,13 @@ export default {
   },
   methods: {
     async detailIsianLab({ id }) {
+    let query = 'rs_id=1'
       fetchApi.pemeriksaan
-        .getLabById(id)
+        .getLabById(id, query)
         .then((res) => {
           console.log(res, "<<res");
-          const encrypId = window.btoa(`${res.data.id}`)
-          this.$router.push(`/antrian-lab/${encrypId}`)
+          // const encrypId = window.btoa(`${res.data.id}`)
+          this.$router.push(`/antrian-lab/${res.data.id}?${query}`)
         })
         .catch((err) => {
           console.info(err.message);

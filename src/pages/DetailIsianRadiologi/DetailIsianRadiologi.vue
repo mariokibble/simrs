@@ -44,7 +44,7 @@ export default {
     }
   },
   computed: {
-    labId() {
+    radioId() {
         return this.$route.params.id
     //   return window.atob(this.$route.params.id)
     },
@@ -68,15 +68,14 @@ export default {
     },
   },
   created() {
-    this.detailIsianLab()
+    this.detailIsianRadiologi()
   },
   methods: {
-    detailIsianLab() {
+    detailIsianRadiologi() {
       fetchApi.pemeriksaan
-        .getLabById(this.labId, 'rs_id=1')
+        .getRadiologiById(this.radioId, 'rs_id=1')
         .then(({ data }) => {
           this.pemeriksaan = data
-          console.log(this.pemeriksaan, '<<< thisPemeriksaan')
           this.fetching = false
         })
         .catch(err => console.log(err))
@@ -122,7 +121,7 @@ export default {
       }
     },
     back() {
-      this.$router.push({ name: 'antrian-lab' })
+      this.$router.push({ name: 'antrian-radiologi' })
     },
   },
 }

@@ -84,12 +84,16 @@ export default {
     const request = resource.get(`${endpoint.pemeriksaan.laboratorium}?${query}`)
     return request
   },
-  getLabById(id) {
-    const request = resource.get(`${endpoint.pemeriksaan.laboratorium}/${id}`)
+  getLabById(id, query) {
+    const request = resource.get(`${endpoint.pemeriksaan.laboratorium}/${id}?${query}`)
     return request
   },
   getRadiologi(query) { 
     const request = resource.get(`${endpoint.pemeriksaan.radiologi}?${query}`)
     return request
-  }
+  },
+  getRadiologiById(id, query) {
+    const request = resource.get(`${endpoint.pemeriksaan.radiologi}/${id}?${query}`)
+    return request
+  },
 }

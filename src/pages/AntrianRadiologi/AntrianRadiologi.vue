@@ -3,6 +3,7 @@
     <TableAntrianRadiologi
       :reload="reload"
       @deletePemeriksaan="deleteConfirm"
+      @detailIsianRadiologi="detailIsianRadiologi"
     />
   </div>
 </template>
@@ -13,6 +14,7 @@ import fetchApi from '@/api'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
 export default {
+  name: "AntrianRadiologi",
   components: {
     TableAntrianRadiologi,
     // eslint-disable-next-line vue/no-unused-components
@@ -21,9 +23,23 @@ export default {
   data() {
     return {
       reload: false,
+      id: "",
     }
   },
   methods: {
+   async detailIsianRadiologi({ id }) {
+    let query = 'rs_id=1'
+      fetchApi.pemeriksaan
+        .getRadiologiById(id, query)
+        .then((res) => {
+          console.log(res, "<<res");
+          // const encrypId = window.btoa(`${res.data.id}`)
+          this.$router.push(`/antrian-radiologi/${res.data.id}?${query}`)
+        })
+        .catch((err) => {
+          console.info(err.message);
+        });
+    },
     deleteConfirm({ id }) {
       this.$swal({
         title: 'Hapus pemeriksaan!',
