@@ -23,17 +23,17 @@ export default {
     return {
       reload: false,
       id: "",
+      rs_id: null
     };
   },
   methods: {
     async detailIsianLab({ id }) {
-    let query = 'rs_id=1'
+      let query = 'rs_id=1'
       fetchApi.pemeriksaan
         .getLabById(id, query)
         .then((res) => {
-          console.log(res, "<<res");
-          // const encrypId = window.btoa(`${res.data.id}`)
-          this.$router.push(`/antrian-lab/${res.data.id}?${query}`)
+          const encrypId = window.btoa(`${res.data.id}`)
+          this.$router.push(`/antrian-lab/${encrypId}?${query}`)
         })
         .catch((err) => {
           console.info(err.message);

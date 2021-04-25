@@ -21,7 +21,7 @@
           </div>
         </b-form-group>
       </div>
-      <div class="custom-search mr-1">
+      <div class="custom-search mr-5">
         <b-form-group>
           <div class="d-flex align-items-center">
             <label class="col-3 text-right">Search</label>
@@ -35,6 +35,15 @@
               type="text"
               class="d-inline-block col-6"
             />
+            <b-button
+              v-b-tooltip.hover.top="'refresh'"
+              v-ripple.400="'rgba(40, 199, 111, 0.15)'"
+              variant="success"
+              class="btn-icon ml-1"
+              @click="init"
+            >
+              <feather-icon icon="RefreshCwIcon" />
+            </b-button>
           </div>
         </b-form-group>
       </div>

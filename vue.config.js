@@ -2,6 +2,9 @@ const path = require('path')
 
 module.exports = {
   lintOnSave: true,
+  devServer: { 
+    port: 3545
+  },
   publicPath: '/',
   css: {
     loaderOptions: {

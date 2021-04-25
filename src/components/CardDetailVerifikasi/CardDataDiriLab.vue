@@ -38,10 +38,13 @@
                 NRM
               </p>
               <p class="mb-0 mt-0">
-                Poliklinik tujuan
+                Asal / Ruangan
               </p>
               <p class="mb-0 mt-0">
-                Dokter
+                Dokter Pengirim
+              </p>
+              <p class="mb-0 mt-0">
+                Diagnasa Kerja
               </p>
             </div>
           </b-col>
@@ -57,10 +60,13 @@
                 : {{ nrm }}
               </p>
               <p class="mb-0 mt-0">
-                : {{ poliklinikTujuan }}
+                : Poli {{ poliklinikTujuan }}
               </p>
               <p class="mb-0 mt-0">
                 :  {{ dokter }}
+              </p>
+              <p class="mb-0 mt-0">
+                : {{ diagnosaKerja }}
               </p>
             </div>
           </b-col>
@@ -115,6 +121,10 @@ export default {
       type: String,
       default: '',
     },
+    diagnosaKerja: { 
+      type: String, 
+      default: '',
+    }
   },
 }
 </script>

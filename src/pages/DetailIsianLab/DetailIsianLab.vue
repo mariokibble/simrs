@@ -6,12 +6,15 @@
         :foto-profile="pemeriksaan.user.foto_profile"
         :tanggal-lahir="pemeriksaan.user.tanggal_lahir"
         :asuransi="pemeriksaan.pemeriksaan.asuransi"
+        :nrm="pemeriksaan.nrm"
         :tanggal-appointment="pemeriksaan.nrm"
         :poliklinikTujuan="pemeriksaan.pemeriksaan.poli.nama"
       />     
       <CardPemeriksaan
         :tanggal-pemeriksaan="pemeriksaan.pemeriksaan.tanggal_periksa"
         :tanggal-hasil="pemeriksaan.pemeriksaan.tanggal_periksa"
+        :prioritas="pemeriksaan.is_prioritas"
+        :status="pemeriksaan.status"
       /> 
     </div>
     <div v-else>
@@ -45,12 +48,12 @@ export default {
   },
   computed: {
     labId() {
-        return this.$route.params.id
-    //   return window.atob(this.$route.params.id)
+       console.info(this.$route.params.id)
+        // return this.$route.params.id
+      return window.atob(this.$route.params.id)
     },
     formattedNama() {
       const { user } = this.pemeriksaan
-      console.log(user, '<<<user')
       const prefixName = addPrefixName({
         jenisKelamin: user.jenis_kelamin,
         statusPernikahan: user.pernikahan,
@@ -123,6 +126,13 @@ export default {
     },
     back() {
       this.$router.push({ name: 'antrian-lab' })
+    },
+    prioritasText() { 
+      const text = { 
+        0: 'Non Cito',
+        1: 'Cito'
+      }
+      return prioritas => text[prioritas]
     },
   },
 }
