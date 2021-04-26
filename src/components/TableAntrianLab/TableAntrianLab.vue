@@ -125,7 +125,7 @@
               class="btn-icon"
               @click="$emit('detailIsianLab', { id: props.row.id })"
             >
-              <feather-icon icon="TargetIcon" />
+              <feather-icon icon="EditIcon" />
             </b-button>
 
             <b-button
@@ -338,7 +338,6 @@ export default {
       const statusColor = { 
         0: "light-warning", 
         1: "light-primary",
-        2: "light-secondary",
         3: "light-success",
         9: "light-danger",
       }
@@ -348,7 +347,6 @@ export default {
       const text = { 
         0: "Belum diproses",
         1: "Sedang diproses",
-        2: "Pending",
         3: "Selesai",
         9: "Batal",
       }
