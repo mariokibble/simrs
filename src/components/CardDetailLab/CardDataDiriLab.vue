@@ -44,7 +44,7 @@
                 Dokter Pengirim
               </p>
               <p class="mb-0 mt-0">
-                Diagnasa Kerja
+                Diagnosa Kerja
               </p>
             </div>
           </b-col>

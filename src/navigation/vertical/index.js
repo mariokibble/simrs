@@ -45,9 +45,22 @@ export default [
   },
   {
     title: 'Laboratorium',
-    route: 'antrian-lab',
     icon: 'Laboratorium',
     iconCustom: true,
+    children: [
+      { 
+        title: 'Antrian Laboratorium',
+        route: 'antrian-lab',
+        icon: 'ListKehadiran',
+        iconCustom: true,
+      },
+      { 
+        title: 'Antrian Pending',
+        route: 'antrian-lab-pending',
+        icon: 'ListKehadiran', 
+        iconCustom: true,
+      }
+    ]
   },
   {
     title: 'Radiologi',

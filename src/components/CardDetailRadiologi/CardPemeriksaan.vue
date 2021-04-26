@@ -12,16 +12,13 @@
                 Tanggal Hasil
               </p>
               <p class="mb-0 mt-0">
-                Dokter
+                Dokter Radiologi
               </p>
               <p class="mb-0 mt-0">
-                Petugas
+                Petugas Radiologi
               </p>
               <p class="mb-0 mt-0">
                 Prioritas
-              </p>
-              <p class="mb-0 mt-0">
-                Status
               </p>
             </div>
           </b-col>
@@ -35,7 +32,6 @@
               <p class="mb-0 mt-0">: {{ dokter }}</p>
               <p class="mb-0 mt-0">: {{ petugas }}</p>
               <p class="mb-0 mt-0">: {{ prioritasText(prioritas) }}
-              <p class="mb-0 mt-0">: {{ statusText(status) }}</p>
               </p>
             </div>
           </b-col>
@@ -76,10 +72,6 @@ export default {
       type: [String, Number] ,
       default: "",
     },
-    status: {
-      type: [String, Number],
-      default: "",
-    },
   }, 
   computed: {
     prioritasText() {
@@ -89,17 +81,6 @@ export default {
       };
 
       return (prioritas) => text[prioritas];
-    },
-
-    statusText() {
-      const text = {
-        0: "Belum diproses",
-        1: "Sedang diproses",
-        2: "Pending",
-        3: "Selesai",
-        9: "Batal",
-      };
-      return (status) => text[status];
     },
   },
 };

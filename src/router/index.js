@@ -167,12 +167,35 @@ const router = new VueRouter({
         requiresAuth: true,
         pageTitle: 'Antrian Laboratorium',
         breadcrumb: [
+          { 
+            text: 'Laboratorium', 
+            active: false,
+          },
           {
             text: 'Antrian Laboratorium',
             active: true,
           },
         ],
       },
+    },
+    {
+        path: '/antrian-lab-pending',
+        name: 'antrian-lab-pending',
+        component: () => import('@/pages/AntrianLabPending'),
+        meta: {
+          requiresAuth: true,
+          pageTitle: 'Antrian Laboratorium Pending',
+          breadcrumb: [
+            { 
+              text: 'Laboratorium', 
+              active: false,
+            },
+            {
+              text: 'Antrian Laboratorium Pending',
+              active: true,
+            },
+          ],
+        },
     },
     {
       path: '/antrian-lab/:id',
@@ -182,6 +205,10 @@ const router = new VueRouter({
         requiresAuth: true,
         pageTitle: 'Input Hasil Laboratorium',
         breadcrumb: [
+          { 
+            text: 'Laboratorium', 
+            active: false,
+          },
           {
             text: 'Antrian Laboratorium',
             to: { name: 'antrian-lab' },
