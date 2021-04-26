@@ -181,11 +181,8 @@ export default {
     },
     async submit() {
       if (await this.checkValidateForm()) {
-        if (this.isNoteCustom && this.noteCustom) {
-          this.selected.push(this.noteCustom)
-        }
-        this.selected.push('Untuk penjelasan selanjutnya silahkan menghubungi Customer Service')
-        this.$emit('submitted', { catatan: this.selected, status: this.notesBy })
+        const catatanCustom = this.isNoteCustom ? this.noteCustom : ''
+        this.$emit('submitted', { catatan: this.selected, status: this.notesBy, catatanCustom })
       }
     },
   },
