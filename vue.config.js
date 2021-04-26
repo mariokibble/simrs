@@ -19,6 +19,7 @@ module.exports = {
         '@core': path.resolve(__dirname, 'src/@core'),
         '@validations': path.resolve(__dirname, 'src/@core/utils/validations/validations.js'),
         '@axios': path.resolve(__dirname, 'src/libs/axios'),
+        '@variables': path.resolve(__dirname, 'src/assets/scss/variables/_variables.scss'),
       },
     },
   },

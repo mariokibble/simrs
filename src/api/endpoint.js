@@ -34,4 +34,7 @@ export default {
     rumahSakit: '/rumah_sakit',
     verifikasi: '/pemeriksaan/verifikasi',
   },
+  laboratorium: {
+    layanan: '/laboratorium',
+  },
 }
