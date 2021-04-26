@@ -19,6 +19,12 @@
       >
         {{ note }}
       </li>
+      <li v-if="status !== 1 && catatanCustom">
+        {{ catatanCustom }}
+      </li>
+      <li v-if="catatan.length">
+        Untuk penjelasan selanjutnya silahkan menghubungi Customer Service
+      </li>
     </ul>
   </b-card-text>
 </template>
@@ -65,6 +71,10 @@ export default {
       default() {
         return []
       },
+    },
+    catatanCustom: {
+      type: String,
+      default: '',
     },
   },
 }

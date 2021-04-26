@@ -60,6 +60,7 @@
           :dokter="pemeriksaan.dokter.user.nama"
           :status="formattedStatus"
           :catatan="catatanTambahan"
+          :catatan-custom="catatanCustom"
         />
       </b-modal>
     </div>
@@ -104,6 +105,7 @@ export default {
       catatanTambahan: [],
       status: 0,
       imageModal: '',
+      catatanCustom: '',
     }
   },
   computed: {
@@ -148,12 +150,18 @@ export default {
     preSubmit(payload) {
       this.catatanTambahan = payload.catatan
       this.status = payload.status
+      this.catatanCustom = payload.catatanCustom
       this.$refs.modalVerifikasiPemeriksaan.show()
     },
     async submitForm() {
       try {
         if (this.status !== 2) {
+          // update status accepted to get nomer antrian
           await fetchApi.pemeriksaan.updateStatusAcceptedVerifikasi(this.pemeriksaan.id)
+        }
+        if (this.status !== 0) {
+          if (this.catatanCustom) this.catatanTambahan.push(this.catatanCustom)
+          this.catatanTambahan.push('Untuk penjelasan selanjutnya silahkan menghubungi Customer Service')
         }
         await fetchApi.pemeriksaan.updatePemeriksaan({
           id: this.pemeriksaan.id,
