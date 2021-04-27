@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-row>
+    <b-row v-if="pemeriksaan.ttv">
       <b-col lg="6">
         <b-row>
           <b-col lg="12">
@@ -25,6 +25,12 @@
       </b-col>
 
     </b-row>
+    <div
+      v-else
+      class="text-center mb-1"
+    >
+      Data TTV tidak di temukan, silahkan lakukan pemeriksaan TTV terlebih dahulu!
+    </div>
   </div>
 </template>
 <script>

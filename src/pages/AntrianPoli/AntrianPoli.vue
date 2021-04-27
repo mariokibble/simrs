@@ -50,7 +50,7 @@ export default {
               variant: 'success',
             },
           })
-          // this.$router.push('/rekamedis')
+          this.$router.push(`/rekam-medis/${id}`)
         }
       } catch (error) {
         console.log(error)

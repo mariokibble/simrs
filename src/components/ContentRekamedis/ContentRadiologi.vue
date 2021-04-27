@@ -24,12 +24,20 @@
                 loading ...
               </div>
               <div v-else-if="fetchingLastOrderRadiologi === 'resolved'">
-                <BioHistoryRadiologi :order-radiologi="lastOrderLab" />
-                <TableHistoryRadiologi
-                  :order-radiologi="lastOrderLab"
-                  @showImageHasil="showImageHasil"
-                />
+                <div v-if="Object.keys(lastOrderLab).length">
+                  <BioHistoryRadiologi :order-radiologi="lastOrderLab" />
+                  <TableHistoryRadiologi
+                    :order-radiologi="lastOrderLab"
+                    @showImageHasil="showImageHasil"
+                  />
 
+                </div>
+                <div
+                  v-else
+                  class="text-center"
+                >
+                  belum ada hasil radiologi
+                </div>
               </div>
               <div v-else-if="fetchingLastOrderRadiologi === 'rejected'">
                 ERROR

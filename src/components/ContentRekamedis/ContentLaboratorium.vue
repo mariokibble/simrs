@@ -24,18 +24,26 @@
                 loading ...
               </div>
               <div v-else-if="fetchingLastOrderLab === 'resolved'">
-                <BioHistoryLaboratorium :order-lab="lastOrderLab" />
-                <TableHistoryLaboratorium :order-lab="lastOrderLab" />
+                <div v-if="Object.keys(lastOrderLab).length">
+                  <BioHistoryLaboratorium :order-lab="lastOrderLab" />
+                  <TableHistoryLaboratorium :order-lab="lastOrderLab" />
 
-                <div class="d-flex justify-content-end">
-                  <b-button
-                    variant="warning"
-                    class="mt-1"
-                    @click="$router.push(`/print/ordered-laboratorium/${lastOrderLab.id}`)"
-                  >
-                    <!-- <feather-icon icon="PlusSquareIcon" /> -->
-                    Print
-                  </b-button>
+                  <div class="d-flex justify-content-end">
+                    <b-button
+                      variant="warning"
+                      class="mt-1"
+                      @click="$router.push(`/print/ordered-laboratorium/${lastOrderLab.id}`)"
+                    >
+                      <!-- <feather-icon icon="PlusSquareIcon" /> -->
+                      Print
+                    </b-button>
+                  </div>
+                </div>
+                <div
+                  v-else
+                  class="text-center"
+                >
+                  belum ada hasil laboratorium
                 </div>
 
               </div>
