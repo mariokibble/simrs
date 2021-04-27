@@ -32,8 +32,8 @@ export default {
       fetchApi.pemeriksaan
         .getRadiologiById(id, query)
         .then(res => {
-          console.log(res, '<<res')
-          this.$router.push(`/antrian-radiologi/${res.data.id}?${query}`)
+          const encrypId = window.btoa(`${res.data.id}`)
+          this.$router.push(`/antrian-radiologi/${encrypId}?${query}`)
         })
         .catch(err => {
           console.info(err.message)

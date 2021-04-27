@@ -219,7 +219,7 @@ export default {
   },
   computed: {
     radioId() {
-      return this.$route.params.id
+      return window.atob(this.$route.params.id)
     },
     formattedNama() {
       const { user } = this.pemeriksaan
