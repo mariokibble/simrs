@@ -276,7 +276,6 @@ export default {
           label: 'Asal Pemeriksaan',
           field: 'pemeriksaan.poli.nama',
         },
-
         {
           label: 'Prioritas',
           field: 'pemeriksaan.is_prioritas',
