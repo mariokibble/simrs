@@ -10,11 +10,10 @@
               class="mr-1"
               @selected="changeEntry('filterByPoli', ...arguments)"
             />
-            <SelectBPJP
+            <SelectStatusAntrianVerifikasi
               class="mr-1"
-              @selected="changeEntry('filterByDpjp', ...arguments)"
+              @selected="changeEntry('filterByStatus', ...arguments)"
             />
-            <SelectStatusAntrianPoli @selected="changeEntry('filterByStatus', ...arguments)" />
           </div>
         </b-form-group>
       </div>
@@ -22,7 +21,7 @@
         <b-form-group>
           <div class="d-flex align-items-center">
             <label class="col-3 text-right">Search</label>
-            <SelectSearchAntrian
+            <SelectSearchAntrianVerifikasi
               class="col-3 mr-1"
               @selected="changeEntry('selectedSearch', ...arguments)"
             />
@@ -35,7 +34,6 @@
           </div>
         </b-form-group>
       </div>
-
     </div>
     <!-- table -->
     <vue-good-table
@@ -56,6 +54,7 @@
         enabled: false,
       }"
       :total-rows="totalRecords"
+      :line-numbers="true"
       @on-page-change="onPageChange"
       @on-sort-change="onSortChange"
       @on-column-filter="onColumnFilter"
@@ -74,11 +73,12 @@
         </span>
         <span v-else-if="props.column.field === 'user.nama'">
           <b>
-            {{ prefixName({
-              jenisKelamin: props.row.user.jenis_kelamin,
-              statusPernikahan: props.row.user.pernikahan,
-              tanggalLahir: props.row.user.tanggal_lahir,
-            })
+            {{
+              prefixName({
+                jenisKelamin: props.row.user.jenis_kelamin,
+                statusPernikahan: props.row.user.pernikahan,
+                tanggalLahir: props.row.user.tanggal_lahir,
+              })
             }}
           </b>
           {{ props.row.user.nama }}
@@ -90,27 +90,34 @@
           <FormatDate :date="props.row.user.tanggal_lahir" />
         </span>
 
+        <span
+          v-else-if="props.column.field === 'tanggal_periksa'"
+          class="text-nowrap"
+        >
+          <FormatDate :date="props.row.tanggal_periksa" />
+        </span>
+
         <!-- Column: Action -->
         <span v-else-if="props.column.field === 'action'">
           <span>
-            <!-- button detail, edit, delete, TTV, rekamedis -->
-            <b-button
-              v-ripple.400="'rgba(40, 199, 111, 0.15)'"
-              v-b-tooltip.hover.top="'Lihat detail'"
-              variant="flat-success"
-              class="btn-icon"
-            >
-              <feather-icon icon="EyeIcon" />
-            </b-button>
+            <!-- button  edit, delete, TTV, rekamedis -->
 
             <b-button
+<<<<<<< HEAD
               v-b-tooltip.hover.top="'Rekam medis'"
+=======
+              v-b-tooltip.hover.top="'Edit Verifikasi'"
+>>>>>>> 8075a9a8182c40213bc0ea52fc28af5eb493e760
               v-ripple.400="'rgba(40, 199, 111, 0.15)'"
               variant="flat-success"
               class="btn-icon"
-              @click="$emit('goToRekamedis', { status: props.row.status, id: props.row.id, kodeAntrian: props.row.kode_antrian })"
+              @click="$emit('detailVerifikasi', { id: props.row.id })"
             >
+<<<<<<< HEAD
               <feather-icon icon="EditIcon" />
+=======
+              <feather-icon icon="TargetIcon" />
+>>>>>>> 8075a9a8182c40213bc0ea52fc28af5eb493e760
             </b-button>
 
             <b-button
@@ -118,7 +125,11 @@
               v-ripple.400="'rgba(40, 199, 111, 0.15)'"
               variant="flat-success"
               class="btn-icon"
-              @click="$emit('deletePemeriksaan', { id:props.row.id, kodeAntrian: props.row.kode_antrian })"
+              @click="
+                $emit('deleteVerifikasi', {
+                  id: props.row.id,
+                })
+              "
             >
               <feather-icon icon="TrashIcon" />
             </b-button>
@@ -143,9 +154,11 @@
             </span>
             <b-form-select
               v-model="serverParams.perPage"
-              :options="['3','5','10']"
+              :options="['3', '5', '10']"
               class="mx-1"
-              @input="(value)=>props.perPageChanged({currentPerPage:value})"
+              @input="
+                (value) => props.perPageChanged({ currentPerPage: value })
+              "
             />
             <span class="text-nowrap"> of {{ props.total }} entries </span>
           </div>
@@ -160,7 +173,7 @@
               prev-class="prev-item"
               next-class="next-item"
               class="mt-1 mb-0"
-              @input="(value)=>props.pageChanged({currentPage:value})"
+              @input="(value) => props.pageChanged({ currentPage: value })"
             >
               <template #prev-text>
                 <feather-icon
@@ -178,19 +191,20 @@
           </div>
         </div>
       </template>
-      <div
-        slot="emptystate"
-        class="text-center"
-      >
-        Antrian Poliklinik tidak ada
-      </div>
     </vue-good-table>
   </b-card>
 </template>
 
 <script>
 import {
-  BPagination, BFormGroup, BFormInput, BFormSelect, BCard, BButton, VBTooltip, BBadge,
+  BPagination,
+  BFormGroup,
+  BFormInput,
+  BFormSelect,
+  BCard,
+  BButton,
+  VBTooltip,
+  BBadge,
 } from 'bootstrap-vue'
 import { VueGoodTable } from 'vue-good-table'
 import SelectPoli from '@/components/SelectPoli/SelectPoli.vue'
@@ -199,9 +213,8 @@ import FormatDate from '@/components/FormatDate/FormatDate.vue'
 import fetchApi from '@/api/index'
 import Ripple from 'vue-ripple-directive'
 import { debounce } from 'debounce'
-import SelectSearchAntrian from '@/components/SelectSearchAntrian/SelectSearchAntrian.vue'
-import SelectBPJP from '@/components/SelectDokter/SelectBPJP.vue'
-import SelectStatusAntrianPoli from '@/components/SelectStatusAntrianPoli/SelectStatusAntrianPoli.vue'
+import SelectStatusAntrianVerifikasi from '@/components/SelectStatusAntrianVerifikasi/SelectStatusAntrianVerifikasi.vue'
+import SelectSearchAntrianVerifikasi from '@/components/SelectSearchAntrianVerifikasi/SelectSearchAntrianVerifikasi.vue'
 import addPrefixName from '@/utils/addPrefixName'
 
 export default {
@@ -215,10 +228,9 @@ export default {
     FormatDate,
     SelectPoli,
     BButton,
-    SelectSearchAntrian,
     BBadge,
-    SelectBPJP,
-    SelectStatusAntrianPoli,
+    SelectStatusAntrianVerifikasi,
+    SelectSearchAntrianVerifikasi,
   },
   directives: {
     'b-tooltip': VBTooltip,
@@ -235,12 +247,7 @@ export default {
       prefixName: addPrefixName,
       isLoading: false,
       dir: false,
-      // No Antrian, Poli, NRM, DPJP, Status TTV, Nama, Tanggal Lahir, Action.
       columns: [
-        {
-          label: 'No Antrian',
-          field: 'kode_antrian',
-        },
         {
           label: 'Nama',
           field: 'user.nama',
@@ -250,16 +257,17 @@ export default {
           field: 'user.tanggal_lahir',
         },
         {
-          label: 'NRM',
-          field: 'nrm',
+          label: 'Jaminan',
+          field: 'asuransi',
         },
         {
           label: 'Poliklinik',
           field: 'poli.nama',
         },
+
         {
-          label: 'DPJP',
-          field: 'dokter.user.nama',
+          label: 'Tanggal Appointment',
+          field: 'tanggal_periksa',
         },
         {
           label: 'Status',
@@ -275,11 +283,9 @@ export default {
       searchTerm: '',
       selectedSearch: null,
       filterByPoli: null,
-      filterByStatus: null,
-      filterByDpjp: null,
+      filterByStatus: '0',
       serverParams: {
-        columnFilters: {
-        },
+        columnFilters: {},
         sort: {
           field: '',
           type: '',
@@ -300,19 +306,25 @@ export default {
       this.dir = false
       return this.dir
     },
+    idDenganIndex() {
+      return this.rows.map((rows, index) => ({
+        ...rows,
+        index: index + 1,
+      }))
+    },
     statusVariant() {
       const statusColor = {
-        3: 'light-warning',
-        4: 'light-info',
-        5: 'light-success',
+        0: 'light-warning',
+        1: 'light-success',
+        9: 'light-danger',
       }
       return status => statusColor[status]
     },
     statusText() {
       const text = {
-        3: 'Belum diperiksa',
-        4: 'Sedang diperiksa',
-        5: 'Sudah diperiksa',
+        0: 'Belum-diverifikasi',
+        1: 'Sudah-diverifikasi',
+        9: 'Ditolak',
       }
 
       return status => text[status]
@@ -323,9 +335,6 @@ export default {
       this.init()
     },
     filterByStatus() {
-      this.init()
-    },
-    filterByDpjp() {
       this.init()
     },
     reload() {
@@ -358,8 +367,7 @@ export default {
     },
     updateParamsToDefault() {
       this.serverParams = {
-        columnFilters: {
-        },
+        columnFilters: {},
         sort: {
           field: '',
           type: '',
@@ -378,10 +386,12 @@ export default {
     },
     onSortChange(params) {
       this.updateParams({
-        sort: [{
-          type: params.sortType,
-          field: this.columns[params.columnIndex].field,
-        }],
+        sort: [
+          {
+            type: params.sortType,
+            field: this.columns[params.columnIndex].field,
+          },
+        ],
       })
       this.loadItems()
     },
@@ -396,13 +406,18 @@ export default {
     async loadItems() {
       try {
         let query = 'rs_id=1'
-        query += `&status=${this.filterByStatus ? this.filterByStatus : '3,4,5'}`
+        query += `&status=${
+          this.filterByStatus ? this.filterByStatus : '0,1,9'
+        }`
         query += `&limit=${this.serverParams.perPage}&page=${this.serverParams.page}`
-        query += `${this.filterByDpjp ? '&dokter_id='.concat(this.filterByDpjp) : ''}`
         query += `${this.filterByPoli ? '&poli_id='.concat(this.filterByPoli) : ''}`
-        query += this.selectedSearch && this.searchTerm ? `&${this.selectedSearch}=${this.searchTerm}` : ''
-
-        const { data: res } = await fetchApi.pemeriksaan.getAntrianPoli(query)
+        query
+          += this.selectedSearch && this.searchTerm
+            ? `&${this.selectedSearch}=${this.searchTerm}`
+            : ''
+        const { data: res } = await fetchApi.pemeriksaan.getAntrianVerifikasi(
+          query,
+        )
         const { data } = res
         this.rows = data
         this.totalRecords = res.total
@@ -413,6 +428,6 @@ export default {
   },
 }
 </script>
-<style lang="scss" >
-    @import '@core/scss/vue/libs/vue-good-table.scss';
+<style lang="scss">
+@import "@core/scss/vue/libs/vue-good-table.scss";
 </style>
