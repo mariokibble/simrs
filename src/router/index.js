@@ -167,8 +167,8 @@ const router = new VueRouter({
         requiresAuth: true,
         pageTitle: 'Antrian Laboratorium',
         breadcrumb: [
-          { 
-            text: 'Laboratorium', 
+          {
+            text: 'Laboratorium',
             active: false,
           },
           {
@@ -179,23 +179,23 @@ const router = new VueRouter({
       },
     },
     {
-        path: '/antrian-lab-pending',
-        name: 'antrian-lab-pending',
-        component: () => import('@/pages/AntrianLabPending'),
-        meta: {
-          requiresAuth: true,
-          pageTitle: 'Antrian Laboratorium Pending',
-          breadcrumb: [
-            { 
-              text: 'Laboratorium', 
-              active: false,
-            },
-            {
-              text: 'Antrian Laboratorium Pending',
-              active: true,
-            },
-          ],
-        },
+      path: '/antrian-lab-pending',
+      name: 'antrian-lab-pending',
+      component: () => import('@/pages/AntrianLabPending'),
+      meta: {
+        requiresAuth: true,
+        pageTitle: 'Antrian Laboratorium Pending',
+        breadcrumb: [
+          {
+            text: 'Laboratorium',
+            active: false,
+          },
+          {
+            text: 'Antrian Laboratorium Pending',
+            active: true,
+          },
+        ],
+      },
     },
     {
       path: '/antrian-lab/:id',
@@ -205,8 +205,8 @@ const router = new VueRouter({
         requiresAuth: true,
         pageTitle: 'Input Hasil Laboratorium',
         breadcrumb: [
-          { 
-            text: 'Laboratorium', 
+          {
+            text: 'Laboratorium',
             active: false,
           },
           {
@@ -251,6 +251,40 @@ const router = new VueRouter({
           },
           {
             text: 'Input Hasil Radiologi',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/antrian-radiologi-pending',
+      name: 'antrian-radiologi-pending',
+      component: () => import('@/pages/AntrianRadiologiPending/index.js'),
+      meta: {
+        requiresAuth: true,
+        pageTitle: 'Antrian Radiologi Pending',
+        breadcrumb: [
+          {
+            text: 'Radiologi',
+            active: false,
+          },
+          {
+            text: 'Antrian Radilogi Pending',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/antrian-farmasi',
+      name: 'antrian-farmasi',
+      component: () => import('@/pages/AntrianFarmasi'),
+      meta: {
+        requiresAuth: true,
+        pageTitle: 'Antrian Farmasi',
+        breadcrumb: [
+          {
+            text: 'Farmasi',
             active: true,
           },
         ],

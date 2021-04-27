@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TableAntrianLabPending
+    <TableAntrianFarmasi
       :reload="reload"
       @deletePemeriksaan="deleteConfirm"
       @detailIsianLab="detailIsianLab"
@@ -8,14 +8,14 @@
   </div>
 </template>
 <script>
-import TableAntrianLabPending from '@/components/TableAntrianLabPending/TableAntrianLabPending.vue'
+import TableAntrianFarmasi from '@/components/TableAntrianFarmasi/TableAntrianFarmasi.vue'
 import fetchApi from '@/api'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
 export default {
   name: 'AntrianLab',
   components: {
-    TableAntrianLabPending,
+    TableAntrianFarmasi,
     // eslint-disable-next-line vue/no-unused-components
     ToastificationContent,
   },

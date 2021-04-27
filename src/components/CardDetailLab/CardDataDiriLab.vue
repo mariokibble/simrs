@@ -66,7 +66,7 @@
                 :  {{ dokter }}
               </p>
               <p class="mb-0 mt-0">
-                : {{ diagnosaKerja }}
+                : belum mengetahui
               </p>
             </div>
           </b-col>
@@ -121,10 +121,10 @@ export default {
       type: String,
       default: '',
     },
-    diagnosaKerja: { 
-      type: String, 
+    diagnosaKerja: {
+      type: String,
       default: '',
-    }
+    },
   },
 }
 </script>

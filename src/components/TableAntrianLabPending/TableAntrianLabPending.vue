@@ -74,7 +74,10 @@
       @on-per-page-change="onPerPageChange"
       @on-search="onSearch"
     >
-      <template slot="table-row" slot-scope="props">
+      <template
+        slot="table-row"
+        slot-scope="props"
+      >
         <!-- Column: Cito -->
         <span v-if="props.column.field === 'pemeriksaan.is_prioritas'">
           <b-badge :variant="citoVariant(props.row.pemeriksaan.is_prioritas)">
@@ -151,7 +154,10 @@
       </template>
 
       <!-- pagination -->
-      <template slot="pagination-bottom" slot-scope="props">
+      <template
+        slot="pagination-bottom"
+        slot-scope="props"
+      >
         <div class="d-flex justify-content-between flex-wrap">
           <div class="d-flex align-items-center mb-0 mt-1">
             <span class="text-nowrap ">
@@ -181,10 +187,16 @@
               @input="(value) => props.pageChanged({ currentPage: value })"
             >
               <template #prev-text>
-                <feather-icon icon="ChevronLeftIcon" size="18" />
+                <feather-icon
+                  icon="ChevronLeftIcon"
+                  size="18"
+                />
               </template>
               <template #next-text>
-                <feather-icon icon="ChevronRightIcon" size="18" />
+                <feather-icon
+                  icon="ChevronRightIcon"
+                  size="18"
+                />
               </template>
             </b-pagination>
           </div>
@@ -204,18 +216,18 @@ import {
   BButton,
   VBTooltip,
   BBadge,
-} from "bootstrap-vue";
-import { VueGoodTable } from "vue-good-table";
-import SelectPoli from "@/components/SelectPoli/SelectPoli.vue";
-import store from "@/store/index";
-import FormatDate from "@/components/FormatDate/FormatDate.vue";
-import fetchApi from "@/api/index";
-import Ripple from "vue-ripple-directive";
-import { debounce } from "debounce";
-import SelectCito from "@/components/SelectCito/SelectCito.vue";
-import SelectSearchLab from "@/components/SelectSearchLab/SelectSearchLab.vue";
-import SelectStatusLabPending from "@/components/SelectStatusLabPending/SelectStatusLabPending.vue"
-import addPrefixName from "@/utils/addPrefixName";
+} from 'bootstrap-vue'
+import { VueGoodTable } from 'vue-good-table'
+import SelectPoli from '@/components/SelectPoli/SelectPoli.vue'
+import store from '@/store/index'
+import FormatDate from '@/components/FormatDate/FormatDate.vue'
+import fetchApi from '@/api/index'
+import Ripple from 'vue-ripple-directive'
+import { debounce } from 'debounce'
+import SelectCito from '@/components/SelectCito/SelectCito.vue'
+import SelectSearchLab from '@/components/SelectSearchLab/SelectSearchLab.vue'
+import SelectStatusLabPending from '@/components/SelectStatusLabPending/SelectStatusLabPending.vue'
+import addPrefixName from '@/utils/addPrefixName'
 
 export default {
   components: {
@@ -234,7 +246,7 @@ export default {
     SelectStatusLabPending,
   },
   directives: {
-    "b-tooltip": VBTooltip,
+    'b-tooltip': VBTooltip,
     Ripple,
   },
   props: {
@@ -250,34 +262,34 @@ export default {
       dir: false,
       columns: [
         {
-          label: "Nama",
-          field: "user.nama",
+          label: 'Nama',
+          field: 'user.nama',
         },
         {
-          label: "Tanggal Lahir",
-          field: "user.tanggal_lahir",
+          label: 'Tanggal Lahir',
+          field: 'user.tanggal_lahir',
         },
         {
-          label: "NRM",
-          field: "nrm",
+          label: 'NRM',
+          field: 'nrm',
         },
         {
-          label: "Asal Pemeriksaan",
-          field: "pemeriksaan.poli.nama",
+          label: 'Asal Pemeriksaan',
+          field: 'pemeriksaan.poli.nama',
         },
 
         {
-          label: "Prioritas",
-          field: "pemeriksaan.is_prioritas",
-          name: "prioritas",
+          label: 'Prioritas',
+          field: 'pemeriksaan.is_prioritas',
+          name: 'prioritas',
         },
         {
-          label: "Status",
-          field: "status",
+          label: 'Status',
+          field: 'status',
         },
         {
-          label: "Action",
-          field: "action",
+          label: 'Action',
+          field: 'action',
         },
       ],
       rows: [],
@@ -300,109 +312,109 @@ export default {
         page: 1,
         perPage: 10,
       },
-    };
+    }
   },
   computed: {
     direction() {
       if (store.state.appConfig.isRTL) {
         // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.dir = true;
-        return this.dir;
+        this.dir = true
+        return this.dir
       }
       // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-      this.dir = false;
-      return this.dir;
+      this.dir = false
+      return this.dir
     },
     idDenganIndex() {
       return this.rows.map((rows, index) => ({
         ...rows,
         index: index + 1,
-      }));
+      }))
     },
     citoVariant() {
       const citoColor = {
-        0: "light-success",
-        1: "light-danger",
-      };
-      return (prioritas) => citoColor[prioritas];
+        0: 'light-success',
+        1: 'light-danger',
+      }
+      return prioritas => citoColor[prioritas]
     },
     citoText() {
       const text = {
-        0: "Non Cito",
-        1: "Cito",
-      };
+        0: 'Non Cito',
+        1: 'Cito',
+      }
 
-      return (prioritas) => text[prioritas];
+      return prioritas => text[prioritas]
     },
-    statusVariant() { 
-      const statusColor = { 
-        2: "light-secondary", 
+    statusVariant() {
+      const statusColor = {
+        2: 'light-secondary',
       }
       return status => statusColor[status]
     },
-    statusText() { 
-      const text = { 
-        2: "Pending",
+    statusText() {
+      const text = {
+        2: 'Pending',
       }
       return status => text[status]
-    }
+    },
   },
   watch: {
     filterByPoli() {
-      this.init();
+      this.init()
     },
     filterByCito() {
-      this.init();
+      this.init()
     },
     reload() {
-      this.init();
+      this.init()
     },
     filterByStatus() {
-      this.init();
+      this.init()
     },
     async selectedSearch(val) {
       if (val && this.searchTerm) {
-        this.isLoading = true;
-        this.updateParams({ page: 1, perPage: 10 });
-        await this.loadItems();
-        this.isLoading = false;
+        this.isLoading = true
+        this.updateParams({ page: 1, perPage: 10 })
+        await this.loadItems()
+        this.isLoading = false
       }
     },
   },
   created() {
-    this.init();
+    this.init()
   },
   methods: {
     async init() {
-      this.isLoading = true;
-      this.updateParamsToDefault();
-      await this.loadItems();
-      this.isLoading = false;
+      this.isLoading = true
+      this.updateParamsToDefault()
+      await this.loadItems()
+      this.isLoading = false
     },
     changeEntry(key, value) {
-      this[key] = value;
+      this[key] = value
     },
     updateParams(newProps) {
-      this.serverParams = { ...this.serverParams, ...newProps };
+      this.serverParams = { ...this.serverParams, ...newProps }
     },
     updateParamsToDefault() {
       this.serverParams = {
         columnFilters: {},
         sort: {
-          field: "",
-          type: "",
+          field: '',
+          type: '',
         },
         page: 1,
         perPage: 10,
-      };
+      }
     },
     onPageChange(params) {
-      this.updateParams({ page: params.currentPage });
-      this.loadItems();
+      this.updateParams({ page: params.currentPage })
+      this.loadItems()
     },
     onPerPageChange(params) {
-      this.updateParams({ perPage: params.currentPerPage });
-      this.loadItems();
+      this.updateParams({ perPage: params.currentPerPage })
+      this.loadItems()
     },
     onSortChange(params) {
       this.updateParams({
@@ -412,39 +424,39 @@ export default {
             field: this.columns[params.columnIndex].field,
           },
         ],
-      });
-      this.loadItems();
+      })
+      this.loadItems()
     },
     onColumnFilter(params) {
-      this.updateParams(params);
-      this.loadItems();
+      this.updateParams(params)
+      this.loadItems()
     },
     // eslint-disable-next-line prefer-arrow-callback, func-names
-    onSearch: debounce(function() {
-      this.init();
+    onSearch: debounce(function () {
+      this.init()
     }, 200),
     async loadItems() {
       try {
-        let query = "rs_id=1";
-        query += `&status=${this.filterByStatus ? this.filterByStatus : ""}`;
-        query += `&limit=${this.serverParams.perPage}&page=${this.serverParams.page}`;
+        let query = 'rs_id=1'
+        query += `&status=${this.filterByStatus ? this.filterByStatus : ''}`
+        query += `&limit=${this.serverParams.perPage}&page=${this.serverParams.page}`
         query += `${
-          this.filterByPoli ? "&poli_id=".concat(this.filterByPoli) : ""
-        }`;
+          this.filterByPoli ? '&poli_id='.concat(this.filterByPoli) : ''
+        }`
         query += `${
-          this.filterByCito ? "&is_prioritas=".concat(this.filterByCito) : ""
-        }`;
+          this.filterByCito ? '&is_prioritas='.concat(this.filterByCito) : ''
+        }`
         query += this.selectedSearch && this.searchTerm ? `&${this.selectedSearch}=${this.searchTerm}` : ''
-        const { data: res } = await fetchApi.pemeriksaan.getLab(query);
-        const { data } = res;
-        this.rows = data;
-        this.totalRecords = res.total;
+        const { data: res } = await fetchApi.pemeriksaan.getLab(query)
+        const { data } = res
+        this.rows = data
+        this.totalRecords = res.total
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     },
   },
-};
+}
 </script>
 <style lang="scss">
 @import "@core/scss/vue/libs/vue-good-table.scss";
