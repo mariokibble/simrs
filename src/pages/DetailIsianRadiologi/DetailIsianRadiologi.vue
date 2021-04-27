@@ -40,7 +40,9 @@
                     v-ripple.400="'rgba(40, 199, 111, 0.15)'"
                     variant="flat-success"
                     class="btn-icon"
-                    @click="tampilkanModal(props.row.id)"
+                    data-toggle="modal"
+                    data-target="#modal"
+                    @click="editIsianModal(props.row)"
                   >
                     <feather-icon icon="EditIcon" />
                   </b-button>
@@ -68,7 +70,7 @@
           <b-col class="d-flex justify-content-end mt-2">
             <b-button
               variant="warning"
-              @click.prevent="submit"
+              @click.prevent="simpan"
             >
               Simpan
             </b-button>
@@ -76,22 +78,23 @@
         </b-card>
       </template>
       <b-modal
-        id="modal-1"
-        ref="modalUploadImageExpertise"
+        id="modal"
+        ref="editIsianModal"
+        v-model="modalEdit"
         title="Upload Image dan expertise"
         centered
         hide-footer
       >
         <form @submit.prevent="">
           <b-form-group
-            label="Upload Profile Photo (optional)"
+            label="Upload gambar basah"
             label-for="photo_id"
           >
             <b-form-file
               id="photo_id"
-              placeholder="Choose a file..."
-              accept=".jpg, .jpeg, .png"
-              @change="editAttachImage"
+              v-model="dataHasil"
+              placeholder="Pilih gambar..."
+              accept="image/jpeg, image/png"
             />
           </b-form-group>
 
@@ -99,12 +102,22 @@
             label="Ekspertise"
             label-for="ekspertise"
           >
-            <b-form-input type="text" />
+            <b-form-textarea
+              id="expertise"
+              v-model="dataExpert"
+              :state="dataExpert.length <= 350"
+              placeholder="Tulis expertise disini..."
+              :rows="4"
+              :max-rows="6"
+            />
           </b-form-group>
 
           <b-row>
             <b-col class="text-left">
-              <b-button variant="warning">
+              <b-button
+                variant="warning"
+                @click="modalEdit = false"
+              >
                 Cancel
               </b-button>
             </b-col>
@@ -113,6 +126,7 @@
                 type="submit"
                 variant="secondary"
                 class="mr-2"
+                @click="updateDataIsian"
               >Update</b-button>
             </b-col>
           </b-row>
@@ -137,7 +151,7 @@ import {
   BModal,
   BCol,
   BFormGroup,
-  BFormInput,
+  BFormTextarea,
   BFormFile,
   BRow,
 } from 'bootstrap-vue'
@@ -157,7 +171,7 @@ export default {
     CardPemeriksaan,
     BModal,
     BCol,
-    BFormInput,
+    BFormTextarea,
     BFormGroup,
     BFormFile,
     BRow,
@@ -185,8 +199,8 @@ export default {
           sortable: false,
         },
         {
-          label: 'Ekspertise',
-          field: 'pemeriksaan.ekspertise',
+          label: 'Expertise',
+          field: 'expertise',
           sortable: false,
         },
         {
@@ -196,6 +210,11 @@ export default {
         },
       ],
       rows: [],
+      modalEdit: false,
+      dataId: '',
+      dataHasil: null,
+      dataExpert: '',
+      masukanData: {},
     }
   },
   computed: {
@@ -216,15 +235,6 @@ export default {
     this.detailIsianRadiologi()
   },
   methods: {
-    tampilkanModal() {
-      this.$refs.modalUploadImageExpertise.show()
-    },
-    editAttachImage(evt) {
-      const file = evt.target.files[0]
-      const reader = new FileReader()
-      reader.addEventListener('load', () => {}, false)
-      reader.readAsDataURL(file)
-    },
     clikBaris(params) {
       for (let a = 0; a < this.rows.length; a += 1) {
         for (let b = 0; b < this.rows[a].children.length; b += 1) {
@@ -253,10 +263,9 @@ export default {
         .then(res => {
           this.pemeriksaan = res.data
           this.fetching = false
-          const sebentar = []
+          const arr = []
           for (let a = 0; a < this.pemeriksaan.data.length; a += 1) {
             const baru = this.pemeriksaan.data
-            console.log(baru[a].nama)
             const parent = {
               mode: 'span',
               label: baru[a].nama,
@@ -267,22 +276,75 @@ export default {
               parent.children.push({
                 id: hasil.id,
                 nama: hasil.layanan.nama,
-                hasil: hasil.hasil,
                 expertise: hasil.expertise,
+                hasil: hasil.hasil,
               })
             }
-            sebentar.push(parent)
+            arr.push(parent)
           }
-          this.rows = sebentar
+          this.rows = arr
           this.fetching = false
         })
         .catch(err => console.log(err))
     },
-    submit() {
-      console.log('masuk sini cuy')
+    editIsianModal(isianData) {
+      this.modalEdit = true
+      this.dataId = isianData.id
+      this.dataHasil = isianData.hasil
+      this.dataExpert = isianData.expertise
     },
-    back() {
-      this.$router.push({ name: 'antrian-radiologi' })
+    updateDataIsian() {
+
+    },
+    submit() {
+    },
+    async simpan() {
+      const payload = {
+        id: this.pemeriksaan.id,
+        waktu_pemeriksaan: this.pemeriksaan.waktu_pemeriksaan,
+        layanans: [],
+      }
+      for (let a = 0; a < this.rows.length; a += 1) {
+        for (let b = 0; b < this.rows[a].children.length; b += 1) {
+          const children = this.rows[a]
+          payload.layanans.push({
+            radiologi_id: children.radiologi_id,
+            hasil: children.hasil,
+            expertise: children.expertise,
+          })
+        }
+      }
+      try {
+        await fetchApi.pemeriksaan.inputRadiologi(payload)
+        await this.detailIsianRadiologi()
+        this.$toast({
+          components: ToastificationContent,
+          props: {
+            title: 'Berhasil mengupdate data pengisian radiologi',
+            icon: 'CheckIcon',
+            variant: 'success',
+            setTimeout: '1000',
+          },
+        })
+        setTimeout(() => {
+          this.btnDisabled = false
+        }, 4000)
+      } catch (err) {
+        if (err.response.status === 422) {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: err.response.data.message || err.response.data,
+              icon: 'BellIcon',
+              variant: 'danger',
+              setTimeout: '5000',
+            },
+          })
+          setTimeout(() => {
+            this.btnDisabled = false
+          }, 3300)
+        }
+      }
     },
   },
 }
