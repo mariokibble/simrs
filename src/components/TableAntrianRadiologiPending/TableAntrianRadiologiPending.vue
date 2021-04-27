@@ -14,7 +14,7 @@
               class="mr-1"
               @selected="changeEntry('filterByCito', ...arguments)"
             />
-            <SelectStatusLab
+            <SelectStatusLabPending
               class="mr-1"
               @selected="changeEntry('filterByStatus', ...arguments)"
             />
@@ -122,11 +122,11 @@
             <!-- button  edit, delete, TTV, rekamedis -->
 
             <b-button
-              v-b-tooltip.hover.top="'Input Hasil Laboratorium'"
+              v-b-tooltip.hover.top="'Input Hasil Radiologi'"
               v-ripple.400="'rgba(40, 199, 111, 0.15)'"
               variant="flat-success"
               class="btn-icon"
-              @click="$emit('detailIsianLab', { id: props.row.id })"
+              @click="$emit('detailIsianRadiologi', { id: props.row.id })"
             >
               <feather-icon icon="EditIcon" />
             </b-button>
@@ -226,7 +226,7 @@ import Ripple from 'vue-ripple-directive'
 import { debounce } from 'debounce'
 import SelectCito from '@/components/SelectCito/SelectCito.vue'
 import SelectSearchLab from '@/components/SelectSearchLab/SelectSearchLab.vue'
-import SelectStatusLab from '@/components/SelectStatusLab/SelectStatusLab.vue'
+import SelectStatusLabPending from '@/components/SelectStatusLabPending/SelectStatusLabPending.vue'
 import addPrefixName from '@/utils/addPrefixName'
 
 export default {
@@ -243,7 +243,7 @@ export default {
     BBadge,
     SelectSearchLab,
     SelectCito,
-    SelectStatusLab,
+    SelectStatusLabPending,
   },
   directives: {
     'b-tooltip': VBTooltip,
@@ -277,7 +277,10 @@ export default {
           label: 'Asal Pemeriksaan',
           field: 'pemeriksaan.poli.nama',
         },
-
+        {
+          label: 'Jenis Pemeriksaan',
+          field: 'pemeriksaan.hasils',
+        },
         {
           label: 'Prioritas',
           field: 'pemeriksaan.is_prioritas',
@@ -299,7 +302,7 @@ export default {
       selectedSearch: null,
       filterByPoli: null,
       filterByCito: null,
-      filterByStatus: '',
+      filterByStatus: '2',
       poliId: null,
       poliName: null,
       name: null,
@@ -348,19 +351,13 @@ export default {
     },
     statusVariant() {
       const statusColor = {
-        0: 'light-warning',
-        1: 'light-primary',
-        3: 'light-success',
-        9: 'light-danger',
+        2: 'light-secondary',
       }
       return status => statusColor[status]
     },
     statusText() {
       const text = {
-        0: 'Belum diproses',
-        1: 'Sedang diproses',
-        3: 'Selesai',
-        9: 'Batal',
+        2: 'Pending',
       }
       return status => text[status]
     },
@@ -444,7 +441,7 @@ export default {
     async loadItems() {
       try {
         let query = 'rs_id=1'
-        query += `&status=${this.filterByStatus ? this.filterByStatus : '0,1,3,9'}`
+        query += `&status=${this.filterByStatus ? this.filterByStatus : ''}`
         query += `&limit=${this.serverParams.perPage}&page=${this.serverParams.page}`
         query += `${
           this.filterByPoli ? '&poli_id='.concat(this.filterByPoli) : ''
@@ -453,7 +450,7 @@ export default {
           this.filterByCito ? '&is_prioritas='.concat(this.filterByCito) : ''
         }`
         query += this.selectedSearch && this.searchTerm ? `&${this.selectedSearch}=${this.searchTerm}` : ''
-        const { data: res } = await fetchApi.pemeriksaan.getLab(query)
+        const { data: res } = await fetchApi.pemeriksaan.getRadiologi(query)
         const { data } = res
         this.rows = data
         this.totalRecords = res.total

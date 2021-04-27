@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TableAntrianRadiologi
+    <TableAntrianRadiologiPending
       :reload="reload"
       @deletePemeriksaan="deleteConfirm"
       @detailIsianRadiologi="detailIsianRadiologi"
@@ -9,14 +9,14 @@
 </template>
 <script>
 
-import TableAntrianRadiologi from '@/components/TableAntrianRadiologi/TableAntrianRadiologi.vue'
+import TableAntrianRadiologiPending from '@/components/TableAntrianRadiologiPending/TableAntrianRadiologiPending.vue'
 import fetchApi from '@/api'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
 export default {
   name: 'AntrianRadiologi',
   components: {
-    TableAntrianRadiologi,
+    TableAntrianRadiologiPending,
     // eslint-disable-next-line vue/no-unused-components
     ToastificationContent,
   },
@@ -32,7 +32,6 @@ export default {
       fetchApi.pemeriksaan
         .getRadiologiById(id, query)
         .then(res => {
-          console.log(res, '<<res')
           this.$router.push(`/antrian-radiologi/${res.data.id}?${query}`)
         })
         .catch(err => {

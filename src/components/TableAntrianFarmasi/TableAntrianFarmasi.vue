@@ -67,7 +67,6 @@
         enabled: false,
       }"
       :total-rows="totalRecords"
-      :line-numbers="true"
       @on-page-change="onPageChange"
       @on-sort-change="onSortChange"
       @on-column-filter="onColumnFilter"
@@ -262,6 +261,10 @@ export default {
       dir: false,
       columns: [
         {
+          label: 'No Antrian',
+          field: 'no_antrian',
+        },
+        {
           label: 'Nama',
           field: 'user.nama',
         },
@@ -273,11 +276,6 @@ export default {
           label: 'NRM',
           field: 'nrm',
         },
-        {
-          label: 'Asal Pemeriksaan',
-          field: 'pemeriksaan.poli.nama',
-        },
-
         {
           label: 'Prioritas',
           field: 'pemeriksaan.is_prioritas',
@@ -443,18 +441,9 @@ export default {
     }, 200),
     async loadItems() {
       try {
-        let query = 'rs_id=1'
-        query += `&status=${this.filterByStatus ? this.filterByStatus : '0,1,3,9'}`
-        query += `&limit=${this.serverParams.perPage}&page=${this.serverParams.page}`
-        query += `${
-          this.filterByPoli ? '&poli_id='.concat(this.filterByPoli) : ''
-        }`
-        query += `${
-          this.filterByCito ? '&is_prioritas='.concat(this.filterByCito) : ''
-        }`
-        query += this.selectedSearch && this.searchTerm ? `&${this.selectedSearch}=${this.searchTerm}` : ''
-        const { data: res } = await fetchApi.pemeriksaan.getLab(query)
+        const { data: res } = await fetchApi.pemeriksaan.getResep()
         const { data } = res
+        console.log(data, '<< data')
         this.rows = data
         this.totalRecords = res.total
       } catch (error) {

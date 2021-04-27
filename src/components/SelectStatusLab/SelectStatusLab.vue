@@ -13,9 +13,9 @@ export default {
   },
   data() {
     return {
-      selected: null,
+      selected: '',
       items: [
-        { value: null, text: 'Pilih status' },
+        { value: '', text: 'Pilih status' },
         { value: 0, text: 'Belum diproses' },
         { value: 1, text: 'Sedang diproses' },
         { value: 3, text: 'Selesai' },

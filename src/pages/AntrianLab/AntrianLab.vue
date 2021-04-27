@@ -8,12 +8,12 @@
   </div>
 </template>
 <script>
-import TableAntrianLab from "@/components/TableAntrianLab/TableAntrianLab.vue";
-import fetchApi from "@/api";
-import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
+import TableAntrianLab from '@/components/TableAntrianLab/TableAntrianLab.vue'
+import fetchApi from '@/api'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
 export default {
-  name: "AntrianLab",
+  name: 'AntrianLab',
   components: {
     TableAntrianLab,
     // eslint-disable-next-line vue/no-unused-components
@@ -22,57 +22,57 @@ export default {
   data() {
     return {
       reload: false,
-      id: "",
-      rs_id: null
-    };
+      id: '',
+      rs_id: null,
+    }
   },
   methods: {
     async detailIsianLab({ id }) {
-      let query = 'rs_id=1'
+      const query = 'rs_id=1'
       fetchApi.pemeriksaan
         .getLabById(id, query)
-        .then((res) => {
+        .then(res => {
           const encrypId = window.btoa(`${res.data.id}`)
           this.$router.push(`/antrian-lab/${encrypId}?${query}`)
         })
-        .catch((err) => {
-          console.info(err.message);
-        });
+        .catch(err => {
+          console.info(err.message)
+        })
     },
     deleteConfirm({ id, kodeAntrian }) {
       this.$swal({
-        title: "Hapus antrian laboratorium!",
+        title: 'Hapus antrian laboratorium!',
         text: `Apakah kamu yakin, akan menghapus data antrian laboratorium dengan kode antrian ${kodeAntrian} ?`,
-        icon: "warning",
+        icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: "Iya, hapus sekarang!",
-        cancelButtonText: "Tidak, batalkan",
+        confirmButtonText: 'Iya, hapus sekarang!',
+        cancelButtonText: 'Tidak, batalkan',
         customClass: {
-          confirmButton: "btn btn-primary",
-          cancelButton: "btn btn-outline-danger ml-1",
+          confirmButton: 'btn btn-primary',
+          cancelButton: 'btn btn-outline-danger ml-1',
         },
         buttonsStyling: false,
       })
-        .then((result) => {
+        .then(result => {
           if (result.value) {
-            return fetchApi.pemeriksaan.deletePemeriksaan(id);
+            return fetchApi.pemeriksaan.deletePemeriksaan(id)
           }
-          return null;
+          return null
         })
-        .then((res) => {
+        .then(res => {
           if (res && res.data) {
-            this.reload = !this.reload;
+            this.reload = !this.reload
             this.$toast({
               component: ToastificationContent,
               props: {
-                title: `Berhasil menghapus data pemeriksaan`,
-                icon: "CheckIcon",
-                variant: "success",
+                title: 'Berhasil menghapus data pemeriksaan',
+                icon: 'CheckIcon',
+                variant: 'success',
               },
-            });
+            })
           }
-        });
+        })
     },
   },
-};
+}
 </script>
