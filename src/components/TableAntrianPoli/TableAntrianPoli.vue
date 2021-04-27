@@ -103,13 +103,21 @@
             <!-- button  edit, delete, TTV, rekamedis -->
 
             <b-button
+<<<<<<< HEAD
               v-b-tooltip.hover.top="'Rekam medis'"
+=======
+              v-b-tooltip.hover.top="'Edit Verifikasi'"
+>>>>>>> 8075a9a8182c40213bc0ea52fc28af5eb493e760
               v-ripple.400="'rgba(40, 199, 111, 0.15)'"
               variant="flat-success"
               class="btn-icon"
               @click="$emit('detailVerifikasi', { id: props.row.id })"
             >
+<<<<<<< HEAD
               <feather-icon icon="EditIcon" />
+=======
+              <feather-icon icon="TargetIcon" />
+>>>>>>> 8075a9a8182c40213bc0ea52fc28af5eb493e760
             </b-button>
 
             <b-button
