@@ -216,7 +216,7 @@ export default {
     this.detailIsianRadiologi()
   },
   methods: {
-    tampilkanModal(id) {
+    tampilkanModal() {
       this.$refs.modalUploadImageExpertise.show()
     },
     editAttachImage(evt) {
