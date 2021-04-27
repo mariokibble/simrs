@@ -5,7 +5,10 @@
     <p class="card-text mb-25 text-secondary">
       {{ title }}
     </p>
-    <h6 class="mb-0">
+    <h6
+      class="mb-0"
+      style="font-size: 18px"
+    >
       {{ value }}
     </h6>
   </div>

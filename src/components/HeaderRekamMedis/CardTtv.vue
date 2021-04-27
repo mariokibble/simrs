@@ -11,8 +11,11 @@
       >
         Tanda-tanda Vital
       </b-card-title>
-      <b-card-sub-title class="mb-1">
-        Terakhir update: {{ new Date() }}
+      <b-card-sub-title
+        class="mb-1"
+        style="font-size: 15px"
+      >
+        Terakhir update: {{ formattedPemeriksaanUpdatedAt }}
       </b-card-sub-title>
       <b-card-text
         class="font-weight-bold mb-0"
@@ -22,27 +25,27 @@
           <CardTtvItem
             key="Kesadaran"
             title="Kesadaran"
-            :value="'CM'"
+            :value="pemeriksaan.ttv.kesadaran || '0'"
           />
           <CardTtvItem
             key="Tekanan Darah"
             title="Tekanan Darah"
-            :value="'120/80 mmhg'"
+            :value="`${pemeriksaan.ttv.tekanan_darah} mmhg`"
           />
           <CardTtvItem
             key="Laju Nadi"
             title="Laju Nadi"
-            :value="'x/menit'"
+            :value="`${pemeriksaan.ttv.nadi} x/menit`"
           />
           <CardTtvItem
             key="Laju Napas"
             title="Laju Napas"
-            :value="'x/menit'"
+            :value="`${pemeriksaan.ttv.pernapasan} x/menit`"
           />
           <CardTtvItem
             key="Suhu Tubuh"
             title="Suhu Tubuh"
-            :value="'36.5 °C'"
+            :value="`${pemeriksaan.ttv.suhu}  °C`"
           />
           <CardTtvItem
             key="EWS"
@@ -59,6 +62,9 @@
 import {
   BCard, BCardTitle, BCardBody, BCardText, BCardSubTitle,
 } from 'bootstrap-vue'
+import { mapState } from 'vuex'
+import getDate from '@/utils/getDate'
+
 import CardTtvItem from './CardTtvItem.vue'
 
 export default {
@@ -72,6 +78,12 @@ export default {
   },
   data() {
     return {}
+  },
+  computed: {
+    ...mapState('rekamMedis', ['pemeriksaan']),
+    formattedPemeriksaanUpdatedAt() {
+      return getDate(this.pemeriksaan.ttv.updated_at)
+    },
   },
 }
 </script>

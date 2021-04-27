@@ -6,7 +6,7 @@
           <b-col lg="12">
             <CardKeluhanAndDiagnosis
               title="Keluhan Utama"
-              :value="'Muntah Berdarah Sejak 2 hari yang lalu'"
+              :value="pemeriksaan.ttv.keluhan_utama"
             />
           </b-col>
           <b-col lg="12">
@@ -29,6 +29,7 @@
 </template>
 <script>
 import { BRow, BCol } from 'bootstrap-vue'
+import { mapState } from 'vuex'
 import CardKeluhanAndDiagnosis from './CardKeluhanAndDiagnosis.vue'
 import CardTtv from './CardTtv.vue'
 
@@ -38,6 +39,9 @@ export default {
     BRow,
     BCol,
     CardTtv,
+  },
+  computed: {
+    ...mapState('rekamMedis', ['pemeriksaan']),
   },
 }
 </script>

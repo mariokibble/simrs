@@ -7,6 +7,7 @@ import appConfig from './app-config'
 import verticalMenu from './vertical-menu'
 import ttv from './ttv'
 import userLoggedIn from './userLoggedIn/index'
+import rekamMedis from './rekamMedis'
 
 Vue.use(Vuex)
 
@@ -17,6 +18,7 @@ export default new Vuex.Store({
     verticalMenu,
     ttv,
     userLoggedIn,
+    rekamMedis,
   },
   strict: process.env.DEV,
 })

@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { getUserDataFromStorage } from '@/utils/getDataStorage'
-import authRouter from './authRouter'
 import store from '@/store'
+import authRouter from './authRouter'
 
 Vue.use(VueRouter)
 
@@ -128,12 +128,17 @@ const router = new VueRouter({
             requiresAuth: true,
             verticalMenuCollapsed: true,
           },
-          // beforeEnter(next) {
-          //   store.commit('verticalMenu/UPDATE_VERTICAL_MENU_COLLAPSED', true)
-          //   next()
-          // },
         },
       ],
+    },
+    {
+      path: '/print/ordered-laboratorium/:id',
+      name: 'print-ordered-laboratorium',
+      component: () => import('@/pages/PrintOrderedLaboratorium'),
+      meta: {
+        requiresAuth: true,
+        layout: 'full',
+      },
     },
     {
       path: '/list-kehadiran',

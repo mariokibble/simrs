@@ -15,6 +15,7 @@
       <b-card-text
         v-if="value"
         class="font-weight-bold mb-0"
+        style="font-size: 18px"
       >
         {{ value }}
       </b-card-text>

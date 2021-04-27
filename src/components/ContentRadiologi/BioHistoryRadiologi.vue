@@ -5,43 +5,43 @@
         <td class="pr-1">
           Tanggal Pemeriksaan:
         </td>
-        <td> <FormatDate :date="orderLab.waktu_pemeriksaan" /> </td>
+        <td> <FormatDate :date="orderRadiologi.waktu_pemeriksaan" /> </td>
       </tr>
       <tr>
         <td class="pr-1">
           Waktu Pemeriksaan:
         </td>
-        <td>{{ getHours(orderLab.waktu_pemeriksaan) }}</td>
+        <td>{{ getHours(orderRadiologi.waktu_pemeriksaan) }}</td>
       </tr>
       <tr>
         <td class="pr-1">
           Nama:
         </td>
-        <td>{{ orderLab.user.nama }}</td>
+        <td>{{ orderRadiologi.user.nama }}</td>
       </tr>
       <tr>
         <td class="pr-1">
           Tanggal Lahir:
         </td>
-        <td> <FormatDate :date="orderLab.user.tanggal_lahir" /></td>
+        <td> <FormatDate :date="orderRadiologi.user.tanggal_lahir" /></td>
       </tr>
       <tr>
         <td class="pr-1">
           NRM:
         </td>
-        <td> {{ orderLab.nrm }} </td>
+        <td> {{ orderRadiologi.nrm }} </td>
       </tr>
       <tr>
         <td class="pr-1">
           Dokter Pengirim:
         </td>
-        <td> {{ orderLab.dokter_pengirim.user.nama }} </td>
+        <td> {{ orderRadiologi.dokter_pengirim.user.nama }} </td>
       </tr>
       <tr>
         <td class="pr-1">
-          Dokter Patalogi Klinik:
+          Dokter Radiologi:
         </td>
-        <td>{{ orderLab.dokter_laboratorium.user.nama }}</td>
+        <td>{{ orderRadiologi.dokter_radiologi.user.nama }}</td>
       </tr>
     </tbody>
   </table>
@@ -55,7 +55,7 @@ export default {
     FormatDate,
   },
   props: {
-    orderLab: {
+    orderRadiologi: {
       type: Object,
       required: true,
     },

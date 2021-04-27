@@ -19,9 +19,20 @@
       >
         <!-- Column: Common -->
         <span
-          v-if="props.column.field === 'is_flag'"
+          v-if="props.column.field === 'hasil'"
         >
-          {{ flag({ hasil: props.row.hasil, nilai: props.row.nilai_normal}) }}
+          <b-button
+            v-if="props.row.hasil"
+            variant="warning"
+            class="p-25"
+            @click="$emit('showImageHasil', props.row.hasil)"
+          >
+            <svgicon
+              width="30"
+              height="30"
+              name="Radiologi"
+            />
+          </b-button>
         </span>
         <span v-else>
           {{ props.formattedRow[props.column.field] }}
@@ -33,17 +44,20 @@
 
 <script>
 import {
-
+  BButton,
 } from 'bootstrap-vue'
+import '@/assets/images/iconSidebar/Radiologi'
+
 import { VueGoodTable } from 'vue-good-table'
 import store from '@/store/index'
 
 export default {
   components: {
     VueGoodTable,
+    BButton,
   },
   props: {
-    orderLab: {
+    orderRadiologi: {
       type: Object,
       required: true,
     },
@@ -63,38 +77,16 @@ export default {
           field: 'hasil',
         },
         {
-          label: 'Flag',
-          field: 'is_flag',
-        },
-        {
-          label: 'Nilai Normal',
-          field: 'nilai_normal',
-        },
-        {
-          label: 'Satuan',
-          field: 'satuan',
-        },
-        {
-          label: 'Keterangan',
-          field: 'keterangan',
+          label: 'Expertise',
+          field: 'expertise',
+          width: '65%',
         },
       ],
     }
   },
   computed: {
-    flag() {
-      return res => {
-        const nilai = res.nilai.split(' - ')
-        if (Number(res.hasil) > nilai[1]) {
-          return 'H'
-        } if (Number(res.hasil) < nilai[0]) {
-          return 'L'
-        }
-        return ''
-      }
-    },
     rows() {
-      return this.orderLab.data.map(lab => ({
+      return this.orderRadiologi.data.map(lab => ({
         mode: 'span',
         label: lab.nama,
         html: false,

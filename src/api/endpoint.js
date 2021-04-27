@@ -35,6 +35,15 @@ export default {
     verifikasi: '/pemeriksaan/verifikasi',
   },
   laboratorium: {
-    layanan: '/laboratorium',
+    laboratorium: '/laboratorium',
+    orderLaboratorium: '/pemeriksaan/laboratorium',
+    lastOrderLab: '/pemeriksaan/laboratorium/user/last',
+    updateOrderLab: '/pemeriksaan/laboratorium/update',
+  },
+  radiologi: {
+    radiologi: '/radiologi',
+    orderRadiologi: '/pemeriksaan/radiologi',
+    lastOrderRadilogi: '/pemeriksaan/radiologi/user/last',
+    updateOrderRadiologi: '/pemeriksaan/radiologi/update',
   },
 }

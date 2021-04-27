@@ -1,29 +1,26 @@
 <template>
   <div>
-    <div v-if="rows.length === 0">
-      loading...
-    </div>
     <CardBorder
-      v-for="row in rows"
-      :key="row.id"
+      v-for="order in rows"
+      :key="order.id"
       class="mt-25 p-25"
     >
       <b-form-group
         v-slot="{ ariaDescribedby }"
-        :label="row.nama"
+        :label="order.nama"
         label-class="text-uppercase font-weight-bold"
       >
         <b-form-checkbox-group
-          :id="row.nama"
+          :id="order.nama"
           v-model="selected"
           :aria-describedby="ariaDescribedby"
-          :name="row.nama"
+          :name="order.nama"
         >
           <b-form-checkbox
-            v-for="layanan in row.layanans"
+            v-for="(layanan) in order.layanans"
             :key="`layanan-${layanan.id}`"
             :value="layanan.id"
-            class="mb-25"
+            class="mb-1"
           >
             {{ layanan.nama }}
           </b-form-checkbox>
@@ -35,7 +32,6 @@
 <script>
 import CardBorder from '@/components/CardBorder/CardBorder.vue'
 import { BFormGroup, BFormCheckboxGroup, BFormCheckbox } from 'bootstrap-vue'
-import fetchApi from '@/api'
 
 export default {
   components: {
@@ -44,25 +40,21 @@ export default {
     BFormCheckboxGroup,
     BFormCheckbox,
   },
+  props: {
+    rows: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       selected: [], // Must be an array reference!
-      options: [
-        { text: 'Orange', value: 'orange' },
-        { text: 'Apple', value: 'apple' },
-        { text: 'Pineapple', value: 'pineapple' },
-        { text: 'Grape', value: 'grape' },
-      ],
-      rows: [],
     }
   },
-  async created() {
-    try {
-      const { data } = await fetchApi.laboratorium.getLayanan()
-      this.rows = data
-    } catch (error) {
-      console.log(error)
-    }
+  watch: {
+    selected(val) {
+      this.$emit('setEntry', val)
+    },
   },
 }
 </script>
