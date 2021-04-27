@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { getUserDataFromStorage } from '@/utils/getDataStorage'
+import store from '@/store'
 import authRouter from './authRouter'
 
 Vue.use(VueRouter)
@@ -110,6 +111,36 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/rekam-medis/:id',
+      name: 'rekam-medis',
+      component: () => import('@/pages/RekamMedis'),
+      meta: {
+        requiresAuth: true,
+        pageTitle: 'Rekam Medis',
+        // TODO: Custom breadcumb
+      },
+      children: [
+        {
+          path: ':content',
+          name: 'content-rekam-medis',
+          component: () => import('@/pages/ContentRekamMedis'),
+          meta: {
+            requiresAuth: true,
+            verticalMenuCollapsed: true,
+          },
+        },
+      ],
+    },
+    {
+      path: '/print/ordered-laboratorium/:id',
+      name: 'print-ordered-laboratorium',
+      component: () => import('@/pages/PrintOrderedLaboratorium'),
+      meta: {
+        requiresAuth: true,
+        layout: 'full',
+      },
+    },
+    {
       path: '/list-kehadiran',
       name: 'list-kehadiran',
       component: () => import('@/pages/ListKehadiran'),
@@ -149,6 +180,12 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
+    if (to.matched.some(record => record.meta.verticalMenuCollapsed)) {
+      store.commit('verticalMenu/UPDATE_VERTICAL_MENU_COLLAPSED', true)
+    } else {
+      store.commit('verticalMenu/UPDATE_VERTICAL_MENU_COLLAPSED', false)
+    }
+
     if (!isLoggedIn()) {
       next({
         path: '/login',
