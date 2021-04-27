@@ -152,7 +152,6 @@ export default {
         })
         this.back()
       } catch (err) {
-        console.log(err)
         if (err.response.status === 422) {
           this.$toast({
             component: ToastificationContent,
