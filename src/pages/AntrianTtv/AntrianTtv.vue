@@ -107,6 +107,7 @@ export default {
           cancelButtonText: 'Tidak',
           customClass: {
             confirmButton: 'btn btn-primary',
+            color: 'black',
             cancelButton: 'btn btn-outline-danger ml-1',
           },
           buttonsStyling: false,
