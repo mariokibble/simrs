@@ -17,7 +17,11 @@
       label="Dokter Patalogi Klinik: "
       label-cols-lg="2"
     >
+      <div v-if="fetchingDokterLab === 'pending'">
+        loading ...
+      </div>
       <b-form-select
+        v-else-if="fetchingDokterLab === 'resolved'"
         v-model="selectedDokter"
         :options="dokterOptions"
       />
@@ -27,6 +31,7 @@
 
 <script>
 import { BFormGroup, BFormRadioGroup, BFormSelect } from 'bootstrap-vue'
+import fetchApi from '@/api'
 
 export default {
   components: {
@@ -46,6 +51,7 @@ export default {
         { text: 'Cito', value: '1' },
         { text: 'Non Cito', value: '0' },
       ],
+      fetchingDokterLab: 'idle',
     }
   },
   watch: {
@@ -56,8 +62,25 @@ export default {
       this.$emit('selectedDokter', val)
     },
   },
-  created() {
+  async created() {
     this.$emit('isPrioritas', this.isPrioritas)
+    await this.fetchDokterLab()
+  },
+  methods: {
+    async fetchDokterLab() {
+      try {
+        this.fetchingDokterLab = 'pending'
+        const { data } = await fetchApi.laboratorium.gerAllDokterLab()
+        this.dokterOptions = [
+          { value: null, text: 'Pilih Dokter Patalogi Klinik' },
+          ...data.map(dokter => ({ value: dokter.id, text: dokter.user.nama })),
+        ]
+        this.fetchingDokterLab = 'resolved'
+      } catch (error) {
+        console.log(error)
+        this.fetchingDokterLab = 'rejected'
+      }
+    },
   },
 }
 </script>
