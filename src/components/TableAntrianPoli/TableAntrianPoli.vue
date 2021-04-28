@@ -18,7 +18,7 @@
           </div>
         </b-form-group>
       </div>
-      <div class="custom-search mr-1">
+      <div class="custom-search mr-5">
         <b-form-group>
           <div class="d-flex align-items-center">
             <label class="col-3 text-right">Search</label>
@@ -32,6 +32,15 @@
               type="text"
               class="d-inline-block col-6"
             />
+            <b-button
+              v-b-tooltip.hover.top="'refresh'"
+              v-ripple.400="'rgba(40, 199, 111, 0.15)'"
+              variant="success"
+              class="btn-icon ml-1"
+              @click="init"
+            >
+              <feather-icon icon="RefreshCwIcon" />
+            </b-button>
           </div>
         </b-form-group>
       </div>
@@ -104,7 +113,7 @@
             </b-button>
 
             <b-button
-              v-b-tooltip.hover.top="'Rekamedis'"
+              v-b-tooltip.hover.top="'Rekam medis'"
               v-ripple.400="'rgba(40, 199, 111, 0.15)'"
               variant="flat-success"
               class="btn-icon"
@@ -287,6 +296,7 @@ export default {
         page: 1,
         perPage: 10,
       },
+      saveInterval: null,
     }
   },
   computed: {
@@ -342,6 +352,12 @@ export default {
   },
   created() {
     this.init()
+  },
+  mounted() {
+    this.interval()
+  },
+  beforeDestroy() {
+    clearInterval(this.saveInterval)
   },
   methods: {
     async init() {
@@ -409,6 +425,11 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    interval() {
+      this.saveInterval = setInterval(() => {
+        this.init()
+      }, 60 * 1000)
     },
   },
 }
