@@ -135,11 +135,7 @@
               v-ripple.400="'rgba(40, 199, 111, 0.15)'"
               variant="flat-success"
               class="btn-icon"
-              @click="
-                $emit('deleteVerifikasi', {
-                  id: props.row.id,
-                })
-              "
+              @click=""
             >
               <feather-icon icon="TrashIcon" />
             </b-button>
@@ -297,7 +293,7 @@ export default {
       selectedSearch: null,
       filterByPoli: null,
       filterByCito: null,
-      filterByStatus: '',
+      filterByStatus: 0,
       poliId: null,
       poliName: null,
       name: null,

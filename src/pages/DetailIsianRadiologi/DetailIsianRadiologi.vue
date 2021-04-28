@@ -82,6 +82,7 @@
         ref="editIsianModal"
         v-model="modalEdit"
         title="Upload Image dan expertise"
+        modal-class="modal-dark"
         centered
         hide-footer
       >
@@ -115,19 +116,19 @@
           <b-row>
             <b-col class="text-left">
               <b-button
-                variant="warning"
+                variant="danger"
                 @click="modalEdit = false"
               >
-                Cancel
+                Batalkan
               </b-button>
             </b-col>
             <b-col class="text-right">
               <b-button
                 type="submit"
                 variant="secondary"
-                class="mr-2"
+                class="mr-0"
                 @click="updateDataIsian"
-              >Update</b-button>
+              >Perbarui</b-button>
             </b-col>
           </b-row>
         </form>

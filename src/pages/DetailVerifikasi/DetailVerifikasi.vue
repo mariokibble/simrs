@@ -3,7 +3,7 @@
     <div v-if="!fetching">
       <CardDataDiri
         :nama="formattedNama"
-        :foto-profile="pemeriksaan.user.foto_profile"
+        :foto-profile="pemeriksaan.user.foto_profil"
         :tanggal-lahir="pemeriksaan.user.tanggal_lahir"
         :asuransi="pemeriksaan.asuransi"
         :tanggal-appointment="pemeriksaan.tanggal_periksa"
