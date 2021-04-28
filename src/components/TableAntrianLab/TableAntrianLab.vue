@@ -293,7 +293,7 @@ export default {
       selectedSearch: null,
       filterByPoli: null,
       filterByCito: null,
-      filterByStatus: 0,
+      filterByStatus: null,
       poliId: null,
       poliName: null,
       name: null,

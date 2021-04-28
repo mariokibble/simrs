@@ -14,10 +14,6 @@
               class="mr-1"
               @selected="changeEntry('filterByCito', ...arguments)"
             />
-            <SelectStatusLabPending
-              class="mr-1"
-              @selected="changeEntry('filterByStatus', ...arguments)"
-            />
           </div>
         </b-form-group>
       </div>
@@ -226,7 +222,6 @@ import Ripple from 'vue-ripple-directive'
 import { debounce } from 'debounce'
 import SelectCito from '@/components/SelectCito/SelectCito.vue'
 import SelectSearchLab from '@/components/SelectSearchLab/SelectSearchLab.vue'
-import SelectStatusLabPending from '@/components/SelectStatusLabPending/SelectStatusLabPending.vue'
 import addPrefixName from '@/utils/addPrefixName'
 
 export default {
@@ -243,7 +238,6 @@ export default {
     BBadge,
     SelectSearchLab,
     SelectCito,
-    SelectStatusLabPending,
   },
   directives: {
     'b-tooltip': VBTooltip,

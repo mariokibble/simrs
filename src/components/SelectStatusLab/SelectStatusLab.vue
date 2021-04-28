@@ -15,11 +15,11 @@ export default {
     return {
       selected: null,
       items: [
-        { value: null, text: 'Pilih status' },
-        { value: 0, text: 'Belum diproses' },
-        { value: 1, text: 'Sedang diproses' },
-        { value: 3, text: 'Selesai' },
-        { value: 9, text: 'Batal' },
+        { value: null, text: 'Silahkan pilih poli' },
+        { value: '0', text: 'Belum diproses' },
+        { value: '1', text: 'Sedang diproses' },
+        { value: '3', text: 'Selesai' },
+        { value: '9', text: 'Batal' },
       ],
     }
   },
