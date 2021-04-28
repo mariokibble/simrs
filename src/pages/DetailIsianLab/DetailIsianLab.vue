@@ -75,10 +75,11 @@
       <b-modal
         id="modal-konfirmasi-isian-lab"
         ref="modalKonfirmasiIsianLab"
-        ok-variant="dark"
+        ok-variant="secondary"
         ok-title="Konfirmasi"
         cancel-title="Batalkan"
         modal-class="modal-dark"
+        cancel-variant="danger"
         centered
         title="Apakah sudah benar data yang anda masukan?"
         class="p-0"
