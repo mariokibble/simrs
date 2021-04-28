@@ -135,7 +135,6 @@
               v-ripple.400="'rgba(40, 199, 111, 0.15)'"
               variant="flat-success"
               class="btn-icon"
-              @click=""
             >
               <feather-icon icon="TrashIcon" />
             </b-button>
