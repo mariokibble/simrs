@@ -16,10 +16,11 @@
               title-tag="h1"
               class="mb-5 headerLeft"
             >
-              Daftar<br>
-              poliklinik<br>
-              sekarang lebih<br>
-              mudah.<br>
+               
+              Pelayanan<br>
+              pasien<br>
+              lebih efisien<br>
+              dengan SIMRS.<br>
             </b-card-title>
           </div>
         </b-col>
