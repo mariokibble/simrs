@@ -44,7 +44,6 @@ export default {
       selectedDokter: null,
       dokterOptions: [
         { value: null, text: 'Pilih Dokter Patalogi Klinik' },
-        { value: 184, text: 'dr Lab 1 RSUD KOTA BOGOR' },
       ],
       isPrioritas: '0',
       priotitasOptions: [
