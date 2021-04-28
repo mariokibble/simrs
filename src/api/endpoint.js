@@ -46,5 +46,6 @@ export default {
     orderRadiologi: '/pemeriksaan/radiologi',
     lastOrderRadilogi: '/pemeriksaan/radiologi/user/last',
     updateOrderRadiologi: '/pemeriksaan/radiologi/update',
+    dokterRadiologi: '/dokter_radiologi/by_rs',
   },
 }

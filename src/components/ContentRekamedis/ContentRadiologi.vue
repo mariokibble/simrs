@@ -57,15 +57,24 @@
       cancel-title="Batalkan"
       @ok="orderRadiologi"
     >
-      <ContentHeadModal @setEntry="setEntry('isPrioritas', ...arguments)" />
-      <div v-if="fetchingRadiologis === 'pending'">
-        loading ...
-      </div>
-      <FormInputOrder
-        v-else-if="fetchingRadiologis === 'resolved'"
-        :rows="radiologis"
-        @setEntry="setEntry('selectedRadilogis', ...arguments)"
-      />
+      <ValidationObserver
+        ref="formOrderRadiologi"
+        tag="form"
+      >
+        <ContentHeadModal @setEntry="setEntry('isPrioritas', ...arguments)" />
+        <FormInputPrioritasAndDokter
+          @isPrioritas="setEntry('isPrioritas', ...arguments)"
+          @selectedDokter="setEntry('selectedDokter', ...arguments)"
+        />
+        <div v-if="fetchingRadiologis === 'pending'">
+          loading ...
+        </div>
+        <FormInputOrder
+          v-else-if="fetchingRadiologis === 'resolved'"
+          :rows="radiologis"
+          @setEntry="setEntry('selectedRadilogis', ...arguments)"
+        />
+      </ValidationObserver>
     </b-modal>
     <b-modal
       ref="modalImageHasil"
@@ -93,10 +102,14 @@ import {
 import CardBorder from '@/components/CardBorder/CardBorder.vue'
 import ContentHeadModal from '@/components/ContentRadiologi/ContentHeadModal.vue'
 import FormInputOrder from '@/components/FormInputOrder/FormInputOrder.vue'
+import FormInputPrioritasAndDokter from '@/components/ContentRadiologi/FormInputPrioritasAndDokter.vue'
+
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import BioHistoryRadiologi from '@/components/ContentRadiologi/BioHistoryRadiologi.vue'
 import TableHistoryRadiologi from '@/components/ContentRadiologi/TableHistoryRadiologi.vue'
 import getDate from '@/utils/getDate'
+import { ValidationObserver } from 'vee-validate'
+import { required } from '@validations'
 import { mapState } from 'vuex'
 import fetchApi from '@/api'
 
@@ -115,10 +128,17 @@ export default {
     BioHistoryRadiologi,
     TableHistoryRadiologi,
     BImg,
+    FormInputPrioritasAndDokter,
+    // eslint-disable-next-line vue/no-unused-components
+    ToastificationContent,
+    ValidationObserver,
+    // eslint-disable-next-line vue/no-unused-components
+    required,
   },
   data() {
     return {
       isPrioritas: 0,
+      selectedDokter: null,
       selectedRadilogis: [],
       radiologis: [],
       fetchingRadiologis: 'idle',
@@ -170,33 +190,42 @@ export default {
         this.fetchingLastOrderRadiologi = 'rejected'
       }
     },
-    async orderRadiologi() {
-      try {
-        const form = {
-          pemeriksaan_id: this.pemeriksaanId,
-          waktu_pemeriksaan: getDate(),
-          is_prioritas: this.isPrioritas,
-          layanans: this.selectedRadilogis.map(radiologiId => ({
-            radiologi_id: radiologiId,
-          })),
+    checkValidateForm() {
+      return new Promise((resolve, reject) => (async () => {
+        const validated = await this.$refs.formOrderRadiologi.validate()
+        if (!validated) {
+          return reject()
         }
-        const { data } = await fetchApi.radiologi.orderRadiologi(form)
-        // langsung update status menjadi 1 untuk sementara
-        await fetchApi.radiologi.updateOrderRadiologi({
-          id: data.id,
-          status: 1,
-        })
-        this.$refs.modalLayananRadiologi.hide()
-        this.$toast({
-          component: ToastificationContent,
-          props: {
-            title: 'Berhasil order radiologi',
-            icon: 'CheckIcon',
-            variant: 'success',
-          },
-        })
+        return resolve(true)
+      })())
+    },
+    async orderRadiologi(e) {
+      e.preventDefault()
+      try {
+        if (await this.checkValidateForm()) {
+          const form = {
+            pemeriksaan_id: this.pemeriksaanId,
+            waktu_pemeriksaan: getDate(),
+            is_prioritas: this.isPrioritas,
+            dokter_radiologi_id: this.$store.state.userLoggedIn.user.id,
+            petugas_radiologi_id: this.selectedDokter,
+            layanans: this.selectedRadilogis.map(radiologiId => ({
+              radiologi_id: radiologiId,
+            })),
+          }
+          await fetchApi.radiologi.orderRadiologi(form)
+          this.$refs.modalLayananRadiologi.hide()
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Berhasil order radiologi',
+              icon: 'CheckIcon',
+              variant: 'success',
+            },
+          })
+        }
       } catch (err) {
-        if (err.response.status === 422) {
+        if (err && err.response.status === 422) {
           this.$toast({
             component: ToastificationContent,
             props: {

@@ -18,4 +18,8 @@ export default {
     const request = resource.post(endpoint.radiologi.updateOrderRadiologi, data)
     return request
   },
+  gerAllDokterRadiologi() {
+    const request = resource.get(`${endpoint.radiologi.dokterRadiologi}/1`)
+    return request
+  },
 }

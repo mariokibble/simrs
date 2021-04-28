@@ -15,11 +15,11 @@
     </b-form-group>
     <ValidationProvider
       #default="{ errors }"
-      name="Dokter Patalogi Klinik"
+      name="Dokter Petugas Radiologi"
       rules="required"
     >
       <b-form-group
-        label="Dokter Patalogi Klinik: "
+        label="Dokter Petugas Radiologi: "
         label-cols-lg="2"
       >
         <div v-if="fetchingDokterLab === 'pending'">
@@ -38,9 +38,8 @@
 
 <script>
 import { BFormGroup, BFormRadioGroup, BFormSelect } from 'bootstrap-vue'
-import { ValidationProvider } from 'vee-validate'
-
 import fetchApi from '@/api'
+import { ValidationProvider } from 'vee-validate'
 
 export default {
   components: {
@@ -53,7 +52,7 @@ export default {
     return {
       selectedDokter: null,
       dokterOptions: [
-        { value: null, text: 'Pilih Dokter Patalogi Klinik' },
+        { value: null, text: 'Pilih Dokter petugas Radiologi' },
       ],
       isPrioritas: '0',
       priotitasOptions: [
@@ -79,9 +78,9 @@ export default {
     async fetchDokterLab() {
       try {
         this.fetchingDokterLab = 'pending'
-        const { data } = await fetchApi.laboratorium.gerAllDokterLab()
+        const { data } = await fetchApi.radiologi.gerAllDokterRadiologi()
         this.dokterOptions = [
-          { value: null, text: 'Pilih Dokter Patalogi Klinik' },
+          { value: null, text: 'Pilih Dokter petugas Radiologi' },
           ...data.map(dokter => ({ value: dokter.id, text: dokter.user.nama })),
         ]
         this.fetchingDokterLab = 'resolved'

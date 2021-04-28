@@ -29,41 +29,18 @@
         <td class="pr-1">
           Diagnosis / Klinis:
         </td>
-        <td> Data nya dari mana? </td>
-      </tr>
-      <tr>
-        <td class="pr-1">
-          Proritas:
-        </td>
-        <td class="align-items-center">
-          <b-form-group
-            v-slot="{ ariaDescribedby }"
-            class="mt-1"
-          >
-            <b-form-radio-group
-              v-model="isPrioritas"
-              :options="priotitasOptions"
-              :aria-describedby="ariaDescribedby"
-              name="isPrioritas"
-              plain
-            />
-          </b-form-group>
-
-        </td>
+        <td> Diabetes </td>
       </tr>
     </tbody>
   </table>
 </template>
 <script>
 import FormatDate from '@/components/FormatDate/FormatDate.vue'
-import { BFormGroup, BFormRadioGroup } from 'bootstrap-vue'
 import { mapState } from 'vuex'
 
 export default {
   components: {
     FormatDate,
-    BFormGroup,
-    BFormRadioGroup,
   },
   data() {
     return {
