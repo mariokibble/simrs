@@ -125,7 +125,13 @@
               v-ripple.400="'rgba(40, 199, 111, 0.15)'"
               variant="flat-success"
               class="btn-icon"
-              @click="$emit('detailIsianLab', { id: props.row.id })"
+              @click="
+                $emit('detailIsianLab', {
+                  id: props.row.id,
+                  kodeAntrian: props.row.pemeriksaan.kode_antrian,
+                  status: props.row.status,
+                })
+              "
             >
               <feather-icon icon="EditIcon" />
             </b-button>
@@ -196,6 +202,12 @@
           </div>
         </div>
       </template>
+      <div
+        slot="emptystate"
+        class="text-center"
+      >
+        Antrian Laboratorium tidak ada
+      </div>
     </vue-good-table>
   </b-card>
 </template>
@@ -396,7 +408,6 @@ export default {
   },
   created() {
     this.init()
-    console.log(this.filterByCito, '<<selectCito')
   },
   methods: {
     async init() {
@@ -452,7 +463,9 @@ export default {
     async loadItems() {
       try {
         let query = 'rs_id=1'
-        query += `&status=${this.filterByStatus ? this.filterByStatus : '0,1,3,9'}`
+        query += `&status=${
+          this.filterByStatus ? this.filterByStatus : '0,1,3,9'
+        }`
         query += `&limit=${this.serverParams.perPage}&page=${this.serverParams.page}`
         query += `${
           this.filterByPoli ? '&poli_id='.concat(this.filterByPoli) : ''
@@ -460,7 +473,10 @@ export default {
         query += `${
           this.filterByCito ? '&is_prioritas='.concat(this.filterByCito) : ''
         }`
-        query += this.selectedSearch && this.searchTerm ? `&${this.selectedSearch}=${this.searchTerm}` : ''
+        query
+          += this.selectedSearch && this.searchTerm
+            ? `&${this.selectedSearch}=${this.searchTerm}`
+            : ''
         const { data: res } = await fetchApi.pemeriksaan.getLab(query)
         const { data } = res
         this.rows = data

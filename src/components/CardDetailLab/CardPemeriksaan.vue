@@ -21,7 +21,7 @@
                 Dokter Patologi Klinik
               </p>
               <p class="mb-0 mt-0">
-                Petugas Klinik
+                Petugas Lab
               </p>
               <p class="mb-0 mt-0">
                 Prioritas

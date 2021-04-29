@@ -21,14 +21,13 @@ export default {
   data() {
     return {
       reload: false,
-      id: '',
     }
   },
   methods: {
-    async detailIsianLab({ id }) {
+    async detailIsianLab({ id, kodeAntrian }) {
       try {
         const { value } = await this.$swal({
-          title: 'Mula isian lab!',
+          title: 'Mulai isian lab!',
           text: 'apakah anda yakin untuk mengisi data hasil lab?',
           icon: 'warning',
           showCancelButton: true,
@@ -42,15 +41,27 @@ export default {
         })
         if (value) {
           const query = 'rs_id=1'
-          fetchApi.pemeriksaan
-            .getLabById(id, query)
-            .then(res => {
-              const encrypId = window.btoa(`${res.data.id}`)
-              this.$router.push(`/antrian-lab/${encrypId}?${query}`)
-            })
-            .catch(err => {
-              console.info(err.message)
-            })
+          const { data } = await fetchApi.pemeriksaan.getLabById(id, query)
+          console.log(data, '<data')
+          const encrypId = window.btoa(`${data.id}`)
+          const payload = {
+            id: data.id,
+            status: data.status,
+          }
+          if (data.status === 0) {
+            payload.status = 1
+          }
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Status poli menjadi sedang diproses pada pasien dengan kode antrian ${kodeAntrian}`,
+              icon: 'CheckIcon',
+              variant: 'success',
+              setTimeout: '1000',
+            },
+          })
+          this.$router.push(`/antrian-lab/${encrypId}?${query}`)
+          await fetchApi.pemeriksaan.inputLab(payload)
         }
       } catch (err) {
         console.log(err)

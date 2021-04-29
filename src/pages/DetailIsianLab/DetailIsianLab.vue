@@ -178,7 +178,7 @@ export default {
   },
   created() {
     this.detailIsianLab()
-    this.simpan()
+    // this.simpan()
   },
   methods: {
     detailIsianLab() {

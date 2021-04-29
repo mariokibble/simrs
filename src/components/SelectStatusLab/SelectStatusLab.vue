@@ -15,7 +15,7 @@ export default {
     return {
       selected: null,
       items: [
-        { value: null, text: 'Silahkan pilih poli' },
+        { value: null, text: 'Pilih poli' },
         { value: '0', text: 'Belum diproses' },
         { value: '1', text: 'Sedang diproses' },
         { value: '3', text: 'Selesai' },
