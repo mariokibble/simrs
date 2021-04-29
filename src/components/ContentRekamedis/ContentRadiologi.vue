@@ -205,8 +205,7 @@ export default {
             pemeriksaan_id: this.pemeriksaanId,
             waktu_pemeriksaan: getDate(),
             is_prioritas: this.isPrioritas,
-            dokter_id: this.pemeriksaan.dokter.id,
-            dokter_radiologi_id: this.$store.state.userLoggedIn.user.id,
+            dokter_id: this.$store.state.userLoggedIn.user.id,
             layanans: this.selectedRadilogis.map(radiologiId => ({
               radiologi_id: radiologiId,
             })),

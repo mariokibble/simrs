@@ -28,11 +28,11 @@ export default {
     async goToRekamedis({ id, kodeAntrian }) {
       try {
         const { value } = await this.$swal({
-          title: 'Mulai rekammedis!',
-          text: 'apakah anda yakin ingin memulai rekammedis?',
+          title: 'Mulai Rekam medis?',
+          text: 'apakah anda yakin ingin memulai Rekam medis?',
           icon: 'warning',
           showCancelButton: true,
-          confirmButtonText: 'Iya!',
+          confirmButtonText: 'Iya',
           cancelButtonText: 'Tidak',
           customClass: {
             confirmButton: 'btn btn-primary',

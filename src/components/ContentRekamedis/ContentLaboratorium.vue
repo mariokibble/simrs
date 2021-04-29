@@ -192,8 +192,7 @@ export default {
             pemeriksaan_id: this.pemeriksaanId,
             waktu_pemeriksaan: getDate(),
             is_prioritas: this.isPrioritas,
-            dokter_laboratorium_id: this.$store.state.userLoggedIn.user.id,
-            dokter_id: this.pemeriksaan.dokter.id,
+            dokter_id: this.$store.state.userLoggedIn.user.id,
             layanans: this.selectedLab.map(labId => ({
               laboratorium_id: labId,
             })),
