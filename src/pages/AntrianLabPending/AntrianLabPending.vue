@@ -27,17 +27,48 @@ export default {
     }
   },
   methods: {
-    async detailIsianLab({ id }) {
-      const query = 'rs_id=1'
-      fetchApi.pemeriksaan
-        .getLabById(id, query)
-        .then(res => {
-          const encrypId = window.btoa(`${res.data.id}`)
+    async detailIsianLab({ id, kodeAntrian }) {
+      try {
+        const { value } = await this.$swal({
+          title: 'Mulai isian lab!',
+          text: 'apakah anda yakin untuk mengisi data hasil lab?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Iya!',
+          cancelButtonText: 'Tidak!',
+          customClass: {
+            confirmButton: 'btn btn-primary',
+            cancelButton: 'btn btn-outline-danger ml-1',
+          },
+          buttonsStyling: false,
+        })
+        if (value) {
+          const query = 'rs_id=1'
+          const { data } = await fetchApi.pemeriksaan.getLabById(id, query)
+          console.log(data.id, '<<< dataId')
+          const encrypId = window.btoa(`${data.id}`)
+          const payload = {
+            id: data.id,
+            status: data.status,
+          }
+          if (data.status === 2) {
+            payload.status = 1
+          }
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Anda sedang memeriksa pasien dengan kode antrian ${kodeAntrian}`,
+              icon: 'CheckIcon',
+              variant: 'success',
+              setTimeout: '1000',
+            },
+          })
           this.$router.push(`/antrian-lab/${encrypId}?${query}`)
-        })
-        .catch(err => {
-          console.info(err.message)
-        })
+          await fetchApi.pemeriksaan.inputLab(payload)
+        }
+      } catch (err) {
+        console.log(err)
+      }
     },
     deleteConfirm({ id, kodeAntrian }) {
       this.$swal({

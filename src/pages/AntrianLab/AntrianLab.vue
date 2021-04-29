@@ -42,7 +42,6 @@ export default {
         if (value) {
           const query = 'rs_id=1'
           const { data } = await fetchApi.pemeriksaan.getLabById(id, query)
-          console.log(data, '<data')
           const encrypId = window.btoa(`${data.id}`)
           const payload = {
             id: data.id,
@@ -54,7 +53,7 @@ export default {
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: `Status poli menjadi sedang diproses pada pasien dengan kode antrian ${kodeAntrian}`,
+              title: `Anda sedang memeriksa pasien dengan kode antrian ${kodeAntrian}`,
               icon: 'CheckIcon',
               variant: 'success',
               setTimeout: '1000',
@@ -66,6 +65,23 @@ export default {
       } catch (err) {
         console.log(err)
       }
+    },
+    deleteConfirm({ kodeAntrian }) {
+      this.$swal({
+        title: 'Hapus pemeriksaan!',
+        text: `Apakah kamu yakin, akan menghapus pemeriksaan dengan kode antrian ${kodeAntrian}?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Iya, hapus sekarang!',
+        cancelButtonText: 'Tidak, batalkan',
+        customClass: {
+          confirmButton: 'btn btn-primary',
+          cancelButton: 'btn btn-outline-danger ml-1',
+        },
+        buttonsStyling: false,
+      }).then(result => {
+        console.log(result)
+      })
     },
   },
 }

@@ -22,4 +22,9 @@ export default {
     const request = resource.get(`${endpoint.laboratorium.orderLaboratorium}/${id}`)
     return request
   },
+  listDokterLab() {
+    const request = resource.get(`${endpoint.laboratorium.dokterLab}/${1}`)
+    return request
+  },
+
 }
