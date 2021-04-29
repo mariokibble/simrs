@@ -66,19 +66,23 @@
       cancel-title="Batalkan"
       @ok="orderLaboratorium"
     >
-      <ContentHeadModal />
-      <FormInputPrioritasAndDokter
-        @isPrioritas="setEntry('isPrioritas', ...arguments)"
-        @selectedDokter="setEntry('selectedDokter', ...arguments)"
-      />
-      <div v-if="fetchingLabs === 'pending'">
-        loading ...
-      </div>
-      <FormInputOrder
-        v-else-if="fetchingLabs === 'resolved'"
-        :rows="laboratoriums"
-        @setEntry="setEntry('selectedLab', ...arguments)"
-      />
+      <ValidationObserver
+        ref="formOrderLab"
+        tag="form"
+      >
+        <ContentHeadModal />
+        <FormInputPrioritas
+          @isPrioritas="setEntry('isPrioritas', ...arguments)"
+        />
+        <div v-if="fetchingLabs === 'pending'">
+          loading ...
+        </div>
+        <FormInputOrder
+          v-else-if="fetchingLabs === 'resolved'"
+          :rows="laboratoriums"
+          @setEntry="setEntry('selectedLab', ...arguments)"
+        />
+      </ValidationObserver>
     </b-modal>
   </div>
 </template>
@@ -90,12 +94,15 @@ import {
 import CardBorder from '@/components/CardBorder/CardBorder.vue'
 import ContentHeadModal from '@/components/ContentLaboratorium/ContentHeadModal.vue'
 import FormInputOrder from '@/components/FormInputOrder/FormInputOrder.vue'
-import FormInputPrioritasAndDokter from '@/components/ContentLaboratorium/FormInputPrioritasAndDokter.vue'
+import FormInputPrioritas from '@/components/FormInputPrioritas/FormInputPrioritas.vue'
 import BioHistoryLaboratorium from '@/components/ContentLaboratorium/BioHistoryLaboratorium.vue'
 import TableHistoryLaboratorium from '@/components/ContentLaboratorium/TableHistoryLaboratorium.vue'
 import fetchApi from '@/api'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import getDate from '@/utils/getDate'
+import { ValidationObserver } from 'vee-validate'
+import { required } from '@validations'
+
 import { mapState } from 'vuex'
 
 import Content from './Content.vue'
@@ -114,13 +121,15 @@ export default {
     TableHistoryLaboratorium,
     // eslint-disable-next-line vue/no-unused-components
     ToastificationContent,
-    FormInputPrioritasAndDokter,
+    FormInputPrioritas,
+    ValidationObserver,
+    // eslint-disable-next-line vue/no-unused-components
+    required,
   },
   data() {
     return {
       selectedLab: [],
       isPrioritas: '',
-      selectedDokter: null,
       laboratoriums: [],
       fetchingLabs: 'idle',
       lastOrderLab: null,
@@ -166,33 +175,42 @@ export default {
         this.fetchingLastOrderLab = 'rejected'
       }
     },
-    async orderLaboratorium() {
-      try {
-        const form = {
-          pemeriksaan_id: this.pemeriksaanId,
-          waktu_pemeriksaan: getDate(),
-          is_prioritas: this.isPrioritas,
-          layanans: this.selectedLab.map(labId => ({
-            laboratorium_id: labId,
-          })),
+    checkValidateForm() {
+      return new Promise((resolve, reject) => (async () => {
+        const validated = await this.$refs.formOrderLab.validate()
+        if (!validated) {
+          return reject()
         }
-        const { data } = await fetchApi.laboratorium.orderLaboratorium(form)
-        // langsung update status menjadi 1 untuk sementara
-        await fetchApi.laboratorium.updateOrderLab({
-          id: data.id,
-          status: 1,
-        })
-        this.$refs.modalLayananLaboratorium.hide()
-        this.$toast({
-          component: ToastificationContent,
-          props: {
-            title: 'Berhasil order laboratorium',
-            icon: 'CheckIcon',
-            variant: 'success',
-          },
-        })
+        return resolve(true)
+      })())
+    },
+    async orderLaboratorium(e) {
+      e.preventDefault()
+      try {
+        if (await this.checkValidateForm()) {
+          const form = {
+            pemeriksaan_id: this.pemeriksaanId,
+            waktu_pemeriksaan: getDate(),
+            is_prioritas: this.isPrioritas,
+            dokter_laboratorium_id: this.$store.state.userLoggedIn.user.id,
+            layanans: this.selectedLab.map(labId => ({
+              laboratorium_id: labId,
+            })),
+          }
+          await fetchApi.laboratorium.orderLaboratorium(form)
+          this.$refs.modalLayananLaboratorium.hide()
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Berhasil order laboratorium',
+              icon: 'CheckIcon',
+              variant: 'success',
+            },
+          })
+        }
       } catch (err) {
-        if (err.response.status === 422) {
+        console.log(err)
+        if (err && err.response.status === 422) {
           this.$toast({
             component: ToastificationContent,
             props: {

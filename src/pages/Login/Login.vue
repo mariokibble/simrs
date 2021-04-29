@@ -156,7 +156,7 @@ export default {
         this.$storage.setStorage(SIMRS_ROLE_ID, data.user.role_id)
         this.$storage.setStorage(SIMRS_NO_HANDPHONE, data.user.no_handphone)
         this.$storage.setStorage(SIMRS_RS_ID, data.user.rs_id)
-        this.UPDATE_USER('userLoggedIn/UPDATE_USER', data)
+        this.UPDATE_USER(data.user)
         this.UPDATE_DATA_USER_FROM_STORAGE(getUserDataFromStorage())
         this.$router.replace('/')
       } catch (err) {

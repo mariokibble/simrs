@@ -87,7 +87,7 @@ export default {
         const nilai = res.nilai.split(' - ')
         if (Number(res.hasil) > nilai[1]) {
           return 'H'
-        } if (Number(res.hasil) < nilai[0]) {
+        } if (Number(res.hasil) >= 0 && Number(res.hasil) < nilai[0]) {
           return 'L'
         }
         return ''

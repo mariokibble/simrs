@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- TODO: validate when there's no selected -->
     <CardBorder
       v-for="order in rows"
       :key="order.id"
@@ -9,21 +10,26 @@
         v-slot="{ ariaDescribedby }"
         :label="order.nama"
         label-class="text-uppercase font-weight-bold"
+        content-cols-lg="12"
       >
         <b-form-checkbox-group
           :id="order.nama"
           v-model="selected"
           :aria-describedby="ariaDescribedby"
           :name="order.nama"
+          class="row"
         >
-          <b-form-checkbox
+          <b-col
             v-for="(layanan) in order.layanans"
             :key="`layanan-${layanan.id}`"
-            :value="layanan.id"
-            class="mb-1"
+            lg="4"
           >
-            {{ layanan.nama }}
-          </b-form-checkbox>
+            <b-form-checkbox
+              :value="layanan.id"
+            >
+              {{ layanan.nama }}
+            </b-form-checkbox>
+          </b-col>
         </b-form-checkbox-group>
       </b-form-group>
     </CardBorder>
@@ -31,7 +37,9 @@
 </template>
 <script>
 import CardBorder from '@/components/CardBorder/CardBorder.vue'
-import { BFormGroup, BFormCheckboxGroup, BFormCheckbox } from 'bootstrap-vue'
+import {
+  BFormGroup, BFormCheckboxGroup, BFormCheckbox, BCol,
+} from 'bootstrap-vue'
 
 export default {
   components: {
@@ -39,6 +47,7 @@ export default {
     BFormGroup,
     BFormCheckboxGroup,
     BFormCheckbox,
+    BCol,
   },
   props: {
     rows: {

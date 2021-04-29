@@ -13,34 +13,19 @@
         class="mt-25 pt-25"
       />
     </b-form-group>
-    <b-form-group
-      label="Dokter Patalogi Klinik: "
-      label-cols-lg="2"
-    >
-      <b-form-select
-        v-model="selectedDokter"
-        :options="dokterOptions"
-      />
-    </b-form-group>
   </div>
 </template>
 
 <script>
-import { BFormGroup, BFormRadioGroup, BFormSelect } from 'bootstrap-vue'
+import { BFormGroup, BFormRadioGroup } from 'bootstrap-vue'
 
 export default {
   components: {
     BFormGroup,
     BFormRadioGroup,
-    BFormSelect,
   },
   data() {
     return {
-      selectedDokter: null,
-      dokterOptions: [
-        { value: null, text: 'Pilih Dokter Patalogi Klinik' },
-        { value: 184, text: 'dr Lab 1 RSUD KOTA BOGOR' },
-      ],
       isPrioritas: '0',
       priotitasOptions: [
         { text: 'Cito', value: '1' },
@@ -52,11 +37,8 @@ export default {
     isPrioritas(val) {
       this.$emit('isPrioritas', val)
     },
-    selectedDokter(val) {
-      this.$emit('selectedDokter', val)
-    },
   },
-  created() {
+  async created() {
     this.$emit('isPrioritas', this.isPrioritas)
   },
 }
