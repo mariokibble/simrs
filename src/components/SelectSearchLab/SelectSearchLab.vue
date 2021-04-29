@@ -17,7 +17,7 @@ export default {
       items: [
         { value: null, text: 'Pilih pencarian berdasarkan :' },
         { value: 'nama', text: 'Nama' },
-        { value: 'nrm', text: 'NRM' },
+        { value: 'nomor_rekam_medis', text: 'NRM'},
       ],
     }
   },

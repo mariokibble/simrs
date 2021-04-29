@@ -79,9 +79,9 @@
         slot-scope="props"
       >
         <!-- Column: Cito -->
-        <span v-if="props.column.field === 'pemeriksaan.is_prioritas'">
-          <b-badge :variant="citoVariant(props.row.pemeriksaan.is_prioritas)">
-            {{ citoText(props.row.pemeriksaan.is_prioritas) }}
+        <span v-if="props.column.field === 'is_prioritas'">
+          <b-badge :variant="citoVariant(props.row.is_prioritas)">
+            {{ citoText(props.row.is_prioritas) }}
           </b-badge>
         </span>
         <span v-else-if="props.column.field === 'status'">
@@ -258,31 +258,45 @@ export default {
         {
           label: 'Nama',
           field: 'user.nama',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'Tanggal Lahir',
           field: 'user.tanggal_lahir',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'NRM',
           field: 'nrm',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'Asal Pemeriksaan',
           field: 'pemeriksaan.poli.nama',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'Prioritas',
-          field: 'pemeriksaan.is_prioritas',
-          name: 'prioritas',
+          field: 'is_prioritas',
+          name: 'isPrioritas',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'Status',
           field: 'status',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'Action',
           field: 'action',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
       ],
       rows: [],
@@ -329,7 +343,7 @@ export default {
         0: 'light-success',
         1: 'light-danger',
       }
-      return prioritas => citoColor[prioritas]
+      return isPrioritas => citoColor[isPrioritas]
     },
     citoText() {
       const text = {
@@ -337,7 +351,7 @@ export default {
         1: 'Cito',
       }
 
-      return prioritas => text[prioritas]
+      return isPrioritas => text[isPrioritas]
     },
     statusVariant() {
       const statusColor = {
@@ -382,6 +396,7 @@ export default {
   },
   created() {
     this.init()
+    console.log(this.filterByCito, '<<selectCito')
   },
   methods: {
     async init() {

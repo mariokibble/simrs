@@ -13,10 +13,10 @@ export default {
   },
   data() {
     return {
-      selected: null,
+      selected: '0',
       items: [
-        { value: null, text: 'Pilih prioritas' },
-        { value: '0', text: 'Non Cito' },
+        { value: '0', text: 'Pilih prioritas' },
+        { value: '0,1', text: 'Non Cito' },
         { value: '1', text: 'Cito' },
       ],
     }
