@@ -44,6 +44,7 @@ export default {
     orderLaboratorium: '/pemeriksaan/laboratorium',
     lastOrderLab: '/pemeriksaan/laboratorium/user/last',
     updateOrderLab: '/pemeriksaan/laboratorium/update',
+    dokterLab: '/dokter_laboratorium/by_rs',
   },
   radiologi: {
     radiologi: '/radiologi',
