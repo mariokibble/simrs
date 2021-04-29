@@ -26,16 +26,35 @@ export default {
   },
   methods: {
     async detailIsianLab({ id }) {
-      const query = 'rs_id=1'
-      fetchApi.pemeriksaan
-        .getLabById(id, query)
-        .then(res => {
-          const encrypId = window.btoa(`${res.data.id}`)
-          this.$router.push(`/antrian-lab/${encrypId}?${query}`)
+      try {
+        const { value } = await this.$swal({
+          title: 'Mula isian lab!',
+          text: 'apakah anda yakin untuk mengisi data hasil lab?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Iya!',
+          cancelButtonText: 'Tidak!',
+          customClass: {
+            confirmButton: 'btn btn-primary',
+            cancelButton: 'btn btn-outline-danger ml-1',
+          },
+          buttonsStyling: false,
         })
-        .catch(err => {
-          console.info(err.message)
-        })
+        if (value) {
+          const query = 'rs_id=1'
+          fetchApi.pemeriksaan
+            .getLabById(id, query)
+            .then(res => {
+              const encrypId = window.btoa(`${res.data.id}`)
+              this.$router.push(`/antrian-lab/${encrypId}?${query}`)
+            })
+            .catch(err => {
+              console.info(err.message)
+            })
+        }
+      } catch (err) {
+        console.log(err)
+      }
     },
   },
 }

@@ -6,20 +6,21 @@
         :foto-profile="pemeriksaan.user.foto_profil"
         :tanggal-lahir="pemeriksaan.user.tanggal_lahir"
         :asuransi="pemeriksaan.pemeriksaan.asuransi"
-        :nrm="pemeriksaan.nrm"
+        :nrm="nrm"
         :tanggal-appointment="pemeriksaan.nrm"
         :poliklinik-tujuan="pemeriksaan.pemeriksaan.poli.nama"
         :dokter="
           pemeriksaan.dokter_pengirim && pemeriksaan.dokter_pengirim.user.nama
             ? pemeriksaan.dokter_pengirim.user.nama
-            : 'dr.sobri'
+            : ''
         "
       />
       <CardPemeriksaan
         :tanggal-pemeriksaan="pemeriksaan.pemeriksaan.tanggal_periksa"
         :tanggal-hasil="pemeriksaan.pemeriksaan.tanggal_periksa"
         :dokter="pemeriksaan.dokter_laboratorium.user.nama"
-        :petugas="pemeriksaan.petugas_laboratorium.user.nama"
+        :petugas="pemeriksaan.petugas_laboratorium && pemeriksaan.petugas_laboratorium.user.nama
+          ? pemeriksaan.petugas_laboratorium.user.nama :'' "
         :prioritas="pemeriksaan.is_prioritas"
         :status="pemeriksaan.status"
       />
