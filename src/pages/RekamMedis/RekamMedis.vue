@@ -84,6 +84,7 @@ export default {
         case 'rawat-inap':
           from = 'Rawat Inap'
       }
+      const selectedTab = listButton.filter(btn => btn.value === this.$route.params.content)[0]
       const output = [
         {
           text: from,
@@ -94,7 +95,7 @@ export default {
           active: true,
         },
         {
-          text: listButton.filter(btn => btn.value === this.$route.params.content)[0].text || 'Not Found',
+          text: selectedTab ? selectedTab.text : 'not found',
           active: true,
         },
       ]
