@@ -18,9 +18,6 @@
                 Tanggal Hasil
               </p>
               <p class="mb-0 mt-0">
-                Dokter Patologi Klinik
-              </p>
-              <p class="mb-0 mt-0">
                 Petugas Lab
               </p>
               <p class="mb-0 mt-0">
@@ -28,6 +25,9 @@
               </p>
               <p class="mb-0 mt-0">
                 Status
+              </p>
+              <p class="mb-3 mt-2">
+                Dokter Patologi Klinik
               </p>
             </div>
           </b-col>
@@ -44,14 +44,18 @@
                 : <FormatDate :date="tanggalHasil" />
               </p>
               <p class="mb-0 mt-0">
-                : {{ dokter }}
+                :  {{ $store.state.userLoggedIn.user && $store.state.userLoggedIn.user.nama ? $store.state.userLoggedIn.user.nama : '' }}
               </p>
               <p class="mb-0 mt-0">
-                : {{ petugas }}
+                : {{ prioritasText(prioritas) }}
               </p>
-              <p class="mb-0 mt-0">: {{ prioritasText(prioritas) }}
-              </p><p class="mb-0 mt-0">
+              <p class="mb-2 mt-0">
                 : {{ statusText(status) }}
+              </p>
+              <p class="mb-2 mt-0">
+                <FormDokter
+                  @selectedDokter="setEntry('selectedDokter', ...arguments)"
+                />
               </p>
             </div>
           </b-col>
@@ -61,8 +65,12 @@
   </b-card>
 </template>
 <script>
-import { BCard, BRow, BCol } from 'bootstrap-vue'
+import {
+  BCard, BRow, BCol,
+} from 'bootstrap-vue'
 import FormatDate from '@/components/FormatDate/FormatDate.vue'
+
+import FormDokter from '@/components/FormDokter/FormDokter.vue'
 
 export default {
   components: {
@@ -70,6 +78,7 @@ export default {
     BCol,
     BRow,
     FormatDate,
+    FormDokter,
   },
   props: {
     tanggalPemeriksaan: {
@@ -97,6 +106,15 @@ export default {
       default: '',
     },
   },
+  data() {
+    return {
+      selectedDokter: null,
+      dokterOptions: [
+        { value: null, text: 'Pilih Dokter Patalogi Klinik' },
+        { value: 184, text: 'dr Lab 1 RSUD KOTA BOGOR' },
+      ],
+    }
+  },
   computed: {
     prioritasText() {
       const text = {
@@ -116,6 +134,16 @@ export default {
         9: 'Batal',
       }
       return status => text[status]
+    },
+  },
+  watch: {
+    selectedDokter(val) {
+      this.$emit('selectedDokter', val)
+    },
+  },
+  methods: {
+    setEntry(key, value) {
+      this[key] = value
     },
   },
 }
