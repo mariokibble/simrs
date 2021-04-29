@@ -118,7 +118,10 @@
               v-ripple.400="'rgba(40, 199, 111, 0.15)'"
               variant="flat-success"
               class="btn-icon"
-              @click="$emit('detailIsianLab', { id: props.row.id })"
+              @click="$emit('detailIsianLab', {
+                id: props.row.id,
+                kodeAntrian: props.row.pemeriksaan.kode_antrian,
+                status: props.row.status, })"
             >
               <feather-icon icon="EditIcon" />
             </b-button>
