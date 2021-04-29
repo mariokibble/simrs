@@ -3,11 +3,13 @@
     <div v-if="!fetching">
       <CardDataDiriLab
         :nama="formattedNama"
-        :foto-profile="pemeriksaan.user.foto_profil"
+        :foto-profile="
+          pemeriksaan.user.foto_profil ? pemeriksaan.user.foto_profil : ''
+        "
         :tanggal-lahir="pemeriksaan.user.tanggal_lahir"
         :asuransi="pemeriksaan.pemeriksaan.asuransi"
-        :nrm="nrm"
-        :tanggal-appointment="pemeriksaan.nrm"
+        :nrm="pemeriksaan.nrm"
+        :tanggal-appointment="pemeriksaan.tanggal_periksa"
         :poliklinik-tujuan="pemeriksaan.pemeriksaan.poli.nama"
         :dokter="
           pemeriksaan.dokter_pengirim && pemeriksaan.dokter_pengirim.user.nama
@@ -18,9 +20,12 @@
       <CardPemeriksaan
         :tanggal-pemeriksaan="pemeriksaan.pemeriksaan.tanggal_periksa"
         :tanggal-hasil="pemeriksaan.pemeriksaan.tanggal_periksa"
-        :dokter="pemeriksaan.dokter_laboratorium.user.nama"
-        :petugas="pemeriksaan.petugas_laboratorium && pemeriksaan.petugas_laboratorium.user.nama
-          ? pemeriksaan.petugas_laboratorium.user.nama :'' "
+        :petugas="
+          pemeriksaan.petugas_laboratorium &&
+            pemeriksaan.petugas_laboratorium.user.nama
+            ? pemeriksaan.petugas_laboratorium.user.nama
+            : ''
+        "
         :prioritas="pemeriksaan.is_prioritas"
         :status="pemeriksaan.status"
       />
@@ -69,27 +74,22 @@
           </vue-good-table>
           <b-col class="d-flex justify-content-end mt-2">
             <b-button
+              variant="danger"
+              class="mr-2"
+              @click.prevent="batal"
+            >
+              Batal
+            </b-button>
+            <b-button
               variant="warning"
-              @click.prevent="tampilkanModal"
+              class="ml-2"
+              @click.prevent="simpan"
             >
               Simpan
             </b-button>
           </b-col>
         </b-card>
       </template>
-      <b-modal
-        id="modal-konfirmasi-isian-lab"
-        ref="modalKonfirmasiIsianLab"
-        ok-variant="secondary"
-        ok-title="Konfirmasi"
-        cancel-title="Batalkan"
-        modal-class="modal-dark"
-        cancel-variant="danger"
-        centered
-        title="Apakah sudah benar data yang anda masukan?"
-        class="p-0"
-        @ok="simpan"
-      />
     </div>
     <div v-else>
       loading ...
@@ -103,7 +103,7 @@ import CardPemeriksaan from '@/components/CardDetailLab/CardPemeriksaan.vue'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import addPrefixName from '@/utils/addPrefixName'
 import {
-  BCard, BButton, BCol, BModal,
+  BCard, BButton, BCol,
 } from 'bootstrap-vue'
 import { VueGoodTable } from 'vue-good-table'
 import 'vue-good-table/dist/vue-good-table.css'
@@ -115,7 +115,6 @@ export default {
     BCard,
     BCol,
     BButton,
-    BModal,
     VueGoodTable,
     CardDataDiriLab,
     CardPemeriksaan,
@@ -178,7 +177,6 @@ export default {
   },
   created() {
     this.detailIsianLab()
-    // this.simpan()
   },
   methods: {
     detailIsianLab() {
@@ -242,7 +240,10 @@ export default {
         }
       }
       try {
-        await fetchApi.pemeriksaan.inputLab(payload)
+        const { data } = await fetchApi.pemeriksaan.inputLab(payload)
+        if (data.status === 1) {
+          payload.status = 3
+        }
         await this.detailIsianLab()
         this.$toast({
           component: ToastificationContent,
@@ -253,9 +254,8 @@ export default {
             setTimeout: '1000',
           },
         })
-        setTimeout(() => {
-          this.btnDisabled = false
-        }, 4000)
+        this.back()
+        await fetchApi.pemeriksaan.inputLab(payload)
       } catch (err) {
         if (err.response.status === 422) {
           this.$toast({
@@ -267,11 +267,11 @@ export default {
               setTimeout: '5000',
             },
           })
-          setTimeout(() => {
-            this.btnDisabled = false
-          }, 3300)
         }
       }
+    },
+    async batal() {
+      console.log('masuk sini')
     },
     masukanHasil(props) {
       const temp = this.rows[props.row.vgt_id].children[props.index]
@@ -306,6 +306,9 @@ export default {
         }
         jumlahIndex += this.rows[i].children.length
       }
+    },
+    back() {
+      this.$router.push({ name: 'antrian-lab' })
     },
   },
 }
