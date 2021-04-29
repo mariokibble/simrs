@@ -16,7 +16,7 @@
               title-tag="h1"
               class="mb-5 headerLeft"
             >
-               
+
               Pelayanan<br>
               pasien<br>
               lebih efisien<br>
