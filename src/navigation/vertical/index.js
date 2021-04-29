@@ -45,19 +45,45 @@ export default [
   },
   {
     title: 'Laboratorium',
-    route: 'Laboratorium',
     icon: 'Laboratorium',
     iconCustom: true,
+    children: [
+      {
+        title: 'Antrian Laboratorium',
+        route: 'antrian-lab',
+        icon: 'AntrianLab',
+        iconCustom: true,
+      },
+      {
+        title: 'Antrian Pending',
+        route: 'antrian-lab-pending',
+        icon: 'AntrianLabPending',
+        iconCustom: true,
+      },
+    ],
   },
   {
     title: 'Radiologi',
-    route: 'Radiologi',
     icon: 'Radiologi',
     iconCustom: true,
+    children: [
+      {
+        title: 'Antrian Radiologi',
+        route: 'antrian-radiologi',
+        icon: 'AntrianRadiologi',
+        iconCustom: true,
+      },
+      {
+        title: 'Antrian Pending',
+        route: 'antrian-radiologi-pending',
+        icon: 'AntrianRadiologiPending',
+        iconCustom: true,
+      },
+    ],
   },
   {
     title: 'Farmasi',
-    route: 'Farmasi',
+    route: 'antrian-farmasi',
     icon: 'Farmasi',
     iconCustom: true,
   },

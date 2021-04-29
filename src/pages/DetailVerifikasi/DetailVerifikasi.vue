@@ -3,49 +3,30 @@
     <div v-if="!fetching">
       <CardDataDiri
         :nama="formattedNama"
-        :foto-profile="pemeriksaan.user.foto_profile"
+        :foto-profile="pemeriksaan.user.foto_profil"
         :tanggal-lahir="pemeriksaan.user.tanggal_lahir"
         :asuransi="pemeriksaan.asuransi"
         :tanggal-appointment="pemeriksaan.tanggal_periksa"
         :poliklinik-tujuan="pemeriksaan.poli.nama"
         :dokter="pemeriksaan.dokter.user.nama"
       />
-      <CardKtp
-        :uri="pemeriksaan.user.foto_ktp"
-        @showModalImage="showModalImage"
-      />
+      <CardKtp :uri="pemeriksaan.user.foto_ktp" />
       <CardAsuransi
         v-if="pemeriksaan.asuransi !== 'UMUM'"
         :type-asuransi="pemeriksaan.asuransi"
         :uri="pemeriksaan.asuransi_file"
         :nomor-bpjs="pemeriksaan.user.nomor_bpjs || '-'"
         :nomor-surat-rujukan-bpjs="'-'"
-        @showModalImage="showModalImage"
       />
       <CardFormVerifikasi @submitted="preSubmit" />
-      <b-modal
-        id="modal-image"
-        ref="modalImage"
-        size="xl"
-      >
-        <b-img
-          thumbnail
-          :src="imageModal"
-          alt="image"
-          style="height: 80vh; width: 100%"
-        />
-        <template #modal-footer>
-          <div />
-        </template>
-      </b-modal>
       <b-modal
         id="modal-verifikasi-pemeriksaan"
         ref="modalVerifikasiPemeriksaan"
         ok-variant="secondary"
-        cancel-variant="danger"
         ok-title="Konfirmasi"
         cancel-title="Batalkan"
         modal-class="modal-dark"
+        cancel-variant="danger"
         centered
         title="Apakah sudah benar?"
         class="p-0"
@@ -73,7 +54,6 @@
 <script>
 import {
   BModal,
-  BImg,
 } from 'bootstrap-vue'
 import CardDataDiri from '@/components/CardDetailVerifikasi/CardDataDiri.vue'
 import CardKtp from '@/components/CardDetailVerifikasi/CardKtp.vue'
@@ -88,7 +68,6 @@ import fetchApi from '@/api'
 
 export default {
   components: {
-    BImg,
     CardDataDiri,
     CardKtp,
     CardAsuransi,
@@ -125,9 +104,9 @@ export default {
       if (this.status === 0) {
         return 'Terverifikasi'
       } if (this.status === 1) {
-        return 'Terverifikasi dengan catatan'
+        return 'Terverifikasi-catatan'
       }
-      return 'Ditolak dengan catatan'
+      return 'Ditolak'
     },
   },
   created() {
@@ -142,10 +121,6 @@ export default {
           this.fetching = false
         })
         .catch(err => console.log(err))
-    },
-    showModalImage(uri) {
-      this.imageModal = uri
-      this.$refs.modalImage.show()
     },
     preSubmit(payload) {
       this.catatanTambahan = payload.catatan
@@ -178,7 +153,6 @@ export default {
         })
         this.back()
       } catch (err) {
-        console.log(err)
         if (err.response.status === 422) {
           this.$toast({
             component: ToastificationContent,

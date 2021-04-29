@@ -33,6 +33,11 @@ export default {
     mulaiPoli: '/pemeriksaan/schedule/start_poli',
     rumahSakit: '/rumah_sakit',
     verifikasi: '/pemeriksaan/verifikasi',
+    laboratorium: '/pemeriksaan/laboratorium',
+    radiologi: '/pemeriksaan/radiologi',
+    updateLaboratorium: '/pemeriksaan/laboratorium/update',
+    updateRadiologi: '/pemeriksaan/radiologi/update',
+    resep: '/pemeriksaan/resep',
   },
   laboratorium: {
     laboratorium: '/laboratorium',
