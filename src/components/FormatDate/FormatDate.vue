@@ -4,6 +4,13 @@
   </span>
 </template>
 <script>
+export const formattedDate = date => {
+  const newDate = new Date(date)
+  const tanggal = newDate.getDate() < 10 ? `0${newDate.getDate()}` : newDate.getDate()
+  const bulan = newDate.getMonth() < 10 ? `0${newDate.getMonth()}` : newDate.getMonth()
+  return `${tanggal} - ${bulan} - ${newDate.getFullYear()}`
+}
+
 export default {
   props: {
     date: {
@@ -13,11 +20,7 @@ export default {
   },
   computed: {
     getDate() {
-      const newDate = new Date(this.date)
-      const tanggal = newDate.getDate() < 10 ? `0${newDate.getDate()}` : newDate.getDate()
-      const bulan = newDate.getMonth() < 10 ? `0${newDate.getMonth()}` : newDate.getMonth()
-      console.log()
-      return `${tanggal} - ${bulan} - ${newDate.getFullYear()}`
+      return formattedDate(this.date)
     },
   },
 }

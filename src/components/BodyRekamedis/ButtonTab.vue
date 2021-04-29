@@ -5,7 +5,7 @@
       :key="btn.value"
       :variant="btnSelected === btn.value ? 'success' : 'warning'"
       class="mr-1 mb-1"
-      @click="btnSelected = btn.value, $router.push(`/rekam-medis/${$route.params.id}/${btn.value}`)"
+      @click="btnSelected = btn.value, $router.push(`/rekam-medis/${$route.params.id}/${btn.value}${queryFrom}`)"
     >
       {{ btn.text }}
     </b-button>
@@ -14,6 +14,53 @@
 <script>
 import { BButton } from 'bootstrap-vue'
 
+export const listButton = [
+  {
+    value: 'pengkajian-awal',
+    text: 'Pengkajian Awal',
+  },
+  {
+    value: 'resep',
+    text: 'Resep',
+  },
+  {
+    value: 'laboratorium',
+    text: 'Laboratorium',
+  },
+  {
+    value: 'radiologi',
+    text: 'Radiologi',
+  },
+  {
+    value: 'cppt',
+    text: 'CPPT',
+  },
+  {
+    value: 'pengkajian-perawat-rajal',
+    text: 'Pengkajian Perawat Rajal',
+  },
+  {
+    value: 'resume-medis',
+    text: 'Resume Medis',
+  },
+  {
+    value: 'care-plan',
+    text: 'Care Plan',
+  },
+  {
+    value: 'dpo',
+    text: 'DPO',
+  },
+  {
+    value: 'edukasi',
+    text: 'Edukasi',
+  },
+  {
+    value: 'resume-medis-rajal',
+    text: 'Resume Medis Rajal',
+  },
+]
+
 export default {
   components: {
     BButton,
@@ -21,53 +68,13 @@ export default {
   data() {
     return {
       btnSelected: 0,
-      listButton: [
-        {
-          value: 'pengkajian-awal',
-          text: 'Pengkajian Awal',
-        },
-        {
-          value: 'resep',
-          text: 'Resep',
-        },
-        {
-          value: 'laboratorium',
-          text: 'Laboratorium',
-        },
-        {
-          value: 'radiologi',
-          text: 'Radiologi',
-        },
-        {
-          value: 'cppt',
-          text: 'CPPT',
-        },
-        {
-          value: 'pengkajian-perawat-rajal',
-          text: 'Pengkajian Perawat Rajal',
-        },
-        {
-          value: 'resume-medis',
-          text: 'Resume Medis',
-        },
-        {
-          value: 'care-plan',
-          text: 'Care Plan',
-        },
-        {
-          value: 'dpo',
-          text: 'DPO',
-        },
-        {
-          value: 'edukasi',
-          text: 'Edukasi',
-        },
-        {
-          value: 'resume-medis-rajal',
-          text: 'Resume Medis Rajal',
-        },
-      ],
+      listButton,
     }
+  },
+  computed: {
+    queryFrom() {
+      return this.$route.query.from ? `?from=${this.$route.query.from}` : ''
+    },
   },
   created() {
     const { content } = this.$route.params

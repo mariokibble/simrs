@@ -1,0 +1,14 @@
+{
+    "X-Ray": {
+        "Thorax PA": {
+            "id": 1,
+            "rs_id": 1,
+            "nama": "Thorax PA",
+            "harga": 100000,
+            "category_id": 1,
+            "created_at": null,
+            "updated_at": null,
+            "deleted_at": null
+        }
+    }
+}

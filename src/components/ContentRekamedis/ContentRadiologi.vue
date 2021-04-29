@@ -7,7 +7,7 @@
             <CardBorder>
               <b-button
                 variant="flat-dark"
-                @click="$refs.modalLayananRadiologi.show()"
+                @click="$refs.modalLayananRadiologi.show(), newSelectedRadiologis = {}"
               >
                 <feather-icon icon="PlusSquareIcon" />
                 Order Radiologi
@@ -68,11 +68,14 @@
         <div v-if="fetchingRadiologis === 'pending'">
           loading ...
         </div>
-        <FormInputOrder
-          v-else-if="fetchingRadiologis === 'resolved'"
-          :rows="radiologis"
-          @setEntry="setEntry('selectedRadilogis', ...arguments)"
-        />
+        <div v-else-if="fetchingRadiologis === 'resolved'">
+          <FormInputOrder
+            v-for="radiologi in radiologis"
+            :key="radiologi.id"
+            :rows="[radiologi]"
+            @setEntry="setEntryNewSelectedRadiologis(radiologi.id, ...arguments)"
+          />
+        </div>
       </ValidationObserver>
     </b-modal>
     <b-modal
@@ -107,11 +110,11 @@ import ToastificationContent from '@core/components/toastification/Toastificatio
 import BioHistoryRadiologi from '@/components/ContentRadiologi/BioHistoryRadiologi.vue'
 import TableHistoryRadiologi from '@/components/ContentRadiologi/TableHistoryRadiologi.vue'
 import getDate from '@/utils/getDate'
+import radiologiToplLevel from '@/constants/radiologi_top_level.json'
 import { ValidationObserver } from 'vee-validate'
 import { required } from '@validations'
 import { mapState } from 'vuex'
 import fetchApi from '@/api'
-
 import Content from './Content.vue'
 
 export default {
@@ -137,12 +140,13 @@ export default {
   data() {
     return {
       isPrioritas: 0,
-      selectedRadilogis: [],
+      selectedRadiologis: [],
       radiologis: [],
       fetchingRadiologis: 'idle',
       lastOrderRadiologi: null,
       fetchingLastOrderRadiologi: 'idle',
       imageHasil: '',
+      newSelectedRadiologis: {},
     }
   },
   computed: {
@@ -163,6 +167,9 @@ export default {
     setEntry(key, value) {
       this[key] = value
     },
+    setEntryNewSelectedRadiologis(categoryId, value) {
+      this.newSelectedRadiologis[categoryId] = value
+    },
     showImageHasil(hasil) {
       this.imageHasil = hasil
       this.$refs.modalImageHasil.show()
@@ -171,7 +178,39 @@ export default {
       try {
         this.fetchingRadiologis = 'pending'
         const { data: radiologis } = await fetchApi.radiologi.getRadiologis()
-        this.radiologis = radiologis
+
+        const newDataRadiologis = []
+        radiologis.forEach(radiologi => {
+          const newDataLayanan = []
+          let layanans = [...radiologi.layanans]
+          if (layanans <= 3) {
+            newDataLayanan.push(radiologi)
+          } else {
+            if (radiologiToplLevel[radiologi.nama]) {
+              const duplicateLayanans = []
+              layanans.forEach(layanan => {
+                if (radiologiToplLevel[radiologi.nama][layanan.nama]) {
+                  duplicateLayanans.unshift(layanan)
+                } else {
+                  duplicateLayanans.push(layanan)
+                }
+              })
+              layanans = duplicateLayanans
+            }
+            const row = Math.ceil((layanans.length) / 3)
+            for (let i = 0; i < row; i += 1) {
+              for (let j = 0; j < layanans.length; j += row) {
+                if (!layanans[i + j]) break
+                newDataLayanan.push(layanans[i + j])
+              }
+            }
+            newDataRadiologis.push({
+              ...radiologi,
+              layanans: newDataLayanan,
+            })
+          }
+        })
+        this.radiologis = newDataRadiologis
         this.fetchingRadiologis = 'resolved'
       } catch (error) {
         console.log(error)
@@ -201,16 +240,25 @@ export default {
       e.preventDefault()
       try {
         if (await this.checkValidateForm()) {
-          const form = {
-            pemeriksaan_id: this.pemeriksaanId,
-            waktu_pemeriksaan: getDate(),
-            is_prioritas: this.isPrioritas,
-            dokter_id: this.$store.state.userLoggedIn.user.id,
-            layanans: this.selectedRadilogis.map(radiologiId => ({
-              radiologi_id: radiologiId,
-            })),
-          }
-          await fetchApi.radiologi.orderRadiologi(form)
+          const promises = []
+          const keysOfSelectedRadiologis = Object.keys(this.newSelectedRadiologis)
+          keysOfSelectedRadiologis.forEach(keyOfSelectedRadiologis => {
+            const listOrderRadiologis = this.newSelectedRadiologis[keyOfSelectedRadiologis]
+            if (listOrderRadiologis.length) {
+              const form = {
+                pemeriksaan_id: this.pemeriksaanId,
+                waktu_pemeriksaan: getDate(),
+                is_prioritas: this.isPrioritas,
+                dokter_id: this.$store.state.userLoggedIn.user.id,
+                layanans: listOrderRadiologis.sort((a, b) => a - b).map(radiologiId => ({
+                  radiologi_id: radiologiId,
+                })),
+              }
+              promises.push(fetchApi.radiologi.orderRadiologi(form))
+            }
+          })
+
+          await Promise.all(promises)
           this.$refs.modalLayananRadiologi.hide()
           this.$toast({
             component: ToastificationContent,

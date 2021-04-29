@@ -50,7 +50,7 @@ export default {
               variant: 'success',
             },
           })
-          this.$router.push(`/rekam-medis/${id}`)
+          this.$router.push(`/rekam-medis/${id}?from=antrian-poliklinik`)
         }
       } catch (error) {
         console.log(error)

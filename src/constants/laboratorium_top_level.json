@@ -1,0 +1,14 @@
+{
+    "Hematologi": {
+        "Hematologi rutin": {
+            "id": 1,
+            "rs_id": 1,
+            "nama": "Hematologi rutin",
+            "harga": 10000,
+            "category_id": 1,
+            "created_at": null,
+            "updated_at": null,
+            "deleted_at": null
+        }
+    }
+}

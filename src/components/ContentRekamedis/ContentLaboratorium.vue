@@ -77,11 +77,15 @@
         <div v-if="fetchingLabs === 'pending'">
           loading ...
         </div>
-        <FormInputOrder
-          v-else-if="fetchingLabs === 'resolved'"
-          :rows="laboratoriums"
-          @setEntry="setEntry('selectedLab', ...arguments)"
-        />
+        <div v-else-if="fetchingLabs === 'resolved'">
+          <FormInputOrder
+            v-for="lab in laboratoriums"
+            :key="lab.id"
+            :rows="[lab]"
+            :auto-check-list="labAutoChecklist[lab.nama]"
+            @setEntry="setEntrySelectedLabs(lab.id, ...arguments)"
+          />
+        </div>
       </ValidationObserver>
     </b-modal>
   </div>
@@ -100,11 +104,11 @@ import TableHistoryLaboratorium from '@/components/ContentLaboratorium/TableHist
 import fetchApi from '@/api'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import getDate from '@/utils/getDate'
+import laboratoriumAutoCheckListJSON from '@/constants/laboratorium_auto_check_list.json'
+import laboratoriumTopLevel from '@/constants/laboratorium_top_level.json'
 import { ValidationObserver } from 'vee-validate'
 import { required } from '@validations'
-
 import { mapState } from 'vuex'
-
 import Content from './Content.vue'
 
 export default {
@@ -128,12 +132,13 @@ export default {
   },
   data() {
     return {
-      selectedLab: [],
       isPrioritas: '',
       laboratoriums: [],
       fetchingLabs: 'idle',
       lastOrderLab: null,
       fetchingLastOrderLab: 'idle',
+      labAutoChecklist: {}, // category: list, trigger,
+      selectedLabs: {},
     }
   },
   computed: {
@@ -154,11 +159,44 @@ export default {
     setEntry(key, value) {
       this[key] = value
     },
+    setEntrySelectedLabs(categoryId, value) {
+      this.selectedLabs[categoryId] = value
+    },
     async fetchLabs() {
       try {
         this.fetchingLabs = 'pending'
         const { data: laboratoriums } = await fetchApi.laboratorium.getLaboratoriums()
-        this.laboratoriums = laboratoriums
+        const newDataLabs = []
+        laboratoriums.forEach(lab => {
+          let layanans = [...lab.layanans]
+          this.labAutoChecklist[lab.nama] = { list: [], trigger: null }
+          if (laboratoriumAutoCheckListJSON[lab.nama]) {
+            layanans.forEach(layanan => {
+              if (laboratoriumAutoCheckListJSON[lab.nama].trigger[layanan.nama]) {
+                this.labAutoChecklist[lab.nama].trigger = layanan.id
+              }
+              if (!laboratoriumAutoCheckListJSON[lab.nama].except[layanan.nama]) {
+                this.labAutoChecklist[lab.nama].list.push(layanan.id)
+              }
+            })
+          }
+          if (laboratoriumTopLevel[lab.nama]) {
+            const newLayanans = []
+            layanans.forEach(layanan => {
+              if (laboratoriumTopLevel[lab.nama][layanan.nama]) {
+                newLayanans.unshift(layanan)
+              } else {
+                newLayanans.push(layanan)
+              }
+            })
+            layanans = newLayanans
+          }
+          newDataLabs.push({
+            ...lab,
+            layanans,
+          })
+        })
+        this.laboratoriums = newDataLabs
         this.fetchingLabs = 'resolved'
       } catch (error) {
         console.log(error)
@@ -188,12 +226,18 @@ export default {
       e.preventDefault()
       try {
         if (await this.checkValidateForm()) {
+          let concatSelectedLab = []
+          Object.keys(this.selectedLabs).forEach(key => {
+            concatSelectedLab = concatSelectedLab.concat(this.selectedLabs[key])
+          })
+          concatSelectedLab = concatSelectedLab.sort((a, b) => a - b)
+
           const form = {
             pemeriksaan_id: this.pemeriksaanId,
             waktu_pemeriksaan: getDate(),
             is_prioritas: this.isPrioritas,
             dokter_id: this.$store.state.userLoggedIn.user.id,
-            layanans: this.selectedLab.map(labId => ({
+            layanans: concatSelectedLab.map(labId => ({
               laboratorium_id: labId,
             })),
           }
