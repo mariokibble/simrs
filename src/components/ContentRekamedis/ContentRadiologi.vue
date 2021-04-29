@@ -62,9 +62,8 @@
         tag="form"
       >
         <ContentHeadModal @setEntry="setEntry('isPrioritas', ...arguments)" />
-        <FormInputPrioritasAndDokter
+        <FormInputPrioritas
           @isPrioritas="setEntry('isPrioritas', ...arguments)"
-          @selectedDokter="setEntry('selectedDokter', ...arguments)"
         />
         <div v-if="fetchingRadiologis === 'pending'">
           loading ...
@@ -102,7 +101,7 @@ import {
 import CardBorder from '@/components/CardBorder/CardBorder.vue'
 import ContentHeadModal from '@/components/ContentRadiologi/ContentHeadModal.vue'
 import FormInputOrder from '@/components/FormInputOrder/FormInputOrder.vue'
-import FormInputPrioritasAndDokter from '@/components/ContentRadiologi/FormInputPrioritasAndDokter.vue'
+import FormInputPrioritas from '@/components/FormInputPrioritas/FormInputPrioritas.vue'
 
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import BioHistoryRadiologi from '@/components/ContentRadiologi/BioHistoryRadiologi.vue'
@@ -128,7 +127,7 @@ export default {
     BioHistoryRadiologi,
     TableHistoryRadiologi,
     BImg,
-    FormInputPrioritasAndDokter,
+    FormInputPrioritas,
     // eslint-disable-next-line vue/no-unused-components
     ToastificationContent,
     ValidationObserver,
@@ -138,7 +137,6 @@ export default {
   data() {
     return {
       isPrioritas: 0,
-      selectedDokter: null,
       selectedRadilogis: [],
       radiologis: [],
       fetchingRadiologis: 'idle',
@@ -208,7 +206,6 @@ export default {
             waktu_pemeriksaan: getDate(),
             is_prioritas: this.isPrioritas,
             dokter_radiologi_id: this.$store.state.userLoggedIn.user.id,
-            petugas_radiologi_id: this.selectedDokter,
             layanans: this.selectedRadilogis.map(radiologiId => ({
               radiologi_id: radiologiId,
             })),
