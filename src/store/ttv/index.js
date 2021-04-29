@@ -53,7 +53,12 @@ export default {
       return new Promise((res, rej) => (async () => {
         try {
           const formData = { ...state.formState }
-          delete formData[FORM_TYPES.ID]
+          // eslint-disable-next-line no-restricted-syntax
+          for (const key in formData) {
+            if (!formData[key]) {
+              delete formData[key]
+            }
+          }
           await fetchApi.pemeriksaan.addTtv(formData)
           await fetchApi.pemeriksaan.selesaiTtv(state.formState[FORM_TYPES.PEMERIKSAAN_ID])
           commit('CLEAR_ENTRY_FORM')

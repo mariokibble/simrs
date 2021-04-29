@@ -99,11 +99,11 @@ export default {
     async preUpdateTtv(value) {
       try {
         const { value: swal } = await this.$swal({
-          title: 'Mulai TTV!',
-          text: 'apakah anda yakin ingin memulai TTV?',
+          title: 'Mulai pemeriksaan Tanda-tanda Vital?',
+          text: 'Apakah anda yakin ingin memulai TTV?',
           icon: 'warning',
           showCancelButton: true,
-          confirmButtonText: 'Iya!',
+          confirmButtonText: 'Iya',
           cancelButtonText: 'Tidak',
           customClass: {
             confirmButton: 'btn btn-primary',
