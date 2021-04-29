@@ -23,6 +23,7 @@
             v-for="(layanan) in order.layanans"
             :key="`layanan-${layanan.id}`"
             lg="4"
+            @change="autoCheckList ? changed(...arguments, layanan.id) : null"
           >
             <b-form-checkbox
               :value="layanan.id"
@@ -54,6 +55,10 @@ export default {
       type: Array,
       required: true,
     },
+    autoCheckList: {
+      type: Object,
+      default: null,
+    },
   },
   data() {
     return {
@@ -63,6 +68,17 @@ export default {
   watch: {
     selected(val) {
       this.$emit('setEntry', val)
+    },
+  },
+  methods: {
+    changed(e, id) {
+      const isChecked = e.target.checked
+      if (Number(this.autoCheckList.trigger) === Number(id) && isChecked) {
+        this.selected = this.autoCheckList.list
+        // console.log(this.autoCheckList)
+      } else if (Number(this.autoCheckList.trigger) === Number(id) && !isChecked) {
+        this.selected = []
+      }
     },
   },
 }

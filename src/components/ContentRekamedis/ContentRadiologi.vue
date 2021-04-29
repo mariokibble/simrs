@@ -169,7 +169,6 @@ export default {
     },
     setEntryNewSelectedRadiologis(categoryId, value) {
       this.newSelectedRadiologis[categoryId] = value
-      console.log(this.newSelectedRadiologis)
     },
     showImageHasil(hasil) {
       this.imageHasil = hasil
@@ -251,7 +250,7 @@ export default {
                 waktu_pemeriksaan: getDate(),
                 is_prioritas: this.isPrioritas,
                 dokter_id: this.$store.state.userLoggedIn.user.id,
-                layanans: listOrderRadiologis.map(radiologiId => ({
+                layanans: listOrderRadiologis.sort((a, b) => a - b).map(radiologiId => ({
                   radiologi_id: radiologiId,
                 })),
               }
