@@ -100,11 +100,10 @@ import TableHistoryLaboratorium from '@/components/ContentLaboratorium/TableHist
 import fetchApi from '@/api'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import getDate from '@/utils/getDate'
+import laboratoriumTopLevel from '@/constants/laboratorium_top_level.json'
 import { ValidationObserver } from 'vee-validate'
 import { required } from '@validations'
-
 import { mapState } from 'vuex'
-
 import Content from './Content.vue'
 
 export default {
@@ -158,7 +157,26 @@ export default {
       try {
         this.fetchingLabs = 'pending'
         const { data: laboratoriums } = await fetchApi.laboratorium.getLaboratoriums()
-        this.laboratoriums = laboratoriums
+        const newDataLabs = []
+        laboratoriums.forEach(lab => {
+          let layanans = [...lab.layanans]
+          if (laboratoriumTopLevel[lab.nama]) {
+            const newLayanans = []
+            layanans.forEach(layanan => {
+              if (laboratoriumTopLevel[lab.nama][layanan.nama]) {
+                newLayanans.unshift(layanan)
+              } else {
+                newLayanans.push(layanan)
+              }
+            })
+            layanans = newLayanans
+          }
+          newDataLabs.push({
+            ...lab,
+            layanans,
+          })
+        })
+        this.laboratoriums = newDataLabs
         this.fetchingLabs = 'resolved'
       } catch (error) {
         console.log(error)
