@@ -14,7 +14,9 @@
               class="mr-1"
               @selected="changeEntry('filterByDpjp', ...arguments)"
             />
-            <SelectStatusAntrianPoli @selected="changeEntry('filterByStatus', ...arguments)" />
+            <SelectStatusAntrianPoli
+              @selected="changeEntry('filterByStatus', ...arguments)"
+            />
           </div>
         </b-form-group>
       </div>
@@ -44,7 +46,6 @@
           </div>
         </b-form-group>
       </div>
-
     </div>
     <!-- table -->
     <vue-good-table
@@ -83,11 +84,12 @@
         </span>
         <span v-else-if="props.column.field === 'user.nama'">
           <b>
-            {{ prefixName({
-              jenisKelamin: props.row.user.jenis_kelamin,
-              statusPernikahan: props.row.user.pernikahan,
-              tanggalLahir: props.row.user.tanggal_lahir,
-            })
+            {{
+              prefixName({
+                jenisKelamin: props.row.user.jenis_kelamin,
+                statusPernikahan: props.row.user.pernikahan,
+                tanggalLahir: props.row.user.tanggal_lahir,
+              })
             }}
           </b>
           {{ props.row.user.nama }}
@@ -117,7 +119,13 @@
               v-ripple.400="'rgba(40, 199, 111, 0.15)'"
               variant="flat-success"
               class="btn-icon"
-              @click="$emit('goToRekamedis', { status: props.row.status, id: props.row.id, kodeAntrian: props.row.kode_antrian })"
+              @click="
+                $emit('goToRekamedis', {
+                  status: props.row.status,
+                  id: props.row.id,
+                  kodeAntrian: props.row.kode_antrian,
+                })
+              "
             >
               <feather-icon icon="EditIcon" />
             </b-button>
@@ -127,7 +135,12 @@
               v-ripple.400="'rgba(40, 199, 111, 0.15)'"
               variant="flat-success"
               class="btn-icon"
-              @click="$emit('deletePemeriksaan', { id:props.row.id, kodeAntrian: props.row.kode_antrian })"
+              @click="
+                $emit('deletePemeriksaan', {
+                  id: props.row.id,
+                  kodeAntrian: props.row.kode_antrian,
+                })
+              "
             >
               <feather-icon icon="TrashIcon" />
             </b-button>
@@ -152,9 +165,11 @@
             </span>
             <b-form-select
               v-model="serverParams.perPage"
-              :options="['3','5','10']"
+              :options="['3', '5', '10']"
               class="mx-1"
-              @input="(value)=>props.perPageChanged({currentPerPage:value})"
+              @input="
+                (value) => props.perPageChanged({ currentPerPage: value })
+              "
             />
             <span class="text-nowrap"> of {{ props.total }} entries </span>
           </div>
@@ -169,7 +184,7 @@
               prev-class="prev-item"
               next-class="next-item"
               class="mt-1 mb-0"
-              @input="(value)=>props.pageChanged({currentPage:value})"
+              @input="(value) => props.pageChanged({ currentPage: value })"
             >
               <template #prev-text>
                 <feather-icon
@@ -199,17 +214,24 @@
 
 <script>
 import {
-  BPagination, BFormGroup, BFormInput, BFormSelect, BCard, BButton, VBTooltip, BBadge,
+  BPagination,
+  BFormGroup,
+  BFormInput,
+  BFormSelect,
+  BCard,
+  BButton,
+  BBadge,
+  VBTooltip,
 } from 'bootstrap-vue'
 import { VueGoodTable } from 'vue-good-table'
-import SelectPoli from '@/components/SelectPoli/SelectPoli.vue'
 import store from '@/store/index'
 import FormatDate from '@/components/FormatDate/FormatDate.vue'
 import fetchApi from '@/api/index'
 import Ripple from 'vue-ripple-directive'
 import { debounce } from 'debounce'
-import SelectSearchAntrian from '@/components/SelectSearchAntrian/SelectSearchAntrian.vue'
 import SelectBPJP from '@/components/SelectDokter/SelectBPJP.vue'
+import SelectPoli from '@/components/SelectPoli/SelectPoli.vue'
+import SelectSearchAntrian from '@/components/SelectSearchAntrian/SelectSearchAntrian.vue'
 import SelectStatusAntrianPoli from '@/components/SelectStatusAntrianPoli/SelectStatusAntrianPoli.vue'
 import addPrefixName from '@/utils/addPrefixName'
 
@@ -249,34 +271,50 @@ export default {
         {
           label: 'No Antrian',
           field: 'kode_antrian',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'Nama',
           field: 'user.nama',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'Tanggal Lahir',
           field: 'user.tanggal_lahir',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'NRM',
           field: 'nrm',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'Poliklinik',
           field: 'poli.nama',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'DPJP',
           field: 'dokter.user.nama',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'Status',
           field: 'status',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'Action',
           field: 'action',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
       ],
       rows: [],
@@ -287,8 +325,7 @@ export default {
       filterByStatus: null,
       filterByDpjp: null,
       serverParams: {
-        columnFilters: {
-        },
+        columnFilters: {},
         sort: {
           field: '',
           type: '',
@@ -374,8 +411,7 @@ export default {
     },
     updateParamsToDefault() {
       this.serverParams = {
-        columnFilters: {
-        },
+        columnFilters: {},
         sort: {
           field: '',
           type: '',
@@ -394,10 +430,12 @@ export default {
     },
     onSortChange(params) {
       this.updateParams({
-        sort: [{
-          type: params.sortType,
-          field: this.columns[params.columnIndex].field,
-        }],
+        sort: [
+          {
+            type: params.sortType,
+            field: this.columns[params.columnIndex].field,
+          },
+        ],
       })
       this.loadItems()
     },
@@ -412,11 +450,20 @@ export default {
     async loadItems() {
       try {
         let query = 'rs_id=1'
-        query += `&status=${this.filterByStatus ? this.filterByStatus : '3,4,5'}`
+        query += `&status=${
+          this.filterByStatus ? this.filterByStatus : '3,4,5'
+        }`
         query += `&limit=${this.serverParams.perPage}&page=${this.serverParams.page}`
-        query += `${this.filterByDpjp ? '&dokter_id='.concat(this.filterByDpjp) : ''}`
-        query += `${this.filterByPoli ? '&poli_id='.concat(this.filterByPoli) : ''}`
-        query += this.selectedSearch && this.searchTerm ? `&${this.selectedSearch}=${this.searchTerm}` : ''
+        query += `${
+          this.filterByDpjp ? '&dokter_id='.concat(this.filterByDpjp) : ''
+        }`
+        query += `${
+          this.filterByPoli ? '&poli_id='.concat(this.filterByPoli) : ''
+        }`
+        query
+          += this.selectedSearch && this.searchTerm
+            ? `&${this.selectedSearch}=${this.searchTerm}`
+            : ''
 
         const { data: res } = await fetchApi.pemeriksaan.getAntrianPoli(query)
         const { data } = res
@@ -434,6 +481,6 @@ export default {
   },
 }
 </script>
-<style lang="scss" >
-    @import '@core/scss/vue/libs/vue-good-table.scss';
+<style lang="scss">
+@import "@core/scss/vue/libs/vue-good-table.scss";
 </style>
