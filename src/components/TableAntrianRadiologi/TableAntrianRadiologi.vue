@@ -115,7 +115,7 @@
         />
 
         <span v-else-if="props.column.field === 'jenisPemeriksaan'">
-          {{ 'X-Ray' }}
+          {{ pemeriksaan.hasils }}
         </span>
 
         <!-- Column: Action -->
@@ -264,35 +264,51 @@ export default {
         {
           label: 'Nama',
           field: 'user.nama',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'Tanggal Lahir',
           field: 'user.tanggal_lahir',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'NRM',
           field: 'nrm',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'Asal Pemeriksaan',
           field: 'pemeriksaan.poli.nama',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'Jenis Pemeriksaan',
           field: 'jenisPemeriksaan',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'Prioritas',
           field: 'pemeriksaan.is_prioritas',
           name: 'prioritas',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'Status',
           field: 'status',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'Action',
           field: 'action',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
       ],
       rows: [],

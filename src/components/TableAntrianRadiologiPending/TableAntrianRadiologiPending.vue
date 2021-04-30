@@ -258,35 +258,51 @@ export default {
         {
           label: 'Nama',
           field: 'user.nama',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'Tanggal Lahir',
           field: 'user.tanggal_lahir',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'NRM',
           field: 'nrm',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'Asal Pemeriksaan',
           field: 'pemeriksaan.poli.nama',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'Jenis Pemeriksaan',
           field: 'pemeriksaan.hasils',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'Prioritas',
           field: 'pemeriksaan.is_prioritas',
           name: 'prioritas',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'Status',
           field: 'status',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
         {
           label: 'Action',
           field: 'action',
+          tdClass: 'text-center',
+          thClass: 'text-center',
         },
       ],
       rows: [],
@@ -443,7 +459,10 @@ export default {
         query += `${
           this.filterByCito ? '&is_prioritas='.concat(this.filterByCito) : ''
         }`
-        query += this.selectedSearch && this.searchTerm ? `&${this.selectedSearch}=${this.searchTerm}` : ''
+        query
+          += this.selectedSearch && this.searchTerm
+            ? `&${this.selectedSearch}=${this.searchTerm}`
+            : ''
         const { data: res } = await fetchApi.pemeriksaan.getRadiologi(query)
         const { data } = res
         this.rows = data

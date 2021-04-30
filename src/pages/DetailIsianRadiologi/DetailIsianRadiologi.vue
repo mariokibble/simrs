@@ -10,15 +10,15 @@
         :tanggal-appointment="pemeriksaan.nrm"
         :poliklinik-tujuan="pemeriksaan.pemeriksaan.poli.nama"
         :dokter=" pemeriksaan.dokter_pengirim && pemeriksaan.dokter_pengirim.user.nama
-            ? pemeriksaan.dokter_pengirim.user.nama
-            : ''"
+          ? pemeriksaan.dokter_pengirim.user.nama
+          : ''"
       />
       <CardPemeriksaan
         :tanggal-pemeriksaan="pemeriksaan.pemeriksaan.tanggal_periksa"
         :tanggal-hasil="pemeriksaan.pemeriksaan.tanggal_periksa"
-        :dokter="pemeriksaan.dokter_radiologi && pemeriksaan.dokter_radiologi.user.nama ? 
-            pemeriksaan.dokter_radiologi.user.nama : ''"
-        :petugas="pemeriksaan.petugas_radiologi && pemeriksaan.petugas_radiologi.user.nama ? 
+        :dokter="pemeriksaan.dokter_radiologi && pemeriksaan.dokter_radiologi.user.nama ?
+          pemeriksaan.dokter_radiologi.user.nama : ''"
+        :petugas="pemeriksaan.petugas_radiologi && pemeriksaan.petugas_radiologi.user.nama ?
           pemeriksaan.petugas_radiologi.user.nama : ''"
         :prioritas="pemeriksaan.pemeriksaan.is_prioritas"
       />
