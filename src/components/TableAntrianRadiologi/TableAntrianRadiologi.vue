@@ -115,7 +115,7 @@
         />
 
         <span v-else-if="props.column.field === 'jenisPemeriksaan'">
-          {{ 'X-Ray' }}
+          {{ !props.row.hasils.length ? '' : props.row.hasils[0].layanan.categori.nama }}
         </span>
 
         <!-- Column: Action -->
@@ -481,6 +481,7 @@ export default {
             : ''
         const { data: res } = await fetchApi.pemeriksaan.getRadiologi(query)
         const { data } = res
+        console.log(data, '<<< data')
         this.rows = data
         this.totalRecords = res.total
       } catch (error) {
