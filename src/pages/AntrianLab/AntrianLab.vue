@@ -28,7 +28,7 @@ export default {
     async detailIsianLab({ id }) {
       try {
         const { value } = await this.$swal({
-          title: 'Mula isian lab!',
+          title: 'Mulai isian lab!',
           text: 'apakah anda yakin untuk mengisi data hasil lab?',
           icon: 'warning',
           showCancelButton: true,
