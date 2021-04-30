@@ -66,7 +66,7 @@ export default {
         console.log(err)
       }
     },
-    deleteConfirm({ id, kodeAntrian }) {
+    deleteConfirm({ kodeAntrian }) {
       this.$swal({
         title: 'Hapus pemeriksaan!',
         text: `Apakah kamu yakin, akan menghapus pemeriksaan dengan kode antrian ${kodeAntrian}?`,
