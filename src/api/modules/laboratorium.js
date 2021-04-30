@@ -22,8 +22,16 @@ export default {
     const request = resource.get(`${endpoint.laboratorium.orderLaboratorium}/${id}`)
     return request
   },
+<<<<<<< HEAD
   getAllDokterLab() {
     const request = resource.get(`${endpoint.laboratorium.dokterLab}/1`)
     return request
   },
+=======
+  listDokterLab() {
+    const request = resource.get(`${endpoint.laboratorium.dokterLab}/${1}`)
+    return request
+  },
+
+>>>>>>> f604c3ef400f95758b4c727b3e3df8f62a2b5e94
 }
