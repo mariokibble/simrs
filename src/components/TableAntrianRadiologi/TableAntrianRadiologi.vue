@@ -115,7 +115,7 @@
         />
 
         <span v-else-if="props.column.field === 'jenisPemeriksaan'">
-          {{ "X-Ray" }}
+          {{ pemeriksaan.hasils }}
         </span>
 
         <!-- Column: Action -->
