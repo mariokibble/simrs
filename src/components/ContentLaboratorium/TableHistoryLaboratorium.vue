@@ -84,7 +84,10 @@ export default {
   computed: {
     flag() {
       return res => {
-        const nilai = res.nilai.split(' - ')
+        if (!res.nilai) {
+          return ''
+        }
+        const nilai = res.nilai?.split(' - ')
         if (Number(res.hasil) > nilai[1]) {
           return 'H'
         } if (Number(res.hasil) >= 0 && Number(res.hasil) < nilai[0]) {
