@@ -5,7 +5,8 @@
   </div>
 </template>
 <script>
-import { ContentLaboratorium, ContentRadiologi } from '@/components/ContentRekamedis'
+import ContentLaboratorium from '@/components/ContentLaboratorium/ContentLaboratorium.vue'
+import ContentRadiologi from '@/components/ContentRadiologi/ContentRadiologi.vue'
 
 export default {
   components: {

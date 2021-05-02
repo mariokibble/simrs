@@ -50,7 +50,7 @@ export default {
               variant: 'success',
             },
           })
-          this.$router.push(`/rekam-medis/${id}?from=antrian-poliklinik`)
+          this.$router.push(`/rekam-medis/${id}/pengkajian-awal?from=antrian-poliklinik`)
         }
       } catch (error) {
         console.log(error)

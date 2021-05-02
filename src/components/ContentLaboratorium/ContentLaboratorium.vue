@@ -109,7 +109,7 @@ import laboratoriumTopLevel from '@/constants/laboratorium_top_level.json'
 import { ValidationObserver } from 'vee-validate'
 import { required } from '@validations'
 import { mapState } from 'vuex'
-import Content from './Content.vue'
+import Content from '../ContentRekamedis/Content.vue'
 
 export default {
   components: {
